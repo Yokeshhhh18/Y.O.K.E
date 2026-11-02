@@ -4,7 +4,7 @@
 const CONFIG = {
   // Get a free key at https://aistudio.google.com/apikey
   // IMPORTANT: in Google Cloud console, restrict this key to your website URL (HTTP referrer)
-  GEMINI_API_KEY: "PASTE_YOUR_KEY_HERE",
+  GEMINI_API_KEY: "AQ.Ab8RN6JRUq_4tHEEVAXltyZkHApcguAZEDFm2v2n7IFJXErCMg",
   MODEL: "gemini-2.5-flash",
 
   HER_NAME: "Dhanya",
