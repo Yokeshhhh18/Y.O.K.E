@@ -1,0 +1,48 @@
+:root {
+  --bg: #fff4f0;
+  --pink: #ff7aa8;
+  --yellow: #ffd166;
+  --ink: #3b2f3a;
+  --card: #ffffff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", "Trebuchet MS", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+.hidden { display: none !important; }
+
+.screen {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 24px; gap: 8px;
+}
+.screen h1 { font-size: 3rem; margin: 0; color: var(--pink); letter-spacing: 6px; }
+.tag { margin: 0 0 12px; }
+#countdown { font-size: 1.6rem; font-weight: bold; background: var(--yellow); padding: 10px 20px; border-radius: 16px; border: 3px solid var(--ink); }
+
+.cartoon { max-width: 260px; width: 70%; border: 4px solid var(--ink); border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); background: #fff; }
+.cartoon[src=""], .cartoon:not([src]) { display: none; }
+
+#app { max-width: 560px; margin: 0 auto; padding: 12px; }
+header { display: flex; align-items: center; gap: 12px; padding: 8px 4px; }
+header h2 { margin: 0; color: var(--pink); letter-spacing: 3px; }
+.avatar { width: 54px; height: 54px; border-radius: 50%; border: 3px solid var(--ink); object-fit: cover; background: #fff; }
+
+#chat { background: var(--card); border: 3px solid var(--ink); border-radius: 20px; padding: 12px; height: 55vh; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+.msg { max-width: 82%; padding: 10px 14px; border-radius: 18px; border: 2px solid var(--ink); white-space: pre-wrap; line-height: 1.4; }
+.msg.bot { background: #ffe3ee; align-self: flex-start; }
+.msg.me { background: #fff1b8; align-self: flex-end; }
+
+#form { display: flex; gap: 8px; margin-top: 10px; }
+#input { flex: 1; padding: 12px; border-radius: 14px; border: 3px solid var(--ink); font: inherit; }
+button { padding: 12px 16px; border-radius: 14px; border: 3px solid var(--ink); background: var(--pink); color: #fff; font: inherit; font-weight: bold; cursor: pointer; box-shadow: 3px 3px 0 var(--ink); }
+button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+
+#surprise { margin-top: 24px; background: var(--card); border: 3px solid var(--ink); border-radius: 20px; padding: 16px; text-align: center; }
+#surprise ul { list-style: none; padding: 0; }
+#surprise li { margin: 8px 0; }
+#surprise a { color: var(--pink); font-weight: bold; }
+.songlink { display: inline-block; margin-top: 10px; padding: 10px 16px; background: var(--yellow); border: 3px solid var(--ink); border-radius: 14px; text-decoration: none; color: var(--ink) !important; }
