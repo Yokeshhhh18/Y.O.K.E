@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Y.O.K.E.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,27 +22,27 @@
   <!-- MAIN APP -->
   <main id="app" class="hidden">
     <header>
-      <img id="avatar" class="avatar" alt="">
+      <div class="avatar-wrap"><img id="avatar" class="avatar" alt=""></div>
       <div>
-        <h2>Y.O.K.E.</h2>
-        <small>You're Our Kind of Everything</small>
+        <h2 class="brand">Y.O.K.E.</h2>
+        <div class="status">You're Our Kind of Everything 💗</div>
       </div>
     </header>
 
     <div id="chat"></div>
+    <div id="chips"></div>
 
     <form id="form">
-      <input id="input" autocomplete="off" placeholder="Y.O.K.E. kitta pesu..." />
-      <button type="submit">Send 💌</button>
+      <input id="input" autocomplete="off" placeholder="Y.O.K.E. kitta pesu... 💌" />
+      <button type="submit" class="send" aria-label="Send">➤</button>
     </form>
 
-    <section id="surprise">
-      <h3>🎁 Surprise for <span class="her"></span></h3>
-      <img id="couplePic" class="cartoon" alt="">
-      <div id="songBox"></div>
-      <h4>Videos I made for you</h4>
-      <ul id="videos"></ul>
+    <section id="gift">
+      <button id="giftBtn" class="giftbtn" type="button">🎁 Tap to open your gift</button>
+      <div id="giftContent" class="hidden"></div>
     </section>
+
+    <footer>Made with 💛 by <span id="youName"></span></footer>
   </main>
 
   <script src="config.js"></script>

@@ -2,24 +2,30 @@
 **You're Our Kind of Everything** — a Tanglish birthday AI for Dhanya.
 
 ## Files
-- `config.js`  — the ONLY file you edit (key, name, song, videos, memories, sample texts)
+- `config.js` — your personal details (name, song, videos, memories, sample texts). **No API key in here.**
+- `api/chat.js` — Vercel server function that talks to Gemini using a secret key
 - `index.html`, `style.css`, `app.js` — the website
-- `images/` — put your cartoon pics here (`dhanya.png`, `me.png`, `us.png`)
+- `images/` — cartoon pics (`dhanya.png`, `me.png`, `us.png`)
 
-## Setup
-1. Get a free Gemini API key: https://aistudio.google.com/apikey
-2. Paste it in `config.js` → `GEMINI_API_KEY`
-3. Fill in `YOUR_NAME`, `SONG`, `VIDEOS`, `MEMORIES`, `SAMPLE_TEXTS`
-4. Add cartoon pics to `images/`
-5. Test: set `UNLOCK_AT` to a past date, open `index.html` in a browser
-6. Before gifting, set `UNLOCK_AT` back to `2026-11-07T00:00:00+05:30`
+## Why the key must NOT be on GitHub
+GitHub scans public repos for API keys and tells Google, which disables the key
+automatically. So the key lives only in Vercel's settings.
 
-## Deploy free (GitHub Pages)
-1. Create a GitHub repo, upload all files
-2. Settings → Pages → Branch: `main` → Save
-3. Your link: `https://<username>.github.io/<repo>/`
+## Setup (Vercel)
+1. Make a NEW key at https://aistudio.google.com/apikey (the old one is already disabled)
+2. Vercel -> your project -> Settings -> Environment Variables
+   - Name: `GEMINI_API_KEY`   Value: your key   Environments: Production (+ Preview)
+3. Deployments -> latest -> ... -> Redeploy (env vars apply only to new deployments)
+4. In `config.js`, delete the `GEMINI_API_KEY` line.
 
-## Key safety
-The key sits in the browser code, so anyone with the link could copy it.
-In Google Cloud Console → Credentials, restrict the key to your GitHub Pages URL
-(HTTP referrer) and to the Generative Language API. Use a repo with a key made only for this.
+## Optional extras in config.js
+```js
+CHIPS: ["Surprise 🎁", "Joke sollu 😂"],
+LETTER: "Dhanya,\n\nYour own birthday letter here...\n\n- Your name",
+GALLERY: [{ src: "images/us.png", caption: "Us 💛" }],
+```
+
+## Testing
+Open your Vercel link, press Ctrl+Shift+J, type `unlock()` and press Enter.
+(The chat only works on the Vercel link, not by opening index.html from your computer.)
+Before gifting, make sure `UNLOCK_AT` is `2026-11-07T00:00:00+05:30`.
