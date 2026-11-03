@@ -29,3 +29,16 @@ GALLERY: [{ src: "images/us.png", caption: "Us 💛" }],
 Open your Vercel link, press Ctrl+Shift+J, type `unlock()` and press Enter.
 (The chat only works on the Vercel link, not by opening index.html from your computer.)
 Before gifting, make sure `UNLOCK_AT` is `2026-11-07T00:00:00+05:30`.
+
+## v2 additions
+- **Intro**: after unlock, a "Tap to open" screen → her wish types out with hearts, then the chat + a short tutorial (once per device).
+- **Voice mode**: 🎙 button. Listening uses the browser (Chrome on Android is best). Replies are spoken by `api/tts.js` (Gemini TTS, same `GEMINI_API_KEY`).
+- **Your own recorded voice**: put files in `audio/` and add to `config.js`:
+```js
+CLIPS: { wish: "audio/wish.m4a", tutorial: "audio/tutorial.m4a", miss: "audio/miss.m4a", see: "audio/see.m4a" },
+SEE_YOU: { type: "image", src: "images/us.png", caption: "Inga dhan iruken 😍" },  // or type: "video"
+TUTORIAL: ["line 1", "line 2"],   // optional: your own words
+INTRO_PIC: "images/me.png",       // optional
+```
+- Optional Vercel env vars: `GEMINI_TTS_MODEL` (default `gemini-3.1-flash-tts-preview`), `GEMINI_TTS_VOICE` (default `Kore`).
+- `images/dhanya.png` and `images/me.png` are already included. Add `images/us.png` when you have it.

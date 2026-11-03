@@ -10,6 +10,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- BIRTHDAY INTRO (after unlock) -->
+  <section id="intro" class="hidden">
+    <button id="skip" type="button">skip</button>
+    <img id="introPic" alt="">
+    <div id="wish" aria-live="polite"></div>
+    <button id="openBtn" type="button">💌 Tap to open</button>
+  </section>
+
+  <!-- VOICE MODE -->
+  <section id="voice">
+    <button id="orb" type="button" aria-label="Tap to talk"></button>
+    <div id="vstate">Tap the orb to talk</div>
+    <div id="vtext"></div>
+    <div class="vrow">
+      <button id="langBtn" type="button">English</button>
+      <button id="vclose" type="button">Close</button>
+    </div>
+  </section>
+
   <!-- LOCK SCREEN (before birthday) -->
   <section id="lock" class="screen">
     <h1>Y.O.K.E.</h1>
@@ -27,6 +46,7 @@
         <h2 class="brand">Y.O.K.E.</h2>
         <div class="status">You're Our Kind of Everything 💗</div>
       </div>
+      <button id="micBtn" type="button" aria-label="Talk to Y.O.K.E.">🎙</button>
     </header>
 
     <div id="chat"></div>
