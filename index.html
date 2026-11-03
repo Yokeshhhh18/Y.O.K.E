@@ -6,16 +6,68 @@
   <title>Y.O.K.E.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- BIRTHDAY INTRO (after unlock) -->
+  <!-- TAMIL MOVIE INTRO (after unlock) -->
   <section id="intro" class="hidden">
-    <button id="skip" type="button">skip</button>
-    <img id="introPic" alt="">
-    <div id="wish" aria-live="polite"></div>
-    <button id="openBtn" type="button">💌 Tap to open</button>
+    <div class="letterbox top"></div>
+    <div class="letterbox bottom"></div>
+    <canvas id="sparks"></canvas>
+    <button id="skip" type="button">SKIP INTRO ⏭</button>
+
+    <!-- Initial Gate -->
+    <div id="gate" class="cine-stage active">
+      <div class="cert-badge">U/A • BLOCKBUSTER LOVE STORY</div>
+      <div class="prod-sub">A SPECIAL BIRTHDAY PRODUCTION</div>
+      <h2 class="cine-main-title">Y.O.K.E.</h2>
+      <p class="cine-tag">You're Our Kind of Everything</p>
+      <button id="openBtn" type="button">🎬 Tap for First Day First Show</button>
+    </div>
+
+    <!-- Scene 1: Production Banner -->
+    <div id="scene1" class="cine-stage">
+      <div class="gold-line"></div>
+      <div class="cine-presents"><span class="you-cine"></span> PRODUCTIONS</div>
+      <div class="cine-sub">PROUDLY PRESENTS</div>
+      <div class="cine-tamil">இனிய பிறந்தநாள் வாழ்த்துக்கள்</div>
+      <div class="gold-line"></div>
+    </div>
+
+    <!-- Scene 2: Heroine Intro (Her Intro) -->
+    <div id="scene2" class="cine-stage">
+      <div class="role-badge">✨ INTRODUCING THE QUEEN ✨</div>
+      <div class="poster-frame her-frame">
+        <img id="herIntroPic" alt="Dhanya">
+        <div class="flare"></div>
+      </div>
+      <h2 class="char-name her-cine"></h2>
+      <div class="char-title">"Azhagi • En Uyire • The Birthday Girl 👑"</div>
+    </div>
+
+    <!-- Scene 3: Hero Intro (My Intro) -->
+    <div id="scene3" class="cine-stage">
+      <div class="role-badge">🔥 DIRECTED, BUILT &amp; LOVED BY 🔥</div>
+      <div class="poster-frame me-frame">
+        <img id="meIntroPic" alt="Yokesh">
+        <div class="flare"></div>
+      </div>
+      <h2 class="char-name you-cine"></h2>
+      <div class="char-title">"Unnoda Forever • Partner in Crime 😎"</div>
+    </div>
+
+    <!-- Scene 4: Title Card & Birthday Wish Climax -->
+    <div id="scene4" class="cine-stage">
+      <div class="climax-pics">
+        <img id="climaxHer" class="mini-poster left" alt="">
+        <span class="heart-bridge">💗</span>
+        <img id="climaxMe" class="mini-poster right" alt="">
+      </div>
+      <div class="cine-tamil-wish">என் இனிய பிறந்தநாள் நல்வாழ்த்துக்கள்</div>
+      <div id="wish" aria-live="polite"></div>
+      <div class="cine-release">NOW STREAMING IN YOUR HEART 💛</div>
+    </div>
   </section>
 
   <!-- VOICE MODE -->
@@ -46,6 +98,7 @@
         <h2 class="brand">Y.O.K.E.</h2>
         <div class="status">You're Our Kind of Everything 💗</div>
       </div>
+      <button id="replayIntroBtn" type="button" title="Replay Movie Intro" aria-label="Replay Movie Intro">🎬</button>
       <button id="micBtn" type="button" aria-label="Talk to Y.O.K.E.">🎙</button>
     </header>
 
