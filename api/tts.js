@@ -1,5 +1,5 @@
 // Vercel serverless function: Gemini text-to-speech. Same GEMINI_API_KEY as chat.js.
-// Returns { audio: <base64 WAV>, mime: "audio/wav" }.
+// Uses a warm male voice ("Puck") styled after Yokesh's affectionate Tanglish delivery.
 
 function pcmToWav(pcm, rate = 24000) {
   const h = Buffer.alloc(44);
@@ -16,18 +16,24 @@ module.exports = async function handler(req, res) {
   if (!key) return res.status(500).json({ error: "GEMINI_API_KEY is not set in Vercel" });
 
   try {
-    const text = String((req.body && req.body.text) || "").trim().slice(0, 600);
+    const rawText = String((req.body && req.body.text) || "").trim().slice(0, 600);
+    // Strip emojis so TTS doesn't read emoji names out loud
+    const text = rawText.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "").trim();
     if (!text) return res.status(400).json({ error: "text is empty" });
 
-    const model = process.env.GEMINI_TTS_MODEL || "gemini-3.1-flash-tts-preview";
-    const voice = process.env.GEMINI_TTS_VOICE || "Kore";
+    const model = process.env.GEMINI_TTS_MODEL || "gemini-2.5-flash-preview-tts";
+    const voice = process.env.GEMINI_TTS_VOICE || "Puck"; // Male, warm conversational voice
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
     const r = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-goog-api-key": key },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: "Say warmly and affectionately, like a loving boyfriend: " + text }] }],
+        contents: [{
+          parts: [{
+            text: "Speak in a soft, natural, intimate South Indian Tanglish (Tamil + English) male voice, like Yokesh lovingly talking to his girlfriend Dhanya: " + text
+          }]
+        }],
         generationConfig: {
           responseModalities: ["AUDIO"],
           speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } }

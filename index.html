@@ -2,86 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Y.O.K.E.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Y.O.K.E. ✨</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Dancing+Script:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- TAMIL MOVIE INTRO (after unlock) -->
+  <!-- =========================================================
+       JANA NAYAGAN STYLE FULL-SCREEN TAMIL BLOCKBUSTER INTRO
+       ========================================================= -->
   <section id="intro" class="hidden">
-    <div class="letterbox top"></div>
-    <div class="letterbox bottom"></div>
     <canvas id="sparks"></canvas>
+    <div class="vignette"></div>
+    <div class="flash-overlay" id="flashOverlay"></div>
     <button id="skip" type="button">SKIP INTRO ⏭</button>
 
-    <!-- Initial Gate -->
-    <div id="gate" class="cine-stage active">
-      <div class="cert-badge">U/A • BLOCKBUSTER LOVE STORY</div>
-      <div class="prod-sub">A SPECIAL BIRTHDAY PRODUCTION</div>
-      <h2 class="cine-main-title">Y.O.K.E.</h2>
-      <p class="cine-tag">You're Our Kind of Everything</p>
-      <button id="openBtn" type="button">🎬 Tap for First Day First Show</button>
+    <!-- Gate: Tap to start FDFS with Mass BGM -->
+    <div id="gate" class="jn-stage active">
+      <div class="jn-cert">U/A • TANGLISH ROMANTIC BLOCKBUSTER</div>
+      <div class="jn-monogram-big">Y</div>
+      <h2 class="jn-gate-title">Y.O.K.E.</h2>
+      <p class="jn-gate-sub">You're Our Kind of Everything</p>
+      <button id="openBtn" type="button">🔥 TAP FOR FIRST DAY FIRST SHOW 🎬</button>
     </div>
 
-    <!-- Scene 1: Production Banner -->
-    <div id="scene1" class="cine-stage">
-      <div class="gold-line"></div>
-      <div class="cine-presents"><span class="you-cine"></span> PRODUCTIONS</div>
-      <div class="cine-sub">PROUDLY PRESENTS</div>
-      <div class="cine-tamil">இனிய பிறந்தநாள் வாழ்த்துக்கள்</div>
-      <div class="gold-line"></div>
+    <!-- Stage 1: 3D Metallic Tamil Letters Slam (0s - 3.6s) -->
+    <div id="jnStage1" class="jn-stage">
+      <div class="jn-3d- emblem">இபிறந்தநாள்</div>
+      <div class="jn-slam-word" id="slamWord1">இனிய</div>
+      <div class="jn-slam-word" id="slamWord2">பிறந்தநாள்</div>
+      <div class="jn-slam-word gold-glow" id="slamWord3">நல்வாழ்த்துக்கள்</div>
+      <div class="jn-sub-credit">A <span class="you-cine"></span> LOVE PRODUCTION</div>
     </div>
 
-    <!-- Scene 2: Heroine Intro (Her Intro) -->
-    <div id="scene2" class="cine-stage">
-      <div class="role-badge">✨ INTRODUCING THE QUEEN ✨</div>
-      <div class="poster-frame her-frame">
+    <!-- Stage 2: Full-Screen Heroine Title Card — DHANYA (3.6s - 9.2s) -->
+    <div id="jnStage2" class="jn-stage jn-fullscreen-card">
+      <div class="jn-bg-watermark">QUEEN</div>
+      <div class="jn-hero-cutout right-side">
         <img id="herIntroPic" alt="Dhanya">
-        <div class="flare"></div>
+        <div class="jn-cutout-fade"></div>
       </div>
-      <h2 class="char-name her-cine"></h2>
-      <div class="char-title">"Azhagi • En Uyire • The Birthday Girl 👑"</div>
+      <div class="jn-title-block left-side">
+        <div class="jn-tamil-tag">என் இதய ராணி • பிறந்தநாள் தேவதை</div>
+        <div class="jn-role-sub">THE QUEEN OF MY WORLD</div>
+        <h1 class="jn-massive-name her-cine"></h1>
+        <div class="jn-English-tag">"En Chellam • En Thangam • My Everything 👑💗"</div>
+      </div>
     </div>
 
-    <!-- Scene 3: Hero Intro (My Intro) -->
-    <div id="scene3" class="cine-stage">
-      <div class="role-badge">🔥 DIRECTED, BUILT &amp; LOVED BY 🔥</div>
-      <div class="poster-frame me-frame">
+    <!-- Stage 3: Full-Screen Hero/Creator Title Card — YOKESH (9.2s - 14.5s) -->
+    <div id="jnStage3" class="jn-stage jn-fullscreen-card">
+      <div class="jn-bg-watermark">Y.O.K.E</div>
+      <div class="jn-hero-cutout right-side">
         <img id="meIntroPic" alt="Yokesh">
-        <div class="flare"></div>
+        <div class="jn-cutout-fade"></div>
       </div>
-      <h2 class="char-name you-cine"></h2>
-      <div class="char-title">"Unnoda Forever • Partner in Crime 😎"</div>
+      <div class="jn-title-block left-side">
+        <div class="jn-tamil-tag">உனக்காகவே உருவாக்கியவன் • உன் உயிர்</div>
+        <div class="jn-role-sub">CREATED, VOICED &amp; LOVED BY</div>
+        <h1 class="jn-massive-name you-cine"></h1>
+        <div class="jn-English-tag">"Unnoda Forever • Always By Your Side 😎🔥"</div>
+      </div>
     </div>
 
-    <!-- Scene 4: Title Card & Birthday Wish Climax -->
-    <div id="scene4" class="cine-stage">
-      <div class="climax-pics">
-        <img id="climaxHer" class="mini-poster left" alt="">
-        <span class="heart-bridge">💗</span>
-        <img id="climaxMe" class="mini-poster right" alt="">
+    <!-- Stage 4: Full-Screen Climax Dual Poster & Birthday Wish (14.5s - 19.5s) -->
+    <div id="jnStage4" class="jn-stage jn-climax-card">
+      <div class="jn-bg-watermark">DHANYA</div>
+      <div class="jn-dual-posters">
+        <div class="jn-dual-img left"><img id="climaxHer" alt=""></div>
+        <div class="jn-dual-img right"><img id="climaxMe" alt=""></div>
+        <div class="jn-dual-gradient"></div>
       </div>
-      <div class="cine-tamil-wish">என் இனிய பிறந்தநாள் நல்வாழ்த்துக்கள்</div>
-      <div id="wish" aria-live="polite"></div>
-      <div class="cine-release">NOW STREAMING IN YOUR HEART 💛</div>
+      <div class="jn-climax-text">
+        <div class="jn-tamil-tag">இனிய பிறந்தநாள் வாழ்த்துக்கள் செல்லம்</div>
+        <div id="wish" aria-live="polite"></div>
+        <div class="jn-release-tag">✨ NOW STREAMING IN YOUR HEART FOREVER ✨</div>
+      </div>
     </div>
   </section>
 
-  <!-- VOICE MODE -->
+  <!-- =========================================================
+       VOICE LIVE MODE (Gemini Live Style Orb)
+       ========================================================= -->
   <section id="voice">
+    <div class="voice-top-badge">✨ Y.O.K.E. LIVE VOICE (Trained on <span class="you-cine"></span>'s Style)</div>
     <button id="orb" type="button" aria-label="Tap to talk"></button>
     <div id="vstate">Tap the orb to talk</div>
     <div id="vtext"></div>
     <div class="vrow">
-      <button id="langBtn" type="button">English</button>
-      <button id="vclose" type="button">Close</button>
+      <button id="langBtn" type="button">🌐 Tanglish / EN</button>
+      <button id="vclose" type="button">✕ Back to Chat</button>
     </div>
   </section>
 
-  <!-- LOCK SCREEN (before birthday) -->
+  <!-- =========================================================
+       LOCK SCREEN (before birthday)
+       ========================================================= -->
   <section id="lock" class="screen">
     <h1>Y.O.K.E.</h1>
     <p class="tag">You're Our Kind of Everything</p>
@@ -90,32 +108,64 @@
     <div id="countdown">--</div>
   </section>
 
-  <!-- MAIN APP -->
+  <!-- =========================================================
+       GEMINI-STYLE ROMANTIC INTERFACE
+       ========================================================= -->
   <main id="app" class="hidden">
-    <header>
-      <div class="avatar-wrap"><img id="avatar" class="avatar" alt=""></div>
-      <div>
-        <h2 class="brand">Y.O.K.E.</h2>
-        <div class="status">You're Our Kind of Everything 💗</div>
+    <!-- Top Navigation Bar (Gemini Style) -->
+    <header class="gem-header">
+      <div class="gem-brand-wrap">
+        <div class="avatar-wrap">
+          <img id="avatar" class="avatar" alt="">
+          <span class="online-dot"></span>
+        </div>
+        <div>
+          <div class="gem-title-row">
+            <h2 class="brand">Y.O.K.E.</h2>
+            <span class="model-pill">2.5 Romantic ✨</span>
+          </div>
+          <div class="status"><span id="youName"></span>'s AI Twin • Always online for <span class="her"></span> 💗</div>
+        </div>
       </div>
-      <button id="replayIntroBtn" type="button" title="Replay Movie Intro" aria-label="Replay Movie Intro">🎬</button>
-      <button id="micBtn" type="button" aria-label="Talk to Y.O.K.E.">🎙</button>
+
+      <div class="gem-actions">
+        <button id="bgmBtn" class="icon-btn" type="button" title="Toggle Romantic BGM">🎵 <span id="bgmLabel">BGM</span></button>
+        <button id="replayIntroBtn" class="icon-btn" type="button" title="Replay Title Card Intro">🎬</button>
+        <button id="giftNavBtn" class="icon-btn gift-glow" type="button" title="Open Birthday Gift">🎁</button>
+      </div>
     </header>
 
-    <div id="chat"></div>
-    <div id="chips"></div>
+    <!-- Scrollable Main Area -->
+    <div id="chatScroll" class="gem-scroll">
+      <!-- Gemini-style Welcome Hero (disappears or stays above messages) -->
+      <div id="welcomeHero" class="gem-welcome">
+        <div class="gem-sparkle">✨💗</div>
+        <h1 class="gem-greet">Happy Birthday, <span class="her"></span>!</h1>
+        <p class="gem-subgreet">Naan dhan <b>Y.O.K.E.</b> — <span class="you-cine"></span> oda voice &amp; love-la train aana unnoda personal AI. En kitta enna venாலும் pesu chellam!</p>
 
-    <form id="form">
-      <input id="input" autocomplete="off" placeholder="Y.O.K.E. kitta pesu... 💌" />
-      <button type="submit" class="send" aria-label="Send">➤</button>
-    </form>
+        <!-- Gemini-style Quick Suggestion Cards -->
+        <div id="chips" class="gem-cards"></div>
+      </div>
 
-    <section id="gift">
-      <button id="giftBtn" class="giftbtn" type="button">🎁 Tap to open your gift</button>
-      <div id="giftContent" class="hidden"></div>
-    </section>
+      <!-- Chat Stream -->
+      <div id="chat" class="gem-chat-stream"></div>
 
-    <footer>Made with 💛 by <span id="youName"></span></footer>
+      <!-- Gift Drawer / Section inside scroll -->
+      <section id="gift" class="gem-gift-section">
+        <button id="giftBtn" class="giftbtn" type="button">🎁 Tap to unwrap your Birthday Surprise</button>
+        <div id="giftContent" class="hidden"></div>
+      </section>
+    </div>
+
+    <!-- Bottom Floating Gemini Prompt Bar -->
+    <div class="gem-bottom-dock">
+      <div id="quickBar" class="gem-quick-pills"></div>
+      <form id="form" class="gem-input-bar">
+        <input id="input" autocomplete="off" placeholder="Ask Y.O.K.E. anything or say 'I miss you'… 💌" />
+        <button id="micBtn" type="button" class="dock-btn mic" title="Live Voice Chat" aria-label="Talk to Y.O.K.E.">🎙</button>
+        <button type="submit" class="dock-btn send" aria-label="Send">➤</button>
+      </form>
+    </div>
   </main>
 
   <script src="config.js"></script>

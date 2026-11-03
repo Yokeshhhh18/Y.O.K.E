@@ -1,5 +1,23 @@
 // Vercel serverless function: keeps the Gemini API key OFF GitHub.
-// Set GEMINI_API_KEY in Vercel -> Project -> Settings -> Environment Variables.
+// Uses audio/test.m4a as a multimodal reference for Yokesh's tone and speaking style!
+const fs = require("fs");
+const path = require("path");
+
+let cachedVoiceBase64 = null;
+function getVoiceSample() {
+  if (cachedVoiceBase64 !== null) return cachedVoiceBase64;
+  try {
+    const p = path.join(process.cwd(), "audio", "test.m4a");
+    if (fs.existsSync(p)) {
+      cachedVoiceBase64 = fs.readFileSync(p).toString("base64");
+      return cachedVoiceBase64;
+    }
+  } catch (e) {
+    console.warn("Could not read voice sample:", e.message);
+  }
+  cachedVoiceBase64 = "";
+  return "";
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -18,11 +36,29 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "history is empty" });
     }
 
-    // keep requests small so nobody can abuse the endpoint
-    const contents = history.slice(-20).map((m) => ({
+    const contents = [];
+    const voiceSample = getVoiceSample();
+    if (voiceSample) {
+      contents.push({
+        role: "user",
+        parts: [
+          { inlineData: { mimeType: "audio/mp4", data: voiceSample } },
+          { text: "Listen to my real voice recording above ('Hii chellam...'). Adopt my exact casual, warm, affectionate Chennai Tanglish speaking style, cadence, and personality (calling her chellam, thangam, kuttyma, da) in all your replies to Dhanya." }
+        ]
+      });
+      contents.push({
+        role: "model",
+        parts: [{ text: "Seri da! I have listened to your voice sample and locked in your exact warm, loving Tanglish tone and style for Dhanya." }]
+      });
+    }
+
+    // append conversation history
+    const recent = history.slice(-20).map((m) => ({
       role: m.role === "model" ? "model" : "user",
       parts: [{ text: String((m.parts && m.parts[0] && m.parts[0].text) || "").slice(0, 1000) }]
     }));
+    contents.push(...recent);
+
     const systemPrompt = String(body.systemPrompt || "").slice(0, 8000);
 
     const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
