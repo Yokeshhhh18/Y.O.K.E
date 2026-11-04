@@ -11,7 +11,7 @@ const CONFIG = {
   // ==========================================================================
   // GOOGLE DRIVE CLOUD STORAGE (For saving all chats & loading Drive media)
   // ==========================================================================
-  GDRIVE_CLOUD_URL: "",
+  GDRIVE_CLOUD_URL: "https://script.google.com/macros/s/AKfycbwhas2_Is88Od53Q9PEFY-wfhLq5adI5VgVvssb1ASlYboZIx9yynyB-uXTu8-iyItGkQ/exec",
 
   // Images for the Tamil Movie Intro & Gift Gallery (Countdown screen is photo-free!)
   HER_PIC: "images/dhanya.png",
