@@ -831,10 +831,34 @@ CRITICAL CONVERSATION RULES:
 3. Always remember you are Y.O.K.E. AI 🤖 built with love by ${you} for ${her}.`;
 }
 
-// Direct client-side Gemini fallback if /api/chat serverless function is unreachable or local
+// Direct client-side Gemini fallback with automatic ListModels discovery (Active 2026 models, retired 1.5-flash removed!)
 async function callDirectGeminiFallback(userText, systemPrompt, recentHistory) {
   if (!DIRECT_GEMINI_KEY) return null;
-  const models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+  const models = [
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
+    "gemini-flash-latest"
+  ];
+  try {
+    const lr = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(DIRECT_GEMINI_KEY)}`);
+    if (lr.ok) {
+      const ld = await lr.json();
+      (ld.models || []).forEach((m) => {
+        const name = String(m.name || "").replace(/^models\//, "");
+        if (
+          m.supportedGenerationMethods?.includes("generateContent") &&
+          /gemini/i.test(name) &&
+          !/tts|image|embedding|vision|aqa|veo|imagen/i.test(name) &&
+          !models.includes(name)
+        ) {
+          models.push(name);
+        }
+      });
+    }
+  } catch (e) {}
+
   for (const m of models) {
     try {
       const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(DIRECT_GEMINI_KEY)}`, {
