@@ -25,6 +25,7 @@ function resolveDriveUrl(url, type = "media") {
 const panel1Src = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.PANEL_1) || "images/panel1.png");
 const panel2Src = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.PANEL_2) || "images/panel2.png");
 const panel3Src = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.PANEL_3) || "images/panel3.png");
+const panel4Src = resolveDriveUrl("images/panel4_blur.png");
 const mePicSrc = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.YOUR_PIC) || "images/avatar.jpg");
 
 const GEM_CARDS = [
@@ -75,6 +76,7 @@ safeImg($("sideAvatar"), mePicSrc);
 safeImg($("panel1Pic"), panel1Src);
 safeImg($("panel2Pic"), panel2Src);
 safeImg($("panel3Pic"), panel3Src);
+safeImg($("panel4Pic"), panel4Src);
 
 // ---------- Floating Hearts ----------
 const HEARTS = ["💗", "💖", "💛", "🌸", "✨", "💕"];
@@ -538,7 +540,7 @@ function triggerFlashAndShake() {
 }
 
 function showStage(id) {
-  ["gate", "jnStage1", "jnStage2", "jnStage3"].forEach((s) => {
+  ["gate", "jnStage1", "jnStage2", "jnStage3", "jnStage4"].forEach((s) => {
     const el = $(s);
     if (el) el.classList.toggle("active", s === id);
   });
@@ -561,29 +563,38 @@ function startIntro() {
   // Play Yokesh's real voice greeting ("Hii chellam...") right as the intro starts!
   if (CLIPS.wish) playSrc(CLIPS.wish);
 
-  // PANEL 1 (0s - 5.8s): Full-Screen Yokesh Arms Open Panel + Overlapping 3D Gold Text
-  introStageMusic = "hero";
+  // PANEL 1 (0s - 4.2s): HAPPY (Yokesh arms wide open)
+  introStageMusic = "slam";
   startIntroMassBGM();
-  playCinemaImpact(65, 1.6);
+  playCinemaImpact(85, 1.4);
   triggerFlashAndShake();
   showStage("jnStage1");
 
-  // PANEL 2 (5.8s - 11.6s): Full-Screen Dhanya Looking Back Panel + Overlapping 3D Gold Text
+  // PANEL 2 (4.2s - 8.4s): BIRTHDAY (Dhanya looking back)
   stageTimeouts.push(setTimeout(() => {
     if (introDone) return;
     introStageMusic = "heroine";
     triggerFlashAndShake();
-    playCinemaImpact(55, 1.6);
+    playCinemaImpact(75, 1.4);
     showStage("jnStage2");
-  }, 5800));
+  }, 4200));
 
-  // PANEL 3 (11.6s - 18.0s): Full-Screen Hugging Climax Panel + Overlapping Birthday Wish
+  // PANEL 3 (8.4s - 12.6s): DHANYA (Hugging together)
+  stageTimeouts.push(setTimeout(() => {
+    if (introDone) return;
+    introStageMusic = "hero";
+    triggerFlashAndShake();
+    playCinemaImpact(65, 1.6);
+    showStage("jnStage3");
+  }, 8400));
+
+  // PANEL 4 (12.6s - 18.5s): HAPPY BIRTHDAY DHANYA (Blurred Panel 3 Background + Typewriter Wish)
   stageTimeouts.push(setTimeout(() => {
     if (introDone) return;
     introStageMusic = "climax";
     triggerFlashAndShake();
-    playCinemaImpact(48, 2.1);
-    showStage("jnStage3");
+    playCinemaImpact(48, 2.2);
+    showStage("jnStage4");
     const text = `Happy Birthday, ${her} 💗`;
     let i = 0;
     (function type() {
@@ -592,7 +603,7 @@ function startIntro() {
       if (i <= text.length) stageTimeouts.push(setTimeout(type, 80));
       else stageTimeouts.push(setTimeout(endIntro, 3200));
     })();
-  }, 11600));
+  }, 12600));
 }
 
 function endIntro() {

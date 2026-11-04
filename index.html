@@ -10,12 +10,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Full-screen interactive particle & confetti canvas -->
   <canvas id="fx"></canvas>
 
   <!-- =========================================================
-       JANA NAYAGAN STYLE 3-PANEL FULL-SCREEN ENGLISH INTRO (v11)
-       (Full-screen widescreen panels with overlapping 3D gold text — NO chapter names!)
+       JANA NAYAGAN STYLE 4-PANEL FULL-SCREEN ENGLISH INTRO (v14)
        ========================================================= -->
   <section id="intro" class="hidden">
     <canvas id="sparks"></canvas>
@@ -35,48 +33,53 @@
       <button id="openBtn" type="button">🔥 TAP FOR FIRST DAY FIRST SHOW 🎬</button>
     </div>
 
-    <!-- PANEL 1 (Full-Screen): Yokesh Arms Wide Open with Pink Petals + Overlapping Text -->
+    <!-- PANEL 1: HAPPY -->
     <div id="jnStage1" class="jn-stage jn-fullscreen-card">
       <div class="jn-bg-watermark">Y.O.K.E</div>
       <div class="jn-hero-cutout">
         <img id="panel1Pic" src="images/panel1.png" alt="Yokesh">
         <div class="jn-cutout-fade"></div>
       </div>
-      <div class="jn-title-block">
-        <div class="jn-eng-dialogue">“MY ARMS &amp; MY HEART HAVE ALWAYS BEEN OPEN ONLY FOR YOU…”</div>
-        <div class="jn-role-sub">🔥 WRITTEN, VOICED &amp; CREATED WITH LOVE BY</div>
-        <h1 class="jn-massive-name you-cine"></h1>
-        <div class="jn-English-tag">Creator of Y.O.K.E. AI • Yours Forever 😎⚡</div>
+      <div class="jn-title-block center-block">
+        <h1 class="jn-massive-slam gold-glow" id="slamWord1">HAPPY</h1>
       </div>
     </div>
 
-    <!-- PANEL 2 (Full-Screen): Dhanya Looking Back with Tiara & Pink Petals + Overlapping Text -->
+    <!-- PANEL 2: BIRTHDAY -->
     <div id="jnStage2" class="jn-stage jn-fullscreen-card">
       <div class="jn-bg-watermark">QUEEN</div>
       <div class="jn-hero-cutout">
         <img id="panel2Pic" src="images/panel2.png" alt="Dhanya">
         <div class="jn-cutout-fade"></div>
       </div>
-      <div class="jn-title-block">
-        <div class="jn-eng-dialogue">“ONE SMILE FROM YOU IS ENOUGH TO STOP MY ENTIRE WORLD”</div>
-        <div class="jn-role-sub">👑 INTRODUCING THE REIGNING QUEEN OF MY HEART</div>
-        <h1 class="jn-massive-name her-cine"></h1>
-        <div class="jn-English-tag">En Chellam • En Thangam • The Birthday Princess ✨💗</div>
+      <div class="jn-title-block center-block">
+        <h1 class="jn-massive-slam gold-glow" id="slamWord2">BIRTHDAY</h1>
       </div>
     </div>
 
-    <!-- PANEL 3 (Full-Screen): Both Hugging Together + Overlapping Birthday Wish Climax -->
+    <!-- PANEL 3: DHANYA -->
     <div id="jnStage3" class="jn-stage jn-fullscreen-card">
       <div class="jn-bg-watermark">FOREVER</div>
       <div class="jn-hero-cutout">
-        <img id="panel3Pic" src="images/panel3.png" alt="Us Together Forever">
+        <img id="panel3Pic" src="images/panel3.png" alt="Us Together">
         <div class="jn-cutout-fade"></div>
       </div>
-      <div class="jn-title-block">
-        <div class="jn-eng-dialogue">“IN YOUR ARMS IS THE ONLY PLACE I EVER WANT TO BE”</div>
-        <div class="jn-role-sub">✨ YOU'RE OUR KIND OF EVERYTHING — TODAY, TOMORROW &amp; ALWAYS ✨</div>
+      <div class="jn-title-block center-block">
+        <h1 class="jn-massive-slam gold-glow" id="slamWord3">DHANYA</h1>
+      </div>
+    </div>
+
+    <!-- PANEL 4: HAPPY BIRTHDAY DHANYA (Blurred Background Panel + Typewriter Wish) -->
+    <div id="jnStage4" class="jn-stage jn-fullscreen-card">
+      <div class="jn-bg-watermark">Y.O.K.E</div>
+      <div class="jn-hero-cutout">
+        <img id="panel4Pic" src="images/panel4_blur.png" alt="Climax Blur">
+        <div class="jn-cutout-fade climax-fade"></div>
+      </div>
+      <div class="jn-title-block center-block">
+        <h1 class="jn-massive-slam gold-glow climax-slam">HAPPY BIRTHDAY DHANYA</h1>
         <div id="wish" aria-live="polite"></div>
-        <div class="jn-English-tag">Happy Birthday, My Forever Queen <span class="her-cine"></span> 👑💖</div>
+        <div class="jn-release-tag">✨ RUNNING SUCCESSFULLY IN OUR HEARTS FOREVER ✨</div>
       </div>
     </div>
   </section>
@@ -199,7 +202,7 @@
         <div class="gem-actions">
           <button id="gamesNavBtn" class="icon-btn game-glow" type="button" title="Play Chibi Doll X-O Game">👑 <span>X-O Game</span></button>
           <button id="bgmModeBtn" class="icon-btn playing" type="button" title="Switch BGM Vibe">🎵 <span id="bgmLabel">Melody</span></button>
-          <button id="replayIntroBtn" class="icon-btn" type="button" title="Replay 3-Panel Intro">🎬</button>
+          <button id="replayIntroBtn" class="icon-btn" type="button" title="Replay 4-Panel Intro">🎬</button>
           <button id="giftNavBtn" class="icon-btn gift-glow" type="button" title="Read Birthday Letter">💌</button>
         </div>
       </header>
