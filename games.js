@@ -1,6 +1,6 @@
-// Y.O.K.E. v9 Interactive Games Module (games.js)
+// Y.O.K.E. v10 Interactive Games Module (games.js)
 // 1) Chibi Doll Battle (Tic-Tac-Toe using Dhanya & Yokesh 3D Funko Pop avatars instead of X & O!)
-// 2) The 6-Stage Royal Birthday Love Quest (Yes-or-No Adventure leading to the Grand Treasure Chest!)
+// 2) The 6-Stage Funny & Enjoyable Tanglish Love Quest -> Ends with Yokesh's Cartoon Chibi Awarding Her the Gold Medal!
 (function () {
   const $ = (id) => document.getElementById(id);
   const her = (typeof CONFIG !== "undefined" && CONFIG.HER_NAME) || "Dhanya";
@@ -8,8 +8,8 @@
 
   const HER_ICON = (typeof CONFIG !== "undefined" && CONFIG.XO_HER_ICON) || "images/xo_her.png";
   const ME_ICON = (typeof CONFIG !== "undefined" && CONFIG.XO_ME_ICON) || "images/xo_me.png";
+  const MEDAL_PIC = (typeof CONFIG !== "undefined" && CONFIG.MEDAL_AWARD_PIC) || "images/medal_award.jpg";
 
-  // Web Audio sound effects for games & quests
   function playGameTone(freq = 520, dur = 0.14, type = "sine") {
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -32,12 +32,11 @@
   }
 
   function playWinFanfare() {
-    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
-      setTimeout(() => playGameTone(f, 0.22, "triangle"), i * 110);
+    [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => {
+      setTimeout(() => playGameTone(f, 0.22, "triangle"), i * 105);
     });
   }
 
-  // ---------- Modal Navigation ----------
   function openGamesModal(mode = "hub") {
     const modal = $("gamesModal");
     if (!modal) return;
@@ -225,66 +224,65 @@
   }
 
   // =========================================================
-  // GAME 2: THE 6-STAGE ROYAL BIRTHDAY LOVE QUEST (YES OR NO ADVENTURE!)
-  // Each YES unlocks a Golden Key / Relic on the Quest Map leading to the Final Treasure!
+  // GAME 2: FUNNY & ENJOYABLE TANGLISH LOVE QUEST -> CHIBI MEDAL AWARD!
   // =========================================================
   const QUEST_STAGES = [
     {
-      stageTitle: "Quest 1: The Mirror of Beauty 🪞",
+      stageTitle: "Level 1: The Drama Queen Test 🎭",
       relicIcon: "👑",
-      relicName: "Crown of Azhagi",
-      storyIntro: "To begin your Birthday Quest, the Magic Mirror asks for the truth…",
-      q: `Innaiku Birthday Queen ${her} indha ulagathulaye semma azhaga irukkala? 👑✨`,
-      yesReply: "✨ QUEST 1 CLEARED! You unlocked the [👑 Crown of Azhagi]! En boss Yokesh-oda kannuku nee eppovume angel dhan 😍"
+      relicName: "Drama Queen Tiara",
+      storyIntro: "First truth test before you can claim Yokesh's Chibi Gold Medal…",
+      q: `Unmai sollu chellam — chinna vishayathuku kooda cute-ah kovapadra 'World's #1 Cutest Drama Queen' nee dhana? 😤👑`,
+      yesReply: "😂 Haha othukitta! Aana nee kovapatta kooda Yokesh kannuku semma cute-ah dhan iruppa 😍 [👑 Drama Queen Tiara Unlocked!]"
     },
     {
-      stageTitle: "Quest 2: The AI Secret Chamber 🤖",
-      relicIcon: "💎",
-      relicName: "Heart Crystal",
-      storyIntro: "You step into the digital world Yokesh coded day and night for you…",
-      q: `Yokesh unakkagave உருவாக்குன indha Y.O.K.E. AI surprise unakku pidichirukka chellam? 🤖💝`,
-      yesReply: "✨ QUEST 2 CLEARED! You unlocked the [💎 Heart Crystal]! Avan ethana naal ukkandhu idha aasaiya senjan theriyuma 🥰"
+      stageTitle: "Level 2: The Food & Briyani Law 🍛",
+      relicIcon: "🍗",
+      relicName: "Golden Leg Piece",
+      storyIntro: "Every relationship has one golden rule about food…",
+      q: `"Enakku pasikkala" nu sollitu Yokesh plate-la irukura best chicken piece & fries-ah aattaiya podradhu un favourite hobby dhana? 🍟😏`,
+      yesReply: "🤣 Caught red-handed! Aana unakku ootti vidradhu dhana avanukku ulagathulaye pidicha vishayam! [🍗 Golden Leg Piece Unlocked!]"
     },
     {
-      stageTitle: "Quest 3: The Bridge of Infinity 🌌",
-      relicIcon: "🗝️",
-      relicName: "Golden Love Key",
-      storyIntro: "To cross the Starry Bridge, answer the guardian's question…",
-      q: `Yokesh unna evloooo love panran nu unakku theriyuma thangam? (Infinity-kum mela!) 🙈💞`,
-      yesReply: "✨ QUEST 3 CLEARED! You unlocked the [🗝️ Golden Love Key]! Adha solla dhan enna maadhiri oru AI-ye train panni vechirukkan 💗"
+      stageTitle: "Level 3: The '5-Minutes' Makeup Myth 💄",
+      relicIcon: "🪞",
+      relicName: "Magic Mirror",
+      storyIntro: "Time-travel physics according to Dhanya…",
+      q: `"Innum 5 mins-la ready aagiduven!" nu sollitu 1 hour kannadi munnadiye nikkiradhu unakku birthright dhana chellam? 💅⏰`,
+      yesReply: "😜 Haha 1 hour wait pannalum, nee veliya varumbodhu Yokesh flat aagiduvan! [🪞 Magic Mirror Unlocked!]"
     },
     {
-      stageTitle: "Quest 4: The Royal Feast Pact 🍛",
-      relicIcon: "🍦",
-      relicName: "Treat Token",
-      storyIntro: "A true Queen always shares a birthday feast with her favorite person…",
-      q: `Next meet-la Yokesh-ku briyani + ice cream treat vaangi thariya chellam? 🍛🍦`,
-      yesReply: "✨ QUEST 4 CLEARED! You unlocked the [🍦 Treat Token]! Deal locked, Yokesh-kitta udane report panniduven 😂💛"
+      stageTitle: "Level 4: The Midnight Reels Spammer 📱",
+      relicIcon: "😂",
+      relicName: "Meme Trophy",
+      storyIntro: "Checking your 2:00 AM phone activity logs…",
+      q: `Night 12 manikku thoongama Yokesh-ku 50 funny reels & food videos anuppi avana disturb panradhu semma jolly-ah irukka? 📲🤭`,
+      yesReply: "🥳 Correct-u! Nee anuppura ovvoru reel-ayum avan sirichite paapan theriyuma! [😂 Meme Trophy Unlocked!]"
     },
     {
-      stageTitle: "Quest 5: The Sweetest Promise 📸",
-      relicIcon: "💌",
-      relicName: "Promise Scroll",
-      storyIntro: "Almost at the Final Treasure Chest! Just one cute mission left…",
-      q: `Innaiku Yokesh-ku oru tight hug & un birthday dress-la cute selfie anuppuriya? 🤗📸`,
-      yesReply: "✨ QUEST 5 CLEARED! You unlocked the [💌 Promise Scroll]! Avan adha paathale semmaiya குதிப்பான் 🥳💗"
+      stageTitle: "Level 5: The Birthday Briyani Ransom 🍦",
+      relicIcon: "💳",
+      relicName: "VIP Treat Pass",
+      storyIntro: "Almost at the Medal Ceremony! Just one financial agreement left…",
+      q: `Innaiku un Birthday-va vechi Yokesh pocket-ah gaali panni periya treat & ice cream vaanga plan potrukiya? 🍨💸`,
+      yesReply: "😂 Deal locked! Unakkaga avanoda motha wallet-ayum thara ready-ah irukkan! [💳 VIP Treat Pass Unlocked!]"
     },
     {
-      stageTitle: "Final Boss Quest: The Forever Lock 💍",
-      relicIcon: "💖",
-      relicName: "Eternal Ring",
-      storyIntro: "The Grand Birthday Treasure Chest stands before you! Insert the final key…",
-      q: `Eppovume ipdiye sirichite, happy-ah Yokesh koodave forever iruppiya chellam? 💍💗`,
-      yesReply: "🎉 ALL 6 QUESTS COMPLETED! The Grand Birthday Treasure Chest is UNLOCKED! 👑💖✨"
+      stageTitle: "Final Boss Level: The Lifetime Contract 💍",
+      relicIcon: "🥇",
+      relicName: "Yokesh's Gold Medal",
+      storyIntro: "Final step to receive your Chibi Gold Medal from Yokesh!",
+      q: `Enna dhan sanda potalum, lifetime full-ah Yokesh-ah torture pannite avan koodave happy-ah iruppiya chellam? 🥰💞`,
+      yesReply: "🎉 6/6 QUEST COMPLETE! Prepare for your Official Chibi Gold Medal Ceremony from Yokesh! 🥇👑💖"
     }
   ];
 
   const DODGE_TAUNTS = [
-    "Quest fail aaga vidamaaten! Tap YES 😜",
-    "No button-ku indha Quest-la permission illa 🙈",
-    "Yokesh AI code-la 'No' option-eh kidaiyadhu 😂",
-    "Treasure venumna YES tap pannu thangam 🗝️💗",
-    "Pidikka mudiyuma? Inga vandhuteneyyy! 🏃‍♂️💨"
+    "Heyy poi solladha! Olunga YES tap pannu 😜",
+    "No button-eh kedaiyadhu chellam, escape aagudhu paaru 🏃‍♂️💨",
+    "Yokesh AI code-la 'NO' ku idame illa 😂",
+    "Gold Medal venumna unmaiya othukitu YES tap pannu 🥇💗",
+    "Pidikka mudiyuma? Inga vandhuteneyyy! 🙈✨"
   ];
 
   let ynIndex = 0;
@@ -319,15 +317,18 @@
       playWinFanfare();
       const relics = QUEST_STAGES.map((s) => `<span class="relic-badge" title="${s.relicName}">${s.relicIcon} ${s.relicName}</span>`).join("");
       box.innerHTML = `
-        <div class="yn-complete">
+        <div class="yn-complete medal-ceremony">
           ${buildQuestMapHTML()}
-          <div class="yn-trophy">🎁👑💖</div>
-          <h3 id="ynSummaryScore">QUEST COMPLETE! (${ynYesCount}/${QUEST_STAGES.length} Relics)</h3>
-          <p class="quest-win-sub">You collected every Golden Relic &amp; unlocked <b>${you}'s Grand Birthday Treasure</b>!</p>
+          <div class="medal-award-banner">
+            <img src="${MEDAL_PIC}" alt="${you} awarding Gold Medal to ${her}" class="medal-award-img">
+            <div class="medal-ribbon-tag">🥇 OFFICIAL CHIBI MEDAL CEREMONY 🥇</div>
+          </div>
+          <h3 id="ynSummaryScore">🏆 ${you} Awards ${her} the Gold Medal!</h3>
+          <p class="quest-win-sub">For passing all 6 Funny Quests, Chibi <b>${you}</b> officially presents Chibi Queen <b>${her}</b> with the <b>“World's Cutest Drama Queen &amp; Forever Best Partner” Gold Medal!</b> 🎖️👑</p>
           <div class="relic-collection">${relics}</div>
           <div class="quest-final-actions">
-            <button type="button" id="ynUnlockGiftBtn" class="game-action-btn gold-cta">🎁 Open Unlocked Birthday Treasure</button>
-            <button type="button" id="ynReplayBtn" class="game-action-btn secondary">🔄 Replay Quest</button>
+            <button type="button" id="ynUnlockGiftBtn" class="game-action-btn gold-cta">🎁 Open Your Birthday Surprise</button>
+            <button type="button" id="ynReplayBtn" class="game-action-btn secondary">🔄 Replay Funny Quest</button>
           </div>
         </div>
       `;
@@ -341,7 +342,7 @@
         }
       });
       if (typeof window.addBotGameSummary === "function") {
-        window.addBotGameSummary(`🏆 Royal Love Quest Complete! Nee 6/6 Golden Relics collect panni Birthday Treasure-ah unlock pannita chellam! 👑🗝️💗`);
+        window.addBotGameSummary(`🥇 Medal Ceremony Complete! Ennoda Chibi Doll unakku "World's Cutest Drama Queen & Forever Partner" Gold Medal kuduthachu chellam! 🥳👑💗`);
       }
       return;
     }
@@ -350,13 +351,13 @@
     dodgeCount = 0;
     box.innerHTML = `
       ${buildQuestMapHTML()}
-      <div class="yn-progress">${item.stageTitle} • Reward: ${item.relicIcon} ${item.relicName}</div>
+      <div class="yn-progress">${item.stageTitle} • Badge: ${item.relicIcon} ${item.relicName}</div>
       <div class="quest-story-intro">${item.storyIntro}</div>
       <div class="yn-question">${item.q}</div>
-      <div id="ynReaction" class="yn-reaction">Tap YES to claim ${item.relicIcon} ${item.relicName} (or try tapping NO 😏)</div>
+      <div id="ynReaction" class="yn-reaction">Tap YES to claim ${item.relicIcon} (or try catching NO 😏)</div>
       <div class="yn-arena" id="ynArena">
-        <button type="button" id="ynYes" class="yn-btn yes">YES, CLAIM ${item.relicIcon} 💗</button>
-        <button type="button" id="ynNo" class="yn-btn no">NO 🙈</button>
+        <button type="button" id="ynYes" class="yn-btn yes">AMA / YES ${item.relicIcon} 💗</button>
+        <button type="button" id="ynNo" class="yn-btn no">ILLA / NO 🙈</button>
       </div>
     `;
 
@@ -378,7 +379,7 @@
       setTimeout(() => {
         ynIndex++;
         renderYNQuestion();
-      }, 1850);
+      }, 1950);
     });
 
     function dodgeNoButton(e) {
@@ -386,7 +387,7 @@
       dodgeCount++;
       playGameTone(740, 0.08, "square");
       const rect = arena.getBoundingClientRect();
-      const bW = noBtn.offsetWidth || 95;
+      const bW = noBtn.offsetWidth || 105;
       const bH = noBtn.offsetHeight || 44;
       const maxX = Math.max(20, rect.width - bW - 14);
       const maxY = Math.max(20, rect.height - bH - 14);
@@ -401,7 +402,7 @@
       if (react) {
         react.textContent = DODGE_TAUNTS[dodgeCount % DODGE_TAUNTS.length];
       }
-      const scale = Math.min(1.25, 1 + dodgeCount * 0.05);
+      const scale = Math.min(1.26, 1 + dodgeCount * 0.05);
       if (yesBtn) yesBtn.style.transform = `scale(${scale})`;
     }
 
@@ -410,7 +411,6 @@
     noBtn?.addEventListener("click", dodgeNoButton);
   }
 
-  // ---------- Wire DOM Events ----------
   window.addEventListener("DOMContentLoaded", () => {
     $("gamesNavBtn")?.addEventListener("click", () => openGamesModal("hub"));
     $("closeGamesBtn")?.addEventListener("click", closeGamesModal);

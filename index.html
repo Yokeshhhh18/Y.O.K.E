@@ -14,78 +14,102 @@
   <canvas id="fx"></canvas>
 
   <!-- =========================================================
-       KOLLYWOOD 70MM BLOCKBUSTER TITLE CARD INTRO (v8)
+       JANA NAYAGAN 70MM BLOCKBUSTER 4-PANEL INTRO (v10)
+       Panel 1: HAPPY (with panel_1.jpg)
+       Panel 2: BIRTHDAY (with panel_2.jpg)
+       Panel 3: DHANYA (with panel_3.jpg)
+       Panel 4: HAPPY BIRTHDAY DHANYA (Tamil + English, NO image, full Jana Nayagan effect!)
        ========================================================= -->
   <section id="intro" class="hidden">
     <canvas id="sparks"></canvas>
     <div class="god-rays"></div>
     <div class="light-sweep"></div>
+    <div class="cine-letterbox top"></div>
+    <div class="cine-letterbox bottom"></div>
     <div class="vignette"></div>
     <div class="flash-overlay" id="flashOverlay"></div>
     <button id="skip" type="button">SKIP INTRO ⏭</button>
 
     <!-- Gate: First Day First Show -->
     <div id="gate" class="jn-stage active">
-      <div class="jn-cert">U/A • 70MM PAN-WORLD ROMANTIC BLOCKBUSTER</div>
+      <div class="jn-cert">U/A • 70MM ANIRUDH-STYLE MASS BANGER INTRO</div>
       <div class="jn-monogram-big">Y</div>
       <h2 class="jn-gate-title">Y.O.K.E.</h2>
       <p class="jn-gate-sub">You're Our Kind of Everything</p>
-      <div class="jn-gate-tamil">இன்று முதல் உங்கள் இதயத்திரையில்</div>
-      <button id="openBtn" type="button">🔥 TAP FOR FIRST DAY FIRST SHOW 🎬</button>
+      <div class="jn-gate-tamil">இனிய பிறந்தநாள் வாழ்த்துக்கள் தன்யா • HAPPY BIRTHDAY DHANYA</div>
+      <button id="openBtn" type="button">🔥 TAP FOR BANGER TITLE INTRO 🎬</button>
     </div>
 
-    <!-- Stage 1: 3D Metallic Tamil Title Slam (0s - 4.0s) -->
-    <div id="jnStage1" class="jn-stage">
-      <div class="jn-prod-badge">⚡ <span class="you-cine"></span> STUDIOS PROUDLY PRESENTS ⚡</div>
-      <div class="jn-slam-word" id="slamWord1">இனிய</div>
-      <div class="jn-slam-word" id="slamWord2">பிறந்தநாள்</div>
-      <div class="jn-slam-word gold-glow" id="slamWord3">நல்வாழ்த்துக்கள்</div>
-      <div class="jn-sub-credit">என் உயிர் தோழி • என் செல்லக்குட்டி</div>
-    </div>
-
-    <!-- Stage 2: Full-Screen Heroine Title Card — DHANYA (4.0s - 9.8s) -->
-    <div id="jnStage2" class="jn-stage jn-fullscreen-card">
-      <div class="jn-bg-watermark">AZHAGI</div>
-      <div class="jn-hero-cutout right-side">
-        <img id="herIntroPic" alt="Dhanya">
-        <div class="jn-cutout-fade"></div>
+    <!-- PANEL 1: "HAPPY / இனிய" with panel_1.jpg -->
+    <div id="jnStage1" class="jn-stage jn-panel-stage">
+      <div class="jn-bg-watermark">HAPPY</div>
+      <div class="jn-panel-frame">
+        <div class="jn-panel-glow"></div>
+        <img id="panel1Pic" src="images/panel_1.jpg" alt="Panel 1" class="jn-panel-img">
+        <div class="jn-panel-hud-corner tl"></div>
+        <div class="jn-panel-hud-corner tr"></div>
+        <div class="jn-panel-hud-corner bl"></div>
+        <div class="jn-panel-hud-corner br"></div>
       </div>
-      <div class="jn-title-block left-side">
-        <div class="jn-tamil-dialogue">“உன் ஒரு சிரிப்பு போதும்... என் மொத்த உலகமும் அழகாகிட!”</div>
-        <div class="jn-role-sub">👑 INTRODUCING THE REIGNING QUEEN OF MY HEART</div>
-        <h1 class="jn-massive-name her-cine"></h1>
-        <div class="jn-English-tag">En Chellam • En Thangam • The Birthday Princess ✨💗</div>
+      <div class="jn-panel-title-wrap">
+        <div class="jn-tamil-slam" id="p1Tamil">இனிய</div>
+        <h1 class="jn-massive-name jn-word-slam" id="p1Eng">HAPPY</h1>
+        <div class="jn-English-tag">⚡ CHAPTER I • OPEN ARMS OF LOVE ⚡</div>
       </div>
     </div>
 
-    <!-- Stage 3: Full-Screen Hero/Creator Title Card — YOKESH (9.8s - 15.5s) -->
-    <div id="jnStage3" class="jn-stage jn-fullscreen-card">
-      <div class="jn-bg-watermark">Y.O.K.E</div>
-      <div class="jn-hero-cutout right-side">
-        <img id="meIntroPic" alt="Yokesh">
-        <div class="jn-cutout-fade"></div>
+    <!-- PANEL 2: "BIRTHDAY / பிறந்தநாள்" with panel_2.jpg -->
+    <div id="jnStage2" class="jn-stage jn-panel-stage">
+      <div class="jn-bg-watermark">BIRTHDAY</div>
+      <div class="jn-panel-frame">
+        <div class="jn-panel-glow"></div>
+        <img id="panel2Pic" src="images/panel_2.jpg" alt="Panel 2" class="jn-panel-img">
+        <div class="jn-panel-hud-corner tl"></div>
+        <div class="jn-panel-hud-corner tr"></div>
+        <div class="jn-panel-hud-corner bl"></div>
+        <div class="jn-panel-hud-corner br"></div>
       </div>
-      <div class="jn-title-block left-side">
-        <div class="jn-tamil-dialogue">“உனக்காக என் குரலிலும் உயிரிலும் உருவாக்கப்பட்ட AI உலகம்!”</div>
-        <div class="jn-role-sub">🔥 WRITTEN, DIRECTED, VOICED &amp; BUILT BY</div>
-        <h1 class="jn-massive-name you-cine"></h1>
-        <div class="jn-English-tag">Creator of Y.O.K.E. AI • Unnoda Forever 😎⚡</div>
+      <div class="jn-panel-title-wrap">
+        <div class="jn-tamil-slam" id="p2Tamil">பிறந்தநாள்</div>
+        <h1 class="jn-massive-name jn-word-slam" id="p2Eng">BIRTHDAY</h1>
+        <div class="jn-English-tag">👑 CHAPTER II • WHEN OUR EYES MET ✨</div>
       </div>
     </div>
 
-    <!-- Stage 4: Full-Screen Climax Dual Poster & Birthday Wish (15.5s - 21.0s) -->
-    <div id="jnStage4" class="jn-stage jn-climax-card">
+    <!-- PANEL 3: "DHANYA / தன்யா" with panel_3.jpg -->
+    <div id="jnStage3" class="jn-stage jn-panel-stage">
+      <div class="jn-bg-watermark">DHANYA</div>
+      <div class="jn-panel-frame">
+        <div class="jn-panel-glow"></div>
+        <img id="panel3Pic" src="images/panel_3.jpg" alt="Panel 3" class="jn-panel-img">
+        <div class="jn-panel-hud-corner tl"></div>
+        <div class="jn-panel-hud-corner tr"></div>
+        <div class="jn-panel-hud-corner bl"></div>
+        <div class="jn-panel-hud-corner br"></div>
+      </div>
+      <div class="jn-panel-title-wrap">
+        <div class="jn-tamil-slam" id="p3Tamil">தன்யா</div>
+        <h1 class="jn-massive-name jn-word-slam her-cine" id="p3Eng">DHANYA</h1>
+        <div class="jn-English-tag">💗 CHAPTER III • IN YOUR ARMS FOREVER 💗</div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: TOTAL "HAPPY BIRTHDAY DHANYA" (Tamil + English, NO IMAGE, Pure Jana Nayagan 3D Metallic Finale!) -->
+    <div id="jnStage4" class="jn-stage jn-noimg-climax">
       <div class="jn-bg-watermark">FOREVER</div>
-      <div class="jn-dual-posters">
-        <div class="jn-dual-img left"><img id="climaxHer" alt=""></div>
-        <div class="jn-dual-img right"><img id="climaxMe" alt=""></div>
-        <div class="jn-dual-gradient"></div>
+      <div class="jn-emblem-crest">👑 ⚡ 💗</div>
+      <div class="jn-prod-badge">🔥 <span class="you-cine"></span>'S Y.O.K.E. AI PRESENTS 🔥</div>
+      <div class="jn-final-tamil-block">
+        <span class="jn-tamil-line">இனிய பிறந்தநாள்</span>
+        <span class="jn-tamil-line gold-highlight">வாழ்த்துக்கள் தன்யா!</span>
       </div>
-      <div class="jn-climax-text">
-        <div class="jn-tamil-dialogue climax-quote">என் இனிய பிறந்தநாள் வாழ்த்துக்கள் செல்லம்!</div>
-        <div id="wish" aria-live="polite"></div>
-        <div class="jn-release-tag">✨ RUNNING SUCCESSFULLY IN OUR HEARTS FOREVER ✨</div>
+      <div class="jn-final-eng-block">
+        <div class="jn-total-word w1">HAPPY</div>
+        <div class="jn-total-word w2">BIRTHDAY</div>
+        <div class="jn-total-word w3 her-cine">DHANYA</div>
       </div>
+      <div id="wish" aria-live="polite"></div>
+      <div class="jn-release-tag">✨ YOU'RE OUR KIND OF EVERYTHING • FOREVER &amp; ALWAYS ✨</div>
     </div>
   </section>
 
@@ -132,7 +156,7 @@
   </section>
 
   <!-- =========================================================
-       INTERACTIVE GAMES MODAL (X-O GAME + YES OR NO GAME)
+       INTERACTIVE GAMES MODAL (CHIBI DOLL X-O + FUNNY QUEST MEDAL)
        ========================================================= -->
   <section id="gamesModal" class="games-overlay hidden">
     <div class="games-panel">
@@ -140,7 +164,7 @@
         <div class="games-tabs">
           <button type="button" class="gtab active" data-tab="hub">🎮 Arcade</button>
           <button type="button" class="gtab" data-tab="xo">👑 Doll X-O</button>
-          <button type="button" class="gtab" data-tab="yn">🗝️ Love Quest</button>
+          <button type="button" class="gtab" data-tab="yn">🥇 Funny Quest</button>
         </div>
         <button type="button" id="closeGamesBtn" class="close-games" aria-label="Close Games">✕</button>
       </div>
@@ -157,10 +181,10 @@
             <button type="button" class="hub-play-btn game-action-btn" data-target="xo">Play X-O Now ▶</button>
           </div>
           <div class="hub-card">
-            <div class="hub-icon">👑🗝️🎁</div>
-            <h4>Royal Birthday Love Quest</h4>
-            <p>Complete 6 Yes/No Quest stages &amp; collect Golden Relics to unlock your Grand Treasure! 😜</p>
-            <button type="button" class="hub-play-btn game-action-btn" data-target="yn">Start Love Quest ▶</button>
+            <div class="hub-icon">🥇👑😂</div>
+            <h4>Funny Birthday Quest</h4>
+            <p>Pass 6 hilarious Tanglish truth tests so Chibi <span class="you-cine"></span> awards you the Gold Medal! 😜</p>
+            <button type="button" class="hub-play-btn game-action-btn" data-target="yn">Start Funny Quest ▶</button>
           </div>
         </div>
       </div>
@@ -180,7 +204,7 @@
         <button type="button" id="xoResetBtn" class="game-action-btn">🔄 New Round</button>
       </div>
 
-      <!-- Tab 2: Yes or No -->
+      <!-- Tab 2: Yes or No Funny Quest -->
       <div id="ynView" class="game-view hidden">
         <div id="ynCardBody" class="yn-card-body"></div>
       </div>
@@ -188,67 +212,92 @@
   </section>
 
   <!-- =========================================================
-       Y.O.K.E. ROMANTIC AI INTERFACE (CLEAR AI IDENTITY)
+       Y.O.K.E. WORKSPACE WITH LEFT HISTORY TAB & PHOTO-FREE CHAT
        ========================================================= -->
-  <main id="app" class="hidden">
-    <div class="aurora-bg" aria-hidden="true">
-      <span class="aurora-blob b1"></span>
-      <span class="aurora-blob b2"></span>
-      <span class="aurora-blob b3"></span>
-    </div>
-
-    <header class="gem-header">
-      <div class="gem-brand-wrap">
-        <div class="avatar-wrap">
-          <img id="avatar" class="avatar" alt="">
-          <span class="online-dot"></span>
-        </div>
-        <div>
-          <div class="gem-title-row">
-            <h2 class="brand">Y.O.K.E.</h2>
-            <span class="model-pill" id="cloudStatusPill">🤖 AI Twin ✨</span>
+  <div id="appShell" class="app-shell hidden">
+    <!-- Left History Sidebar Drawer -->
+    <aside id="historySidebar" class="history-sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-brand">
+          <span class="sidebar-logo">🤖</span>
+          <div>
+            <div class="sidebar-title">Chat History</div>
+            <div class="sidebar-sub" id="driveSyncSub">☁️ Google Drive Linked</div>
           </div>
-          <div class="status">An AI made by <span id="youName"></span> • only for <span class="her"></span> 💗</div>
         </div>
+        <button id="closeSidebarBtn" class="sidebar-close-btn" type="button" aria-label="Close Sidebar">✕</button>
       </div>
 
-      <div class="gem-actions">
-        <button id="gamesNavBtn" class="icon-btn game-glow" type="button" title="Play X-O & Yes/No Games">🎮 <span>Games</span></button>
-        <button id="bgmModeBtn" class="icon-btn playing" type="button" title="Switch BGM Vibe">🎵 <span id="bgmLabel">Melody</span></button>
-        <button id="replayIntroBtn" class="icon-btn" type="button" title="Replay Title Card Intro">🎬</button>
-        <button id="giftNavBtn" class="icon-btn gift-glow" type="button" title="Open Birthday Gift">🎁</button>
+      <button id="newChatBtn" class="new-chat-btn" type="button">＋ New Birthday Chat</button>
+
+      <div class="sidebar-section-label">SAVED CONVERSATIONS</div>
+      <div id="historyList" class="history-list"></div>
+
+      <div class="sidebar-footer">
+        <button id="clearHistoryBtn" class="clear-history-btn" type="button">🗑 Clear Local History</button>
       </div>
-    </header>
+    </aside>
+    <div id="sidebarBackdrop" class="sidebar-backdrop hidden"></div>
 
-    <!-- Scrollable Main Area -->
-    <div id="chatScroll" class="gem-scroll">
-      <div id="welcomeHero" class="gem-welcome">
-        <div class="gem-sparkle">✨🤖👑💗</div>
-        <h1 class="gem-greet">Happy Birthday, <span class="her"></span>!</h1>
-        <p class="gem-subgreet">Naan dhan <b>Y.O.K.E.</b>, oru AI 🤖 — <span class="you-cine"></span> avanoda Tanglish style &amp; love vechi unakkagave உருவாக்குன personal AI companion. En kitta pesalam, <b>❌⭕ X-O</b> matrum <b>💗 Yes or No</b> games vilayadalam!</p>
-
-        <div id="chips" class="gem-cards"></div>
+    <!-- Main Chat Area (No Pictures Inside Chat!) -->
+    <main id="app" class="main-chat-area">
+      <div class="aurora-bg" aria-hidden="true">
+        <span class="aurora-blob b1"></span>
+        <span class="aurora-blob b2"></span>
+        <span class="aurora-blob b3"></span>
       </div>
 
-      <div id="chat" class="gem-chat-stream"></div>
+      <header class="gem-header">
+        <div class="gem-brand-wrap">
+          <button id="toggleSidebarBtn" class="icon-btn sidebar-toggle" type="button" title="Open Chat History">☰ <span>History</span></button>
+          <div class="ai-badge-orb" aria-hidden="true">🤖</div>
+          <div>
+            <div class="gem-title-row">
+              <h2 class="brand">Y.O.K.E.</h2>
+              <span class="model-pill" id="cloudStatusPill">⚡ Gemini AI Live</span>
+            </div>
+            <div class="status">Personal AI built by <span id="youName"></span> • for <span class="her"></span> 💗</div>
+          </div>
+        </div>
 
-      <section id="gift" class="gem-gift-section">
-        <button id="giftBtn" class="giftbtn" type="button">🎁 Tap to unwrap your Birthday Surprise</button>
-        <div id="giftContent" class="hidden"></div>
-      </section>
-    </div>
+        <div class="gem-actions">
+          <button id="gamesNavBtn" class="icon-btn game-glow" type="button" title="Play Chibi X-O & Funny Quest">🎮 <span>Games</span></button>
+          <button id="bgmModeBtn" class="icon-btn playing" type="button" title="Switch BGM Vibe">🎵 <span id="bgmLabel">Melody</span></button>
+          <button id="replayIntroBtn" class="icon-btn" type="button" title="Replay 4-Panel Intro">🎬</button>
+          <button id="giftNavBtn" class="icon-btn gift-glow" type="button" title="Open Birthday Gift">🎁</button>
+        </div>
+      </header>
 
-    <!-- Bottom Floating Prompt Bar -->
-    <div class="gem-bottom-dock">
-      <div id="quickBar" class="gem-quick-pills"></div>
-      <form id="form" class="gem-input-bar">
-        <input id="input" autocomplete="off" placeholder="Chat with Y.O.K.E. AI or tap 🎮 Games… 💌" />
-        <button id="micBtn" type="button" class="dock-btn mic" title="Live AI Voice Chat" aria-label="Talk to Y.O.K.E.">🎙</button>
-        <button type="submit" class="dock-btn send" aria-label="Send">➤</button>
-      </form>
-      <div class="ai-fine-print">🤖 Y.O.K.E. is an AI crafted with love by <span class="you-cine"></span> for <span class="her"></span> 💛</div>
-    </div>
-  </main>
+      <!-- Scrollable Main Area -->
+      <div id="chatScroll" class="gem-scroll">
+        <div id="welcomeHero" class="gem-welcome">
+          <div class="gem-sparkle">✨🤖👑💗</div>
+          <h1 class="gem-greet">Happy Birthday, <span class="her"></span>!</h1>
+          <p class="gem-subgreet">இனிய பிறந்தநாள் வாழ்த்துக்கள் செல்லம்! Naan dhan <b>Y.O.K.E.</b>, oru AI 🤖 — <span class="you-cine"></span> avanoda Tanglish style &amp; Gemini brain vechi unakkagave உருவாக்குன personal AI. En kitta pesalam, <b>👑 Chibi X-O</b> matrum <b>🥇 Funny Medal Quest</b> vilayadalam!</p>
+
+          <div id="chips" class="gem-cards"></div>
+        </div>
+
+        <div id="chat" class="gem-chat-stream"></div>
+
+        <section id="gift" class="gem-gift-section">
+          <button id="giftBtn" class="giftbtn" type="button">🎁 Tap to unwrap your Birthday Surprise</button>
+          <div id="giftContent" class="hidden"></div>
+        </section>
+      </div>
+
+      <!-- Bottom Floating Prompt Bar -->
+      <div class="gem-bottom-dock">
+        <div id="quickBar" class="gem-quick-pills"></div>
+        <form id="form" class="gem-input-bar">
+          <input id="input" autocomplete="off" placeholder="Ask Y.O.K.E. AI anything or tap 🎮 Games… 💌" />
+          <button id="micBtn" type="button" class="dock-btn mic" title="Live AI Voice Chat" aria-label="Talk to Y.O.K.E.">🎙</button>
+          <button type="submit" class="dock-btn send" aria-label="Send">➤</button>
+        </form>
+        <div class="ai-fine-print">🤖 Y.O.K.E. is an AI powered by Gemini &amp; crafted with love by <span class="you-cine"></span> for <span class="her"></span> 💛</div>
+      </div>
+    </main>
+  </div>
 
   <script src="config.js"></script>
   <script src="fx.js"></script>

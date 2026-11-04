@@ -1015,3 +1015,277 @@ body.unlocked {
 .game-action-btn.secondary {
   background: rgba(255, 255, 255, 0.1);
 }
+
+/* =========================================================
+   v10 ADDITIONS: 4-PANEL JANA NAYAGAN INTRO, LEFT HISTORY TAB,
+   PHOTO-FREE CHAT & CHIBI GOLD MEDAL CEREMONY
+   ========================================================= */
+
+/* ---------- 70MM Cinema Letterbox Bars ---------- */
+.cine-letterbox {
+  position: absolute; left: 0; right: 0; height: 5.5vh;
+  background: #000; z-index: 20; pointer-events: none;
+  border-color: rgba(255, 215, 0, 0.35);
+}
+.cine-letterbox.top { top: 0; border-bottom: 1.5px solid rgba(255, 215, 0, 0.4); }
+.cine-letterbox.bottom { bottom: 0; border-top: 1.5px solid rgba(255, 215, 0, 0.4); }
+
+/* ---------- Panels 1, 2, 3: Wide Comic/Cinema Banner + Jana Nayagan Slam ---------- */
+.jn-panel-stage {
+  padding: 6vh 4vw;
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px;
+}
+.jn-panel-stage.active { display: flex; }
+
+.jn-panel-frame {
+  position: relative;
+  width: min(92vw, 980px);
+  aspect-ratio: 1024 / 338;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 3px solid var(--gold);
+  box-shadow: 0 22px 65px rgba(0, 0, 0, 0.9), 0 0 55px rgba(255, 180, 0, 0.45);
+  z-index: 6;
+  animation: panelFrameSlam 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes panelFrameSlam {
+  0%   { opacity: 0; transform: perspective(900px) rotateX(18deg) scale(1.22); filter: brightness(2) blur(8px); }
+  70%  { opacity: 1; transform: perspective(900px) rotateX(-3deg) scale(0.98); filter: brightness(1.1) blur(0); }
+  100% { opacity: 1; transform: perspective(900px) rotateX(0deg) scale(1); }
+}
+
+.jn-panel-img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transform: scale(1.02);
+  animation: panelSlowPan 5.2s ease-out forwards;
+}
+@keyframes panelSlowPan {
+  from { transform: scale(1.12); }
+  to   { transform: scale(1.0); }
+}
+
+.jn-panel-glow {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 50%, rgba(10, 2, 8, 0.55) 100%),
+    linear-gradient(120deg, transparent 30%, rgba(255, 225, 130, 0.22) 50%, transparent 70%);
+  background-size: 100% 100%, 240% 100%;
+  animation: sweepBeam 3.5s ease-in-out infinite;
+}
+
+.jn-panel-hud-corner {
+  position: absolute; width: 26px; height: 26px; z-index: 4; pointer-events: none;
+  border: 3px solid #fff3b0;
+  filter: drop-shadow(0 0 8px #ffd700);
+}
+.jn-panel-hud-corner.tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.jn-panel-hud-corner.tr { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+.jn-panel-hud-corner.bl { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+.jn-panel-hud-corner.br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+
+.jn-panel-title-wrap {
+  position: relative; z-index: 8; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.jn-tamil-slam {
+  font-family: "Noto Sans Tamil", sans-serif;
+  font-size: clamp(1.9rem, 6.2vw, 3.3rem);
+  font-weight: 900; line-height: 1.1;
+  background: linear-gradient(180deg, #ffffff 0%, #ffe885 45%, #ff9900 90%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 5px 0 #3d1e00) drop-shadow(0 0 28px rgba(255, 175, 0, 0.9));
+  animation: tamilSlam 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.12s backwards;
+}
+.jn-word-slam {
+  margin: 0 !important;
+  font-size: clamp(3.2rem, 11vw, 6.2rem) !important;
+  letter-spacing: 10px !important;
+  animation: tamilSlam 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.22s backwards;
+}
+
+/* ---------- Panel 4: Pure No-Image Jana Nayagan Finale ("HAPPY BIRTHDAY DHANYA") ---------- */
+.jn-noimg-climax {
+  padding: 8vh 5vw;
+  z-index: 12;
+  background: radial-gradient(circle at 50% 45%, rgba(120, 18, 60, 0.42) 0%, rgba(12, 2, 8, 0.92) 70%);
+}
+.jn-emblem-crest {
+  font-size: 2.6rem; letter-spacing: 10px; margin-bottom: 6px;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.85));
+  animation: beat 1.4s infinite;
+}
+.jn-final-tamil-block {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  margin: 6px 0 12px;
+}
+.jn-tamil-line {
+  font-family: "Noto Sans Tamil", sans-serif;
+  font-size: clamp(1.65rem, 5.8vw, 3rem); font-weight: 900;
+  color: #ffe89e;
+  text-shadow: 0 5px 0 #3d1c00, 0 0 30px rgba(255, 160, 0, 0.85);
+  animation: tamilSlam 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.jn-tamil-line.gold-highlight {
+  font-size: clamp(1.9rem, 6.6vw, 3.5rem);
+  background: linear-gradient(180deg, #ffffff 0%, #ffe885 45%, #ff9100 90%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  animation-delay: 0.25s;
+}
+.jn-final-eng-block {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 14px; margin: 4px 0 10px;
+}
+.jn-total-word {
+  font-family: "Cinzel Decorative", "Bebas Neue", serif;
+  font-size: clamp(2.6rem, 9.5vw, 5.4rem);
+  font-weight: 900; letter-spacing: 6px; line-height: 1.05;
+  background: linear-gradient(180deg, #ffffff 0%, #fff1a8 30%, #ffc107 65%, #9e5800 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 7px 0 #3a1c00) drop-shadow(0 12px 32px rgba(255, 160, 0, 0.9));
+  animation: tamilSlam 0.65s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.jn-total-word.w1 { animation-delay: 0.45s; }
+.jn-total-word.w2 { animation-delay: 0.70s; }
+.jn-total-word.w3 {
+  animation-delay: 0.95s;
+  background: linear-gradient(180deg, #ffffff 0%, #ffb3d1 35%, #ff4d88 75%, #880e4f 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 7px 0 #3a001e) drop-shadow(0 12px 36px rgba(255, 77, 136, 0.95));
+}
+
+/* =========================================================
+   LEFT HISTORY SIDEBAR & WORKSPACE SHELL
+   ========================================================= */
+.app-shell {
+  display: flex; width: 100vw; height: 100dvh; overflow: hidden;
+  position: relative; z-index: 2;
+}
+
+.history-sidebar {
+  width: 280px; flex-shrink: 0; height: 100dvh;
+  background: rgba(18, 5, 16, 0.96);
+  border-right: 1px solid rgba(255, 209, 102, 0.28);
+  display: flex; flex-direction: column;
+  padding: 14px 12px; z-index: 60;
+  backdrop-filter: blur(18px);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sidebar-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 12px; border-bottom: 1px solid rgba(255, 179, 205, 0.18);
+}
+.sidebar-brand { display: flex; align-items: center; gap: 10px; }
+.sidebar-logo {
+  width: 38px; height: 38px; border-radius: 12px;
+  background: linear-gradient(135deg, #e91e63, #ff8f00);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem; border: 1.5px solid var(--gold);
+}
+.sidebar-title { font-weight: 800; font-size: 0.95rem; color: #fff; }
+.sidebar-sub { font-size: 0.72rem; color: #ffd166; }
+.sidebar-close-btn {
+  display: none; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(255, 209, 102, 0.35); background: transparent;
+  color: #ffd166; cursor: pointer;
+}
+
+.new-chat-btn {
+  margin: 12px 0; padding: 11px 14px; border-radius: 14px;
+  border: 1.5px solid var(--gold);
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.38), rgba(255, 143, 0, 0.28));
+  color: #fff; font: 700 0.86rem "Plus Jakarta Sans", sans-serif;
+  cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px;
+  transition: transform 0.15s, background 0.2s;
+}
+.new-chat-btn:hover { transform: translateY(-1px); background: linear-gradient(135deg, #e91e63, #ff8f00); }
+
+.sidebar-section-label {
+  font-size: 0.68rem; font-weight: 800; letter-spacing: 1.8px;
+  color: #c98da9; margin: 4px 4px 8px;
+}
+.history-list {
+  flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;
+  padding-right: 2px;
+}
+.history-item {
+  border: 1px solid rgba(255, 179, 205, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fceef5; border-radius: 12px; padding: 10px 12px;
+  cursor: pointer; text-align: left; transition: all 0.18s;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.history-item:hover {
+  background: rgba(255, 122, 168, 0.14); border-color: rgba(255, 209, 102, 0.45);
+}
+.history-item.active {
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.32), rgba(156, 39, 176, 0.32));
+  border-color: var(--gold);
+}
+.history-item-title {
+  font-size: 0.84rem; font-weight: 700; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.history-item-meta {
+  font-size: 0.7rem; color: #d29ab8; display: flex; justify-content: space-between;
+}
+
+.sidebar-footer {
+  padding-top: 10px; border-top: 1px solid rgba(255, 179, 205, 0.16);
+}
+.clear-history-btn {
+  width: 100%; padding: 8px 12px; border-radius: 10px;
+  border: 1px solid rgba(255, 122, 168, 0.3);
+  background: rgba(255, 255, 255, 0.04); color: #ffb3d1;
+  font: 600 0.76rem "Plus Jakarta Sans", sans-serif; cursor: pointer;
+}
+.clear-history-btn:hover { background: rgba(233, 30, 99, 0.25); color: #fff; }
+
+.main-chat-area {
+  flex: 1; display: flex; flex-direction: column; height: 100dvh;
+  max-width: 100% !important; margin: 0 !important; min-width: 0;
+}
+
+.ai-badge-orb {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe57f, #ff4d88 55%, #6a1b9a);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; box-shadow: 0 0 16px rgba(255, 92, 138, 0.5);
+  flex-shrink: 0;
+}
+
+/* Mobile & Collapsed Sidebar Drawer */
+.sidebar-backdrop {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65);
+  z-index: 55; backdrop-filter: blur(4px);
+}
+body.sidebar-collapsed .history-sidebar {
+  margin-left: -280px;
+}
+@media (max-width: 820px) {
+  .history-sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    transform: translateX(-100%);
+  }
+  body.sidebar-open .history-sidebar {
+    transform: translateX(0);
+  }
+  .sidebar-close-btn { display: inline-flex; align-items: center; justify-content: center; }
+}
+
+/* ---------- Chibi Gold Medal Ceremony Banner ---------- */
+.medal-award-banner {
+  position: relative; max-width: 390px; margin: 4px auto 10px;
+  border-radius: 20px; overflow: hidden;
+  border: 2.5px solid var(--gold);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.45);
+}
+.medal-award-img {
+  width: 100%; height: auto; display: block;
+}
+.medal-ribbon-tag {
+  background: linear-gradient(90deg, #ff8f00, #e91e63, #ff8f00);
+  color: #fff; font-weight: 800; font-size: 0.76rem; letter-spacing: 1.5px;
+  padding: 5px 10px; text-align: center;
+}
