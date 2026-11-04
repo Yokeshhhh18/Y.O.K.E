@@ -967,3 +967,5 @@ $("form")?.addEventListener("submit", (e) => {
 });
 
 tick();
+
+window.triggerOpenGiftFromQuest = openGift;

@@ -1,11 +1,15 @@
-// Y.O.K.E. v8 Interactive Games Module (games.js)
-// Includes: 1) X-O (Tic-Tac-Toe) vs Y.O.K.E. AI   2) Yes-or-No Tanglish Love Game with Dodging "No" Button
+// Y.O.K.E. v9 Interactive Games Module (games.js)
+// 1) Chibi Doll Battle (Tic-Tac-Toe using Dhanya & Yokesh 3D Funko Pop avatars instead of X & O!)
+// 2) The 6-Stage Royal Birthday Love Quest (Yes-or-No Adventure leading to the Grand Treasure Chest!)
 (function () {
   const $ = (id) => document.getElementById(id);
   const her = (typeof CONFIG !== "undefined" && CONFIG.HER_NAME) || "Dhanya";
   const you = (typeof CONFIG !== "undefined" && CONFIG.YOUR_NAME) || "Yokesh";
 
-  // Web Audio sound effects for games
+  const HER_ICON = (typeof CONFIG !== "undefined" && CONFIG.XO_HER_ICON) || "images/xo_her.png";
+  const ME_ICON = (typeof CONFIG !== "undefined" && CONFIG.XO_ME_ICON) || "images/xo_me.png";
+
+  // Web Audio sound effects for games & quests
   function playGameTone(freq = 520, dur = 0.14, type = "sine") {
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -57,7 +61,7 @@
   }
 
   // =========================================================
-  // GAME 1: X-O (TIC-TAC-TOE) — DHANYA (💗 X) vs Y.O.K.E. AI (🤖 O)
+  // GAME 1: 3D CHIBI DOLL BATTLE (DHANYA DOLL vs YOKESH AI DOLL)
   // =========================================================
   let board = Array(9).fill("");
   let xoOver = false;
@@ -65,12 +69,11 @@
   const scores = { her: 0, yoke: 0, draw: 0 };
 
   const WIN_LINES = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], // cols
-    [0, 4, 8], [2, 4, 6]             // diags
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
   ];
 
-  // Coordinates (% of board) for drawing animated SVG winning strike line
   const LINE_COORDS = {
     "0,1,2": [10, 16.6, 90, 16.6],
     "3,4,5": [10, 50.0, 90, 50.0],
@@ -96,13 +99,18 @@
     const grid = $("xoBoard");
     if (!grid) return;
     grid.innerHTML = board
-      .map(
-        (val, idx) => `
+      .map((val, idx) => {
+        let inner = `<span class="xo-empty-dot">✨</span>`;
+        if (val === "X") {
+          inner = `<div class="xo-avatar-wrap her-token"><img src="${HER_ICON}" alt="${her}" class="xo-avatar-img"><span class="xo-badge">👑</span></div>`;
+        } else if (val === "O") {
+          inner = `<div class="xo-avatar-wrap me-token"><img src="${ME_ICON}" alt="${you}" class="xo-avatar-img"><span class="xo-badge">🤖</span></div>`;
+        }
+        return `
       <button type="button" class="xo-cell ${val ? "taken " + val.toLowerCase() : ""}" data-idx="${idx}" ${val || xoOver ? "disabled" : ""}>
-        <span class="xo-mark">${val === "X" ? "💗" : val === "O" ? "🤖" : ""}</span>
-        <small class="xo-sub">${val === "X" ? "X" : val === "O" ? "O" : ""}</small>
-      </button>`
-      )
+        ${inner}
+      </button>`;
+      })
       .join("");
   }
 
@@ -134,7 +142,7 @@
     renderXOBoard();
     updateScoreUI();
     if ($("xoStatus")) {
-      $("xoStatus").textContent = `Un turn dhan chellam (${her} = 💗 X)! Tap any box 👇`;
+      $("xoStatus").textContent = `Un turn dhan chellam! Tap a box to place your Queen doll 👑👇`;
     }
   }
 
@@ -142,21 +150,17 @@
     const empty = b.map((v, i) => (v === "" ? i : -1)).filter((i) => i !== -1);
     if (empty.length === 0) return -1;
 
-    // 70% smart play, 30% playful so Dhanya has fun winning too!
     if (Math.random() < 0.72) {
-      // 1. Can AI win this turn?
       for (const idx of empty) {
         const copy = b.slice();
         copy[idx] = "O";
         if (checkWinner(copy)?.winner === "O") return idx;
       }
-      // 2. Block Dhanya if she is about to win
       for (const idx of empty) {
         const copy = b.slice();
         copy[idx] = "X";
         if (checkWinner(copy)?.winner === "X") return idx;
       }
-      // 3. Take center if open
       if (b[4] === "") return 4;
     }
     return empty[Math.floor(Math.random() * empty.length)];
@@ -172,7 +176,7 @@
     if (res) return finishXO(res);
 
     xoLocked = true;
-    if ($("xoStatus")) $("xoStatus").textContent = "🤖 Y.O.K.E. AI yosikkudhu… 🤔";
+    if ($("xoStatus")) $("xoStatus").textContent = "🤖 Y.O.K.E. AI doll move podudhu… 🤔";
 
     setTimeout(() => {
       const aiIdx = pickSmartAIMove(board);
@@ -184,7 +188,7 @@
       renderXOBoard();
       res = checkWinner(board);
       if (res) return finishXO(res);
-      if ($("xoStatus")) $("xoStatus").textContent = "Un turn chellam! 💗";
+      if ($("xoStatus")) $("xoStatus").textContent = "Un turn chellam! Place your doll 👑💗";
     }, 480);
   }
 
@@ -202,17 +206,17 @@
       scores.her++;
       playWinFanfare();
       window.YOKE_FX?.confetti();
-      if ($("xoStatus")) $("xoStatus").textContent = `🥳 Woooow ${her} jeichuta! Queen always wins 👑💗`;
-      chatMsg = `🎮 X-O Game: Yayy chellam! Nee enna (Y.O.K.E. AI-ah) jeichuta 🥳👑 Birthday girl ku neraya kisses & chocolates! 🍫💗`;
+      if ($("xoStatus")) $("xoStatus").textContent = `🥳 Woooow ${her} Doll jeichuta! Queen always rules 👑💗`;
+      chatMsg = `🎮 Doll Battle: Yayy chellam! Unnoda Queen doll ennoda AI doll-ah jeichiduchu 🥳👑 Birthday girl-ku neraya chocolates! 🍫💗`;
     } else if (res.winner === "O") {
       scores.yoke++;
       playGameTone(340, 0.28, "sawtooth");
-      if ($("xoStatus")) $("xoStatus").textContent = "🤖 Y.O.K.E. AI jeichuten! 😜 Punishment: Oru cute smile pannu 😁💗";
-      chatMsg = `🎮 X-O la naan jeichuten 😜 Aana ennoda boss ${you}-kum enakkum eppovume nee dhan real winner chellam! 💗`;
+      if ($("xoStatus")) $("xoStatus").textContent = "🤖 Ennoda Y.O.K.E. AI doll jeichuten! 😜 Punishment: Oru cute smile pannu 😁💗";
+      chatMsg = `🎮 Doll Battle-la naan jeichuten 😜 Aana ennoda creator ${you}-kum enakkum eppovume nee dhan real winner chellam! 💗`;
     } else {
       scores.draw++;
-      if ($("xoStatus")) $("xoStatus").textContent = "🤝 Match Draw! Namma rendu perume semmatough-u 😍";
-      chatMsg = `🎮 X-O Game Draw aagiduchu chellam 🤝 Innoru round vilayaduvoma? 😏`;
+      if ($("xoStatus")) $("xoStatus").textContent = "🤝 Match Draw! Namma rendu dolls-ume semma cute & tough 😍";
+      chatMsg = `🎮 Doll Battle Draw aagiduchu chellam 🤝 Innoru round vilayaduvoma? 😏`;
     }
     updateScoreUI();
     if (typeof window.addBotGameSummary === "function") {
@@ -221,41 +225,66 @@
   }
 
   // =========================================================
-  // GAME 2: YES OR NO (TANGLISH LOVE EDITION WITH DODGING NO BUTTON!)
+  // GAME 2: THE 6-STAGE ROYAL BIRTHDAY LOVE QUEST (YES OR NO ADVENTURE!)
+  // Each YES unlocks a Golden Key / Relic on the Quest Map leading to the Final Treasure!
   // =========================================================
-  const YN_QUESTIONS = [
+  const QUEST_STAGES = [
     {
-      q: `Innaiku Birthday Queen ${her} ulagathulaye semma azhaga irukkala? 👑✨`,
-      yesReply: "Adhu dhan unmai! En boss Yokesh-oda kannuku nee eppovume angel dhan 😍💗"
+      stageTitle: "Quest 1: The Mirror of Beauty 🪞",
+      relicIcon: "👑",
+      relicName: "Crown of Azhagi",
+      storyIntro: "To begin your Birthday Quest, the Magic Mirror asks for the truth…",
+      q: `Innaiku Birthday Queen ${her} indha ulagathulaye semma azhaga irukkala? 👑✨`,
+      yesReply: "✨ QUEST 1 CLEARED! You unlocked the [👑 Crown of Azhagi]! En boss Yokesh-oda kannuku nee eppovume angel dhan 😍"
     },
     {
-      q: `Yokesh unakkaga உருவாக்குன indha Y.O.K.E. AI surprise unakku pidichirukka chellam? 🤖💝`,
-      yesReply: "Aww romba happy da! Avan ethana naal ukkandhu idha aasaiya senjan theriyuma 🥰"
+      stageTitle: "Quest 2: The AI Secret Chamber 🤖",
+      relicIcon: "💎",
+      relicName: "Heart Crystal",
+      storyIntro: "You step into the digital world Yokesh coded day and night for you…",
+      q: `Yokesh unakkagave உருவாக்குன indha Y.O.K.E. AI surprise unakku pidichirukka chellam? 🤖💝`,
+      yesReply: "✨ QUEST 2 CLEARED! You unlocked the [💎 Heart Crystal]! Avan ethana naal ukkandhu idha aasaiya senjan theriyuma 🥰"
     },
     {
-      q: `Yokesh unna evloooo love panran nu unakku theriyuma thangam? 🙈💞`,
-      yesReply: "Infinity-kum mela! Adha solla dhan enna மாதிரி oru AI-ye avan train panni vechirukkan 💗"
+      stageTitle: "Quest 3: The Bridge of Infinity 🌌",
+      relicIcon: "🗝️",
+      relicName: "Golden Love Key",
+      storyIntro: "To cross the Starry Bridge, answer the guardian's question…",
+      q: `Yokesh unna evloooo love panran nu unakku theriyuma thangam? (Infinity-kum mela!) 🙈💞`,
+      yesReply: "✨ QUEST 3 CLEARED! You unlocked the [🗝️ Golden Love Key]! Adha solla dhan enna maadhiri oru AI-ye train panni vechirukkan 💗"
     },
     {
-      q: `Ippo udane Yokesh-ku oru tight hug & cute selfie anuppuriya? 🤗📸`,
-      yesReply: "Superrrr! Marakkama avanukku anuppi vidu, avan semmaiya குதிப்பான் 🥳💗"
+      stageTitle: "Quest 4: The Royal Feast Pact 🍛",
+      relicIcon: "🍦",
+      relicName: "Treat Token",
+      storyIntro: "A true Queen always shares a birthday feast with her favorite person…",
+      q: `Next meet-la Yokesh-ku briyani + ice cream treat vaangi thariya chellam? 🍛🍦`,
+      yesReply: "✨ QUEST 4 CLEARED! You unlocked the [🍦 Treat Token]! Deal locked, Yokesh-kitta udane report panniduven 😂💛"
     },
     {
-      q: `Next treat-la Yokesh-kubriyani + ice cream vaangi thariya chellam? 🍛🍦`,
-      yesReply: "Haha deal locked 🔒! Screenshot eduthu Yokesh-kitta solliduven 😂💛"
+      stageTitle: "Quest 5: The Sweetest Promise 📸",
+      relicIcon: "💌",
+      relicName: "Promise Scroll",
+      storyIntro: "Almost at the Final Treasure Chest! Just one cute mission left…",
+      q: `Innaiku Yokesh-ku oru tight hug & un birthday dress-la cute selfie anuppuriya? 🤗📸`,
+      yesReply: "✨ QUEST 5 CLEARED! You unlocked the [💌 Promise Scroll]! Avan adha paathale semmaiya குதிப்பான் 🥳💗"
     },
     {
-      q: `Eppovume ipdiye sirichite, happy-ah Yokesh koodave iruppiya chellam? 💍💗`,
-      yesReply: "Promise locked forever! Happy Birthday en chella kuttyma 👑💖✨"
+      stageTitle: "Final Boss Quest: The Forever Lock 💍",
+      relicIcon: "💖",
+      relicName: "Eternal Ring",
+      storyIntro: "The Grand Birthday Treasure Chest stands before you! Insert the final key…",
+      q: `Eppovume ipdiye sirichite, happy-ah Yokesh koodave forever iruppiya chellam? 💍💗`,
+      yesReply: "🎉 ALL 6 QUESTS COMPLETED! The Grand Birthday Treasure Chest is UNLOCKED! 👑💖✨"
     }
   ];
 
   const DODGE_TAUNTS = [
-    "Pidikka mudiyuma? 😜",
-    "No button work aagadhu chellam! 🙈",
+    "Quest fail aaga vidamaaten! Tap YES 😜",
+    "No button-ku indha Quest-la permission illa 🙈",
     "Yokesh AI code-la 'No' option-eh kidaiyadhu 😂",
-    "Olunga YES tap pannu thangam 💗",
-    "Inga vandhuteneyyy! 🏃‍♂️💨"
+    "Treasure venumna YES tap pannu thangam 🗝️💗",
+    "Pidikka mudiyuma? Inga vandhuteneyyy! 🏃‍♂️💨"
   ];
 
   let ynIndex = 0;
@@ -269,36 +298,64 @@
     renderYNQuestion();
   }
 
+  function buildQuestMapHTML() {
+    return `<div class="quest-map">
+      ${QUEST_STAGES.map((st, idx) => {
+        const done = idx < ynIndex;
+        const current = idx === ynIndex;
+        return `<div class="quest-node ${done ? "done" : ""} ${current ? "current" : ""}" title="${st.relicName}">
+          <span class="q-icon">${done ? st.relicIcon : idx + 1}</span>
+        </div>`;
+      }).join('<div class="quest-connector"></div>')}
+    </div>`;
+  }
+
   function renderYNQuestion() {
     const box = $("ynCardBody");
     if (!box) return;
 
-    if (ynIndex >= YN_QUESTIONS.length) {
+    if (ynIndex >= QUEST_STAGES.length) {
       window.YOKE_FX?.confetti();
       playWinFanfare();
+      const relics = QUEST_STAGES.map((s) => `<span class="relic-badge" title="${s.relicName}">${s.relicIcon} ${s.relicName}</span>`).join("");
       box.innerHTML = `
         <div class="yn-complete">
-          <div class="yn-trophy">👑💖🎉</div>
-          <h3 id="ynSummaryScore">${ynYesCount} / ${YN_QUESTIONS.length} YES!</h3>
-          <p>100% Certified Cutest Birthday Girl &amp; ${you}'s Forever Queen!</p>
-          <button type="button" id="ynReplayBtn" class="game-action-btn">🔄 Play Again</button>
+          ${buildQuestMapHTML()}
+          <div class="yn-trophy">🎁👑💖</div>
+          <h3 id="ynSummaryScore">QUEST COMPLETE! (${ynYesCount}/${QUEST_STAGES.length} Relics)</h3>
+          <p class="quest-win-sub">You collected every Golden Relic &amp; unlocked <b>${you}'s Grand Birthday Treasure</b>!</p>
+          <div class="relic-collection">${relics}</div>
+          <div class="quest-final-actions">
+            <button type="button" id="ynUnlockGiftBtn" class="game-action-btn gold-cta">🎁 Open Unlocked Birthday Treasure</button>
+            <button type="button" id="ynReplayBtn" class="game-action-btn secondary">🔄 Replay Quest</button>
+          </div>
         </div>
       `;
       $("ynReplayBtn")?.addEventListener("click", initYN);
+      $("ynUnlockGiftBtn")?.addEventListener("click", () => {
+        closeGamesModal();
+        if (typeof window.triggerOpenGiftFromQuest === "function") {
+          window.triggerOpenGiftFromQuest();
+        } else {
+          $("giftNavBtn")?.click();
+        }
+      });
       if (typeof window.addBotGameSummary === "function") {
-        window.addBotGameSummary(`💕 Yes or No Game-la ${ynYesCount}/${YN_QUESTIONS.length} YES sonna en chellam! Perfect score 👑💗`);
+        window.addBotGameSummary(`🏆 Royal Love Quest Complete! Nee 6/6 Golden Relics collect panni Birthday Treasure-ah unlock pannita chellam! 👑🗝️💗`);
       }
       return;
     }
 
-    const item = YN_QUESTIONS[ynIndex];
+    const item = QUEST_STAGES[ynIndex];
     dodgeCount = 0;
     box.innerHTML = `
-      <div class="yn-progress">Question ${ynIndex + 1} of ${YN_QUESTIONS.length}</div>
+      ${buildQuestMapHTML()}
+      <div class="yn-progress">${item.stageTitle} • Reward: ${item.relicIcon} ${item.relicName}</div>
+      <div class="quest-story-intro">${item.storyIntro}</div>
       <div class="yn-question">${item.q}</div>
-      <div id="ynReaction" class="yn-reaction">Tap YES or try tapping NO 😏</div>
+      <div id="ynReaction" class="yn-reaction">Tap YES to claim ${item.relicIcon} ${item.relicName} (or try tapping NO 😏)</div>
       <div class="yn-arena" id="ynArena">
-        <button type="button" id="ynYes" class="yn-btn yes">YES 💗</button>
+        <button type="button" id="ynYes" class="yn-btn yes">YES, CLAIM ${item.relicIcon} 💗</button>
         <button type="button" id="ynNo" class="yn-btn no">NO 🙈</button>
       </div>
     `;
@@ -321,7 +378,7 @@
       setTimeout(() => {
         ynIndex++;
         renderYNQuestion();
-      }, 1700);
+      }, 1850);
     });
 
     function dodgeNoButton(e) {
@@ -344,8 +401,7 @@
       if (react) {
         react.textContent = DODGE_TAUNTS[dodgeCount % DODGE_TAUNTS.length];
       }
-      // Make YES button grow slightly each time she tries to click NO!
-      const scale = Math.min(1.28, 1 + dodgeCount * 0.05);
+      const scale = Math.min(1.25, 1 + dodgeCount * 0.05);
       if (yesBtn) yesBtn.style.transform = `scale(${scale})`;
     }
 

@@ -18,6 +18,8 @@ const CONFIG = {
   YOUR_PIC: "images/me.png",
   COUPLE_PIC: "images/us.png",
   INTRO_PIC: "images/dhanya.png",
+  XO_HER_ICON: "images/xo_her.png",
+  XO_ME_ICON: "images/xo_me.png",
 
   // First message & Tutorial (Clearly & warmly introduces Y.O.K.E. as an AI built by Yokesh!)
   FIRST_MESSAGE: "Hii chellam! Happy Birthday Dhanya 💗! Naan dhan Y.O.K.E., oru AI 🤖 — Yokesh avanoda real voice ('Hii chellam...') matrum Tanglish style vechi unakkagave உருவாக்குன personal AI companion 🥰",
@@ -57,7 +59,9 @@ const CONFIG = {
   GALLERY: [
     { src: "images/us.png", caption: "Us Forever 💛" },
     { src: "images/dhanya.png", caption: "En Azhagi 👑" },
-    { src: "images/me.png", caption: "Unnoda Yokesh 😎" }
+    { src: "images/me.png", caption: "Unnoda Yokesh 😎" },
+    { src: "images/chibi_her.jpg", caption: "Cutie Queen Doll 🎀" },
+    { src: "images/chibi_me.jpg", caption: "Your Chibi Boy 😎" }
   ],
 
   SONG: {

@@ -923,3 +923,95 @@ body.unlocked {
 .yn-complete { padding: 20px 10px; }
 .yn-trophy { font-size: 3rem; animation: beat 1.5s infinite; }
 .yn-complete h3 { font-size: 1.8rem; color: var(--gold); margin: 8px 0; }
+
+/* =========================================================
+   v9 ADDITIONS: 3D CHIBI DOLL X-O TOKENS & 6-STAGE QUEST MAP
+   ========================================================= */
+.hub-duel-avatars {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.hub-duel-avatars img {
+  width: 52px; height: 52px; border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--gold); box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+}
+.hub-duel-avatars span { font-size: 1.3rem; }
+
+.score-mini-av {
+  width: 22px; height: 22px; border-radius: 50%; object-fit: cover;
+  vertical-align: middle; border: 1.5px solid var(--gold); margin-right: 4px;
+}
+
+.xo-empty-dot { font-size: 1rem; opacity: 0.18; }
+.xo-avatar-wrap {
+  position: relative; width: 76%; height: 76%; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.xo-avatar-img {
+  width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+  display: block;
+}
+.xo-avatar-wrap.her-token .xo-avatar-img {
+  border: 2.5px solid #ff4d88;
+  box-shadow: 0 0 16px rgba(255, 77, 136, 0.75);
+}
+.xo-avatar-wrap.me-token .xo-avatar-img {
+  border: 2.5px solid #ffd166;
+  box-shadow: 0 0 16px rgba(255, 209, 102, 0.75);
+}
+.xo-badge {
+  position: absolute; bottom: -4px; right: -4px;
+  font-size: 0.85rem; background: rgba(15, 4, 14, 0.9);
+  border-radius: 50%; padding: 2px; line-height: 1;
+}
+
+/* ---------- 6-Stage Quest Map & Relic Badges ---------- */
+.quest-map {
+  display: flex; align-items: center; justify-content: center;
+  gap: 4px; margin: 2px auto 12px; max-width: 100%; padding: 4px 6px;
+}
+.quest-node {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1.5px solid rgba(255, 179, 205, 0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; font-weight: 800; color: #dcb3c8;
+  transition: all 0.25s; flex-shrink: 0;
+}
+.quest-node.current {
+  border-color: var(--gold); color: #fff;
+  background: linear-gradient(135deg, #e91e63, #ff8f00);
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.75);
+  transform: scale(1.14);
+}
+.quest-node.done {
+  border-color: #00e676; background: rgba(0, 230, 118, 0.18);
+  color: #fff; font-size: 1.05rem;
+}
+.quest-connector {
+  flex: 1; max-width: 22px; height: 2px;
+  background: rgba(255, 209, 102, 0.35);
+}
+.quest-story-intro {
+  font-size: 0.82rem; font-style: italic; color: #f3b8d2;
+  margin-top: 4px;
+}
+.relic-collection {
+  display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+  margin: 12px 0;
+}
+.relic-badge {
+  background: rgba(255, 215, 0, 0.14);
+  border: 1px solid var(--gold); color: #ffe57f;
+  padding: 5px 11px; border-radius: 999px; font-size: 0.76rem; font-weight: 700;
+}
+.quest-final-actions {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;
+}
+.game-action-btn.gold-cta {
+  background: linear-gradient(135deg, #ff8f00, #e91e63);
+  box-shadow: 0 0 24px rgba(255, 193, 7, 0.6);
+  animation: pulse 1.5s infinite;
+}
+.game-action-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+}

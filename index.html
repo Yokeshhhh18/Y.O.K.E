@@ -139,8 +139,8 @@
       <div class="games-header">
         <div class="games-tabs">
           <button type="button" class="gtab active" data-tab="hub">🎮 Arcade</button>
-          <button type="button" class="gtab" data-tab="xo">❌⭕ X-O Game</button>
-          <button type="button" class="gtab" data-tab="yn">💗 Yes or No</button>
+          <button type="button" class="gtab" data-tab="xo">👑 Doll X-O</button>
+          <button type="button" class="gtab" data-tab="yn">🗝️ Love Quest</button>
         </div>
         <button type="button" id="closeGamesBtn" class="close-games" aria-label="Close Games">✕</button>
       </div>
@@ -151,16 +151,16 @@
         <p class="game-sub">Choose a game below, chellam!</p>
         <div class="hub-grid">
           <div class="hub-card">
-            <div class="hub-icon">💗 vs 🤖</div>
-            <h4>X-O Love Battle</h4>
-            <p>Play Tic-Tac-Toe (<span class="her"></span> 💗 X vs Y.O.K.E. AI 🤖 O). Can you beat my AI brain?</p>
+            <div class="hub-duel-avatars"><img src="images/xo_her.png" alt="Dhanya"><span>⚡</span><img src="images/xo_me.png" alt="Yokesh"></div>
+            <h4>Chibi Doll X-O Battle</h4>
+            <p>Play Tic-Tac-Toe with our 3D Dolls! (<span class="her"></span> 👑 vs Y.O.K.E. AI 🤖)</p>
             <button type="button" class="hub-play-btn game-action-btn" data-target="xo">Play X-O Now ▶</button>
           </div>
           <div class="hub-card">
-            <div class="hub-icon">😍 / 🙈</div>
-            <h4>Yes or No Challenge</h4>
-            <p>6 cute Tanglish birthday questions from <span class="you-cine"></span>! Try tapping "NO" if you can 😜</p>
-            <button type="button" class="hub-play-btn game-action-btn" data-target="yn">Play Yes or No ▶</button>
+            <div class="hub-icon">👑🗝️🎁</div>
+            <h4>Royal Birthday Love Quest</h4>
+            <p>Complete 6 Yes/No Quest stages &amp; collect Golden Relics to unlock your Grand Treasure! 😜</p>
+            <button type="button" class="hub-play-btn game-action-btn" data-target="yn">Start Love Quest ▶</button>
           </div>
         </div>
       </div>
@@ -168,9 +168,9 @@
       <!-- Tab 1: X-O (Tic-Tac-Toe) -->
       <div id="xoView" class="game-view hidden">
         <div class="xo-scoreboard">
-          <div class="score-pill her-s">💗 <span class="her"></span>: <b id="scoreHer">0</b></div>
+          <div class="score-pill her-s"><img src="images/xo_her.png" class="score-mini-av" alt=""> <span class="her"></span>: <b id="scoreHer">0</b></div>
           <div class="score-pill draw-s">🤝 Draw: <b id="scoreDraw">0</b></div>
-          <div class="score-pill yoke-s">🤖 Y.O.K.E. AI: <b id="scoreYoke">0</b></div>
+          <div class="score-pill yoke-s"><img src="images/xo_me.png" class="score-mini-av" alt=""> Y.O.K.E. AI: <b id="scoreYoke">0</b></div>
         </div>
         <div id="xoStatus" class="xo-status">Un turn dhan chellam! Tap any box 👇</div>
         <div class="xo-board-wrap">
