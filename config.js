@@ -11,7 +11,7 @@ const CONFIG = {
   // ==========================================================================
   // GOOGLE DRIVE CLOUD STORAGE (Paste your Google Apps Script Web App URL here)
   // ==========================================================================
-  GDRIVE_CLOUD_URL: "",
+  GDRIVE_CLOUD_URL: "https://script.google.com/macros/s/AKfycbwhas2_Is88Od53Q9PEFY-wfhLq5adI5VgVvssb1ASlYboZIx9yynyB-uXTu8-iyItGkQ/exec",
 
   // Optional: If you want an additional custom MP3/Drive audio track to play during the 4-panel intro along with the built-in Anirudh-style Kuthu Banger synth, paste its URL here:
   INTRO_BANGER_URL: "",
