@@ -17,7 +17,7 @@ const CONFIG = {
   // GOOGLE DRIVE CLOUD STORAGE (For saving all chats & loading Drive media)
   // Paste your Google Apps Script Web App URL (https://script.google.com/macros/s/.../exec)
   // ==========================================================================
-  GDRIVE_CLOUD_URL: "",
+  GDRIVE_CLOUD_URL: "https://script.google.com/macros/s/AKfycbwhas2_Is88Od53Q9PEFY-wfhLq5adI5VgVvssb1ASlYboZIx9yynyB-uXTu8-iyItGkQ/exec",
 
   // Full-screen images for the Jana Nayagan English Intro + 3D Chibi Doll icons for X-O Game
   HER_PIC: "images/dhanya.png",
