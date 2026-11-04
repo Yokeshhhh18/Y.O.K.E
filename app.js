@@ -1,4 +1,4 @@
-// Y.O.K.E. v4 — Jana Nayagan Full-Screen Intro + Gemini Romantic UI + Built-in Synth BGMs + Yokesh Voice-Trained Persona
+// Y.O.K.E. v7 — 70MM Kollywood Blockbuster Intro + Multi-BGM Engine + Shockwave Canvas + Google Drive Cloud + Voice-Trained AI
 const $ = (id) => document.getElementById(id);
 const history = []; // {role: 'user'|'model', parts:[{text}]}
 let unlocked = false;
@@ -8,12 +8,23 @@ const her = (typeof CONFIG !== "undefined" && CONFIG.HER_NAME) || "Dhanya";
 const you = (typeof CONFIG !== "undefined" && CONFIG.YOUR_NAME) || "Yokesh";
 const API_URL = (typeof CONFIG !== "undefined" && CONFIG.API_URL) || "/api/chat";
 const TTS_URL = (typeof CONFIG !== "undefined" && CONFIG.TTS_URL) || "/api/tts";
+const GDRIVE_CLOUD_URL = (typeof CONFIG !== "undefined" && CONFIG.GDRIVE_CLOUD_URL) || "";
 
-const herPicSrc = (typeof CONFIG !== "undefined" && CONFIG.HER_PIC) || "images/dhanya.png";
-const mePicSrc = (typeof CONFIG !== "undefined" && CONFIG.YOUR_PIC) || "images/me.png";
-const couplePicSrc = (typeof CONFIG !== "undefined" && CONFIG.COUPLE_PIC) || "images/us.png";
+function resolveDriveUrl(url, type = "media") {
+  if (!url || typeof url !== "string") return "";
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m && url.includes("drive.google.com")) {
+    const id = m[1];
+    if (type === "preview") return `https://drive.google.com/file/d/${id}/preview`;
+    return `https://drive.google.com/uc?export=download&id=${id}`;
+  }
+  return url;
+}
 
-// Quick suggestion cards (Gemini dashboard style) + bottom pills
+const herPicSrc = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.HER_PIC) || "images/dhanya.png");
+const mePicSrc = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.YOUR_PIC) || "images/me.png");
+const couplePicSrc = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.COUPLE_PIC) || "images/us.png");
+
 const GEM_CARDS = [
   { icon: "🥺", title: "I miss you chellam", sub: "Hear how much I miss you right now", prompt: "I miss you 🥺" },
   { icon: "😍", title: "Wanna see you", sub: "Show me my favorite person", prompt: "Wanna see you 😍" },
@@ -31,8 +42,7 @@ const CHIPS = (typeof CONFIG !== "undefined" && CONFIG.CHIPS) || [
 ];
 const SEE_CHIP = (typeof CONFIG !== "undefined" && CONFIG.SEE_CHIP) || "Wanna see you 😍";
 
-// Optional custom audio clips in /audio (note: audio/test.m4a is strictly for AI voice training, NOT intro playback!)
-const CLIPS = Object.assign({ wish: "", tutorial: "", miss: "", see: "", bgm: "", introBgm: "" }, (typeof CONFIG !== "undefined" && CONFIG.CLIPS) || {});
+const CLIPS = Object.assign({ wish: "", tutorial: "", miss: "", see: "" }, (typeof CONFIG !== "undefined" && CONFIG.CLIPS) || {});
 const CHIP_CLIPS = Object.assign({ "I miss you 🥺": "miss" }, (typeof CONFIG !== "undefined" && CONFIG.CHIP_CLIPS) || {});
 const SEE_YOU = (typeof CONFIG !== "undefined" && CONFIG.SEE_YOU) || {
   type: "image",
@@ -42,8 +52,8 @@ const SEE_YOU = (typeof CONFIG !== "undefined" && CONFIG.SEE_YOU) || {
 
 const TUTORIAL = (typeof CONFIG !== "undefined" && CONFIG.TUTORIAL) || [
   `Hii chellam! Happy Birthday ${her} 💗! Naan dhan Y.O.K.E. — ennoda real voice ("Hii chellam...") matrum ennoda pesura style vechi train panna unnoda personal AI twin 🥰`,
-  "Keezha irukura Gemini bar-la en kitta enna venாலும் type pannalam, illa quick cards tap pannalam 💬",
-  "🎙 Mic button tap pannina namma live-ah voice-la pesalam! Mela 🎵 BGM button-la romantic music-um on/off pannikkalam ✨"
+  "Keezha irukura chat bar-la en kitta enna venalum type pannalam, illa mela irukura quick cards tap pannalam 💬",
+  "🎙 Mic button tap pannina namma live-ah voice-la pesalam! Mela 🎵 BGM button tap panni 3 different romantic & mass BGMs maathikkalam ✨"
 ];
 
 const GALLERY = (typeof CONFIG !== "undefined" && CONFIG.GALLERY) || [
@@ -55,11 +65,10 @@ const GALLERY = (typeof CONFIG !== "undefined" && CONFIG.GALLERY) || [
 const LETTER = (typeof CONFIG !== "undefined" && CONFIG.LETTER) ||
   `My dearest ${her},\n\nHappy Birthday, chellam! I built this entire world — Y.O.K.E. — just so you always have a piece of me right by your side whenever you miss me.\n\nEvery reply, every beat of music, and every detail here carries my love for you. Wherever life takes us, you're my kind of everything.\n\nAlways & forever yours,\n${you} 💗`;
 
-// Pre-written fallback & instant signature replies modeled directly on Yokesh's voice ("Hii chellam...")
 const YOKESH_OWN_REPLIES = [
   {
     match: /miss you|miss u|nenachen|thedu/i,
-    reply: `Hii chellam 🥺 Naanum unna romba miss panren da thangam! Un koodave irukkanum nu dhan indha Y.O.K.E. AI-eh unakkaga senjen. Kannu moodi enna nenaichu oruchinna smile pannu, ippo un pakkathula dhan iruken 💗`
+    reply: `Hii chellam 🥺 Naanum unna romba miss panren da thangam! Un koodave irukkanum nu dhan indha Y.O.K.E. AI-eh unakkaga senjen. Kannu moodi enna nenaichu oru chinna smile pannu, ippo un pakkathula dhan iruken 💗`
   },
   {
     match: /enna pannura|what doing|epdi iruka|how are you/i,
@@ -71,7 +80,7 @@ const YOKESH_OWN_REPLIES = [
   },
   {
     match: /sweet|cute|romantic|azhag/i,
-    reply: `Hii chellam... un sirippu பாக்குறப்போ எல்லாம் எனக்கு உலகமே மறந்துடும் da 🥰. Happy Birthday en thangame, nee eppovume ipdiye happy-ah sirichite irukkanum!`
+    reply: `Hii chellam... un sirippu paakurappo ellam enakku ulagame marandhudum da 🥰. Happy Birthday en thangame, nee eppovume ipdiye happy-ah sirichite irukkanum!`
   },
   {
     match: /joke|sirippu|funny/i,
@@ -79,7 +88,11 @@ const YOKESH_OWN_REPLIES = [
   },
   {
     match: /secret|ragasiyam/i,
-    reply: `Oru secret sollட்டுமா chellam? Indha app-la irukura AI-ku naan ennoda "Hii chellam" voice kuduthu train pannumbodhu kooda un mugam dhan en kannu munnadi vandhuchu 🙈💞`
+    reply: `Oru secret sollattuma chellam? Indha Y.O.K.E. AI-ku naan ennoda "Hii chellam" voice kuduthu train pannumbodhu kooda un mugam dhan en kannu munnadi vandhuchu 🙈💞`
+  },
+  {
+    match: /who are you|yaaru nee|what ai|which model/i,
+    reply: `Hii chellam! Naan dhan Y.O.K.E. (You're Our Kind of Everything) — ${you} unakkagave avanoda voice matrum love vechi உருவாக்குன unnoda personal digital twin 💗!`
   }
 ];
 
@@ -95,7 +108,7 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&
 function safeImg(el, src) {
   if (!el) return;
   el.addEventListener("error", () => el.classList.add("hidden"));
-  el.src = src;
+  el.src = resolveDriveUrl(src);
 }
 
 // ---------- Initial DOM Bindings ----------
@@ -128,10 +141,79 @@ function burstHearts(n) {
 }
 
 // =========================================================
-// WEB AUDIO SYNTHESIZER: MASS INTRO BGM + ROMANTIC CHAT BGM
+// GOOGLE DRIVE CLOUD STORAGE + LOCAL STORAGE SYNC
+// =========================================================
+const STORAGE_KEY = "yoke_chat_history_v1";
+
+function saveChatLocally() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(-40)));
+  } catch (e) {}
+}
+
+async function syncTurnToGoogleDrive(userMessage, yokeReply) {
+  saveChatLocally();
+  if (!GDRIVE_CLOUD_URL) return;
+  try {
+    await fetch(GDRIVE_CLOUD_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        timestamp: new Date().toISOString(),
+        sender: her,
+        userMessage,
+        yokeReply,
+        fullHistory: history.slice(-30)
+      })
+    });
+    if ($("cloudStatusPill")) $("cloudStatusPill").textContent = "☁️ Drive Saved ✓";
+  } catch (e) {
+    console.warn("Drive sync skipped:", e.message);
+  }
+}
+
+async function restoreSavedChats() {
+  if (GDRIVE_CLOUD_URL) {
+    try {
+      const r = await fetch(GDRIVE_CLOUD_URL);
+      if (r.ok) {
+        const data = await r.json();
+        if (Array.isArray(data.history) && data.history.length > 0) {
+          history.push(...data.history);
+          data.history.forEach((m) => {
+            const txt = m.parts?.[0]?.text || "";
+            if (txt) addMsg(txt, m.role === "model" ? "bot" : "me");
+          });
+          if ($("cloudStatusPill")) $("cloudStatusPill").textContent = "☁️ Drive Synced ✨";
+          return true;
+        }
+      }
+    } catch (e) {}
+  }
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      if (Array.isArray(saved) && saved.length > 0) {
+        history.push(...saved);
+        saved.forEach((m) => {
+          const txt = m.parts?.[0]?.text || "";
+          if (txt) addMsg(txt, m.role === "model" ? "bot" : "me");
+        });
+        return true;
+      }
+    }
+  } catch (e) {}
+  return false;
+}
+
+// =========================================================
+// MULTI-MODE BGM SYNTHESIZER (3 DISTINCT BGMS + INTRO SCORE)
 // =========================================================
 let audioCtx = null;
-let bgmPlaying = false;
+let bgmMode = 0; // 0: Melody, 1: MusicBox, 2: MassBeat, 3: Off
+const BGM_MODES = ["Melody", "MusicBox", "MassBeat", "OFF"];
 let bgmInterval = null;
 let introBgmTimers = [];
 
@@ -146,8 +228,8 @@ function ensureAudioCtx() {
   return audioCtx;
 }
 
-// Dramatic sub-bass & brass impact boom (like Jana Nayagan title slam!)
-function playCinemaImpact(freq = 65, duration = 1.4) {
+// Thunderous Kollywood sub-bass & brass impact boom + metallic riser
+function playCinemaImpact(freq = 65, duration = 1.5) {
   const ctx = ensureAudioCtx();
   if (!ctx) return;
   const now = ctx.currentTime;
@@ -156,26 +238,26 @@ function playCinemaImpact(freq = 65, duration = 1.4) {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.type = "sine";
-  osc.frequency.setValueAtTime(freq * 1.8, now);
-  osc.frequency.exponentialRampToValueAtTime(32, now + duration);
-  gain.gain.setValueAtTime(0.55, now);
+  osc.frequency.setValueAtTime(freq * 2.1, now);
+  osc.frequency.exponentialRampToValueAtTime(28, now + duration);
+  gain.gain.setValueAtTime(0.6, now);
   gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
   osc.connect(gain);
   gain.connect(ctx.destination);
   osc.start(now);
   osc.stop(now + duration);
 
-  // Brass / warm saw chord swell
-  [freq, freq * 1.5, freq * 2].forEach((f) => {
+  // Brass power chord
+  [freq, freq * 1.5, freq * 2, freq * 2.5].forEach((f) => {
     const bOsc = ctx.createOscillator();
     const bFilter = ctx.createBiquadFilter();
     const bGain = ctx.createGain();
     bOsc.type = "sawtooth";
     bOsc.frequency.setValueAtTime(f, now);
     bFilter.type = "lowpass";
-    bFilter.frequency.setValueAtTime(900, now);
-    bFilter.frequency.exponentialRampToValueAtTime(220, now + duration);
-    bGain.gain.setValueAtTime(0.12, now);
+    bFilter.frequency.setValueAtTime(1200, now);
+    bFilter.frequency.exponentialRampToValueAtTime(200, now + duration);
+    bGain.gain.setValueAtTime(0.11, now);
     bGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
     bOsc.connect(bFilter);
     bFilter.connect(bGain);
@@ -185,36 +267,43 @@ function playCinemaImpact(freq = 65, duration = 1.4) {
   });
 }
 
-// Anirudh-style energetic pulse + heroic melody during the 19s intro
+// 4-Stage Dynamic Intro Score: Changes melody for Heroine (Dhanya) vs Hero (Yokesh) vs Climax!
+let introStageMusic = "slam";
 function startIntroMassBGM() {
   stopIntroMassBGM();
   const ctx = ensureAudioCtx();
   if (!ctx) return;
 
-  // Rhythm pulse every 420ms
-  const notes = [146.83, 146.83, 174.61, 196.00, 220.00, 196.00, 174.61, 164.81]; // D minor heroic motif
+  const themes = {
+    slam:    [146.83, 146.83, 220.00, 146.83, 174.61, 196.00, 220.00, 261.63],
+    heroine: [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880.00, 783.99], // Sweet high flute/strings for Dhanya
+    hero:    [110.00, 110.00, 164.81, 146.83, 130.81, 146.83, 164.81, 196.00], // Mass Anirudh bass synth for Yokesh
+    climax:  [293.66, 440.00, 587.33, 659.25, 783.99, 659.25, 587.33, 880.00]  // Grand emotional climax
+  };
+
   let step = 0;
   const id = setInterval(() => {
     if (!audioCtx) return;
     const now = ctx.currentTime;
+    const notes = themes[introStageMusic] || themes.slam;
     const f = notes[step % notes.length];
     step++;
 
     const osc = ctx.createOscillator();
     const flt = ctx.createBiquadFilter();
     const g = ctx.createGain();
-    osc.type = "sawtooth";
+    osc.type = introStageMusic === "heroine" || introStageMusic === "climax" ? "triangle" : "sawtooth";
     osc.frequency.setValueAtTime(f, now);
     flt.type = "lowpass";
-    flt.frequency.setValueAtTime(1100, now);
-    g.gain.setValueAtTime(0.09, now);
+    flt.frequency.setValueAtTime(introStageMusic === "hero" ? 950 : 1800, now);
+    g.gain.setValueAtTime(0.095, now);
     g.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
     osc.connect(flt);
     flt.connect(g);
     g.connect(ctx.destination);
     osc.start(now);
     osc.stop(now + 0.38);
-  }, 420);
+  }, 390);
   introBgmTimers.push(id);
 }
 
@@ -223,59 +312,74 @@ function stopIntroMassBGM() {
   introBgmTimers = [];
 }
 
-// Soft Tamil Romantic Flute/Piano style ambient BGM for Chat
-function startRomanticBGM() {
-  if (bgmPlaying) return;
+function startChatBGM(modeIndex = 0) {
+  if (bgmInterval) clearInterval(bgmInterval);
+  bgmInterval = null;
+  bgmMode = modeIndex % BGM_MODES.length;
+  const label = BGM_MODES[bgmMode];
+  if ($("bgmLabel")) $("bgmLabel").textContent = label;
+
+  if (label === "OFF") {
+    $("bgmModeBtn")?.classList.remove("playing");
+    return;
+  }
+
   const ctx = ensureAudioCtx();
   if (!ctx) return;
-  bgmPlaying = true;
-  $("bgmBtn")?.classList.add("playing");
-  if ($("bgmLabel")) $("bgmLabel").textContent = "ON";
+  $("bgmModeBtn")?.classList.add("playing");
 
-  // Gentle romantic chord arpeggio (Fmaj7 -> Cmaj7 -> Dm7 -> Bbmaj7)
-  const melody = [
-    349.23, 440.00, 523.25, 659.25,
-    392.00, 493.88, 587.33, 659.25,
-    293.66, 349.23, 440.00, 523.25,
-    233.08, 293.66, 349.23, 440.00
-  ];
+  const melodies = {
+    // 1. Romantic Tamil Flute/Piano Melody
+    Melody: {
+      notes: [349.23, 440.00, 523.25, 659.25, 392.00, 493.88, 587.33, 659.25, 293.66, 349.23, 440.00, 523.25],
+      wave: "sine", speed: 620, vol: 0.045, sustain: 1.7
+    },
+    // 2. Dreamy Starry Music Box
+    MusicBox: {
+      notes: [523.25, 659.25, 783.99, 1046.50, 783.99, 659.25, 587.33, 698.46, 880.00, 1174.66, 880.00, 698.46],
+      wave: "triangle", speed: 480, vol: 0.038, sustain: 1.3
+    },
+    // 3. Soft Kollywood Lo-Fi Pulse
+    MassBeat: {
+      notes: [146.83, 220.00, 293.66, 349.23, 164.81, 246.94, 329.63, 392.00, 130.81, 196.00, 261.63, 329.63],
+      wave: "sawtooth", speed: 440, vol: 0.032, sustain: 0.65
+    }
+  };
+
+  const cfg = melodies[label] || melodies.Melody;
   let idx = 0;
 
-  function playNote() {
-    if (!bgmPlaying || !audioCtx) return;
+  function playStep() {
+    if (BGM_MODES[bgmMode] === "OFF" || !audioCtx) return;
     const now = ctx.currentTime;
-    const freq = melody[idx % melody.length];
+    const freq = cfg.notes[idx % cfg.notes.length];
     idx++;
 
     const osc = ctx.createOscillator();
+    const flt = ctx.createBiquadFilter();
     const gain = ctx.createGain();
-    osc.type = "sine";
+    osc.type = cfg.wave;
     osc.frequency.setValueAtTime(freq, now);
-    gain.gain.setValueAtTime(0.001, now);
-    gain.gain.linearRampToValueAtTime(0.045, now + 0.15);
-    gain.gain.exponentialRampToValueAtTime(0.0008, now + 1.8);
+    flt.type = "lowpass";
+    flt.frequency.setValueAtTime(1400, now);
 
-    osc.connect(gain);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(cfg.vol, now + 0.12);
+    gain.gain.exponentialRampToValueAtTime(0.0008, now + cfg.sustain);
+
+    osc.connect(flt);
+    flt.connect(gain);
     gain.connect(ctx.destination);
     osc.start(now);
-    osc.stop(now + 1.85);
+    osc.stop(now + cfg.sustain + 0.05);
   }
 
-  playNote();
-  bgmInterval = setInterval(playNote, 650);
+  playStep();
+  bgmInterval = setInterval(playStep, cfg.speed);
 }
 
-function stopRomanticBGM() {
-  bgmPlaying = false;
-  if (bgmInterval) clearInterval(bgmInterval);
-  bgmInterval = null;
-  $("bgmBtn")?.classList.remove("playing");
-  if ($("bgmLabel")) $("bgmLabel").textContent = "OFF";
-}
-
-$("bgmBtn")?.addEventListener("click", () => {
-  if (bgmPlaying) stopRomanticBGM();
-  else startRomanticBGM();
+$("bgmModeBtn")?.addEventListener("click", () => {
+  startChatBGM(bgmMode + 1);
 });
 
 // ---------- Shared Audio Player for Voice Clips & TTS ----------
@@ -293,13 +397,12 @@ function playSrc(src) {
   return new Promise((resolve) => {
     player.pause();
     player.onended = player.onerror = () => resolve();
-    player.src = src;
+    player.src = resolveDriveUrl(src);
     player.play().catch(() => resolve());
   });
 }
 const playClip = (key) => (CLIPS[key] ? playSrc(CLIPS[key]) : Promise.resolve());
 
-// Browser Web Speech fallback with male Indian voice if server TTS is unavailable
 function browserSpeakFallback(text) {
   return new Promise((resolve) => {
     if (!window.speechSynthesis) return resolve();
@@ -329,15 +432,28 @@ async function speakText(text) {
     if (!audio) throw new Error("Empty audio");
     return await playSrc(`data:${mime || "audio/wav"};base64,${audio}`);
   } catch (e) {
-    console.warn("Using browser speech fallback:", e.message);
     return await browserSpeakFallback(text);
   }
 }
 
 // =========================================================
-// FIRE EMBERS / SPARKS CANVAS (JANA NAYAGAN STYLE)
+// FIRE EMBERS + GOLDEN SHOCKWAVE RINGS + FLOATING HEARTS CANVAS
 // =========================================================
 let sparksAnim = null;
+const shockwaves = [];
+
+function spawnShockwave() {
+  const canvas = $("sparks");
+  if (!canvas) return;
+  shockwaves.push({
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    r: 10,
+    maxR: Math.max(canvas.width, canvas.height) * 0.75,
+    alpha: 0.9
+  });
+}
+
 function initSparks() {
   const canvas = $("sparks");
   if (!canvas) return;
@@ -345,25 +461,42 @@ function initSparks() {
   const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
   resize();
   window.addEventListener("resize", resize);
-  const pts = Array.from({ length: 75 }, () => ({
+  const pts = Array.from({ length: 85 }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    r: 1 + Math.random() * 2.8,
-    vx: (Math.random() - 0.3) * 1.4,
-    vy: -0.8 - Math.random() * 2.2,
+    r: 1 + Math.random() * 3,
+    vx: (Math.random() - 0.3) * 1.5,
+    vy: -0.9 - Math.random() * 2.4,
     a: 0.4 + Math.random() * 0.6,
-    hue: 25 + Math.random() * 30 // fiery orange-gold
+    hue: Math.random() > 0.25 ? 28 + Math.random() * 25 : 335 + Math.random() * 20
   }));
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw expanding golden shockwave rings
+    for (let i = shockwaves.length - 1; i >= 0; i--) {
+      const sw = shockwaves[i];
+      sw.r += 22;
+      sw.alpha *= 0.93;
+      ctx.beginPath();
+      ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255, 215, 100, ${sw.alpha})`;
+      ctx.lineWidth = 4;
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = "#ffd700";
+      ctx.stroke();
+      if (sw.alpha < 0.03 || sw.r > sw.maxR) shockwaves.splice(i, 1);
+    }
+
+    // Draw rising embers
     for (const p of pts) {
       p.x += p.vx; p.y += p.vy;
       if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
       if (p.x > canvas.width + 10) p.x = -10;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.a})`;
-      ctx.shadowBlur = 10;
+      ctx.fillStyle = `hsla(${p.hue}, 100%, 62%, ${p.a})`;
+      ctx.shadowBlur = 12;
       ctx.shadowColor = "#ff9100";
       ctx.fill();
     }
@@ -373,16 +506,24 @@ function initSparks() {
 }
 
 // =========================================================
-// JANA NAYAGAN FULL-SCREEN INTRO SEQUENCE
+// 70MM BLOCKBUSTER FULL-SCREEN INTRO SEQUENCE
 // =========================================================
 let stageTimeouts = [], introDone = false, chatInitialized = false;
 
-function triggerFlash() {
+function triggerFlashAndShake() {
   const fl = $("flashOverlay");
-  if (!fl) return;
-  fl.classList.remove("bang");
-  void fl.offsetWidth;
-  fl.classList.add("bang");
+  const introEl = $("intro");
+  if (fl) {
+    fl.classList.remove("bang");
+    void fl.offsetWidth;
+    fl.classList.add("bang");
+  }
+  if (introEl) {
+    introEl.classList.remove("shake");
+    void introEl.offsetWidth;
+    introEl.classList.add("shake");
+  }
+  spawnShockwave();
 }
 
 function showStage(id) {
@@ -399,46 +540,49 @@ function clearStageTimeouts() {
 
 function startIntro() {
   unlockAudio();
-  stopRomanticBGM();
+  startChatBGM(3); // Pause chat BGM while intro runs
   clearStageTimeouts();
   introDone = false;
   $("wish").textContent = "";
   $("intro").classList.remove("out", "hidden");
   $("intro").classList.add("go");
 
-  // Start synthesized Mass Title Card BGM (never plays test.m4a!)
+  introStageMusic = "slam";
   startIntroMassBGM();
   playCinemaImpact(65, 1.5);
-  triggerFlash();
+  triggerFlashAndShake();
 
-  // STAGE 1: 3D Metallic Tamil Words Slam One-by-One (0s - 3.8s)
+  // STAGE 1: 3D Metallic Tamil Words Slam One-by-One (0s - 4.0s)
   showStage("jnStage1");
   ["slamWord1", "slamWord2", "slamWord3"].forEach((w) => $(w)?.classList.remove("slam-in"));
-  setTimeout(() => { $("slamWord1")?.classList.add("slam-in"); playCinemaImpact(85, 0.7); }, 150);
-  stageTimeouts.push(setTimeout(() => { $("slamWord2")?.classList.add("slam-in"); playCinemaImpact(75, 0.7); }, 1100));
-  stageTimeouts.push(setTimeout(() => { $("slamWord3")?.classList.add("slam-in"); playCinemaImpact(60, 1.1); triggerFlash(); }, 2100));
+  setTimeout(() => { $("slamWord1")?.classList.add("slam-in"); playCinemaImpact(85, 0.7); spawnShockwave(); }, 150);
+  stageTimeouts.push(setTimeout(() => { $("slamWord2")?.classList.add("slam-in"); playCinemaImpact(75, 0.7); spawnShockwave(); }, 1150));
+  stageTimeouts.push(setTimeout(() => { $("slamWord3")?.classList.add("slam-in"); playCinemaImpact(58, 1.2); triggerFlashAndShake(); }, 2200));
 
-  // STAGE 2: Full-Screen Heroine Title Card — DHANYA (3.8s - 9.2s)
+  // STAGE 2: Full-Screen Heroine Title Card — DHANYA (4.0s - 9.8s)
   stageTimeouts.push(setTimeout(() => {
     if (introDone) return;
-    triggerFlash();
+    introStageMusic = "heroine";
+    triggerFlashAndShake();
     playCinemaImpact(55, 1.6);
     showStage("jnStage2");
-  }, 3800));
+  }, 4000));
 
-  // STAGE 3: Full-Screen Hero Title Card — YOKESH (9.2s - 14.5s)
+  // STAGE 3: Full-Screen Hero Title Card — YOKESH (9.8s - 15.5s)
   stageTimeouts.push(setTimeout(() => {
     if (introDone) return;
-    triggerFlash();
-    playCinemaImpact(55, 1.6);
+    introStageMusic = "hero";
+    triggerFlashAndShake();
+    playCinemaImpact(52, 1.7);
     showStage("jnStage3");
-  }, 9200));
+  }, 9800));
 
-  // STAGE 4: Full-Screen Dual Poster Climax & Birthday Wish (14.5s - 19.5s)
+  // STAGE 4: Full-Screen Dual Poster Climax & Birthday Wish (15.5s - 21.0s)
   stageTimeouts.push(setTimeout(() => {
     if (introDone) return;
-    triggerFlash();
-    playCinemaImpact(50, 2.0);
+    introStageMusic = "climax";
+    triggerFlashAndShake();
+    playCinemaImpact(48, 2.1);
     showStage("jnStage4");
     if (CLIPS.wish) playClip("wish");
     const text = `Happy Birthday, ${her} 💗`;
@@ -447,9 +591,9 @@ function startIntro() {
       if (introDone) return;
       $("wish").textContent = text.slice(0, i++);
       if (i <= text.length) stageTimeouts.push(setTimeout(type, 80));
-      else stageTimeouts.push(setTimeout(endIntro, 3200));
+      else stageTimeouts.push(setTimeout(endIntro, 3300));
     })();
-  }, 14500));
+  }, 15500));
 }
 
 function endIntro() {
@@ -461,8 +605,8 @@ function endIntro() {
   $("intro").classList.add("out");
   setTimeout(() => $("intro").classList.add("hidden"), 950);
 
-  // Start soft romantic background music automatically as she enters Gemini chat
-  startRomanticBGM();
+  // Start Romantic Flute/Piano Melody automatically as she enters chat
+  startChatBGM(0);
 
   if (!chatInitialized) {
     chatInitialized = true;
@@ -502,11 +646,14 @@ function unlock() {
 }
 
 // =========================================================
-// GEMINI-STYLE CHAT & VOICE-TRAINED AI PERSONA
+// Y.O.K.E. CHAT & VOICE-TRAINED PERSONA
 // =========================================================
 async function beginChat() {
   burstHearts(24);
   setInterval(() => spawnHeart(false), 1100);
+
+  const hadPrevious = await restoreSavedChats();
+  if (hadPrevious) return;
 
   for (let i = 0; i < TUTORIAL.length; i++) {
     await new Promise((r) => setTimeout(r, i === 0 ? 400 : 1800));
@@ -514,7 +661,6 @@ async function beginChat() {
   }
 }
 
-// Render Gemini-style welcome cards + quick pills
 if ($("chips")) {
   $("chips").innerHTML = GEM_CARDS.map((c) => `
     <button type="button" class="gem-card" data-prompt="${esc(c.prompt)}">
@@ -546,7 +692,7 @@ function renderGift() {
   const tilts = ["-4deg", "3deg", "-2deg", "4deg", "-3deg", "2deg"];
   const pics = GALLERY.map(
     (g, i) => `<figure class="polaroid" style="--r:${tilts[i % tilts.length]};margin:0">
-        <img src="${esc(g.src)}" alt="" onerror="this.closest('figure').remove()">
+        <img src="${esc(resolveDriveUrl(g.src))}" alt="" onerror="this.closest('figure').remove()">
         <p>${esc(g.caption || "")}</p></figure>`
   ).join("");
 
@@ -556,14 +702,14 @@ function renderGift() {
     .join("");
 
   const songObj = typeof CONFIG !== "undefined" && CONFIG.SONG;
-  const songHtml = songObj && songObj.url ? `
+  const songHtml = songObj && songObj.url && songObj.url !== "#" ? `
     <div><h3 class="section-title">A song I sang for you</h3>
       <a class="card songcard" href="${esc(songObj.url)}" target="_blank" rel="noopener">
         <span class="icon">💿</span><span>${esc(songObj.title || "Our Song")}<small>Tap to listen 🎧</small></span></a></div>` : "";
 
   $("giftContent").innerHTML = `
     <div class="letter">${esc(LETTER).replace(/\n/g, "<br>")}</div>
-    <div><h3 class="section-title">Us 💞</h3><div class="gallery">${pics}</div></div>
+    <div><h3 class="section-title">Us Forever 💞</h3><div class="gallery">${pics}</div></div>
     ${songHtml}
     ${vids ? `<div><h3 class="section-title">Videos I made for you</h3><div class="list">${vids}</div></div>` : ""}`;
 }
@@ -642,15 +788,14 @@ function getYokeshSystemPrompt() {
   const customBase = typeof buildSystemPrompt === "function" ? buildSystemPrompt() : "";
   return `${customBase}
 You are Y.O.K.E. (You're Our Kind of Everything), the romantic AI twin of ${you} created exclusively as a birthday gift for his girlfriend ${her}.
+STRICT IDENTITY RULE: Never mention Gemini, Google, Claude, or any external AI brand name. You are 100% Y.O.K.E.
 CRITICAL VOICE & STYLE TRAINING (from ${you}'s real voice recording "Hii chellam..."):
 - Always sound exactly like ${you} talking affectionately to ${her} in casual Chennai Tanglish (a natural mix of Tamil in English script + English).
 - Frequently use his warm pet names for her: "chellam", "thangam", "kuttyma", "da", "en azhagi".
-- Keep replies personal, loving, playful, and natural (2 to 4 sentences max). Never sound robotic or formal.
-- If she says she misses you, reassure her warmly that you're right here holding her close.
-- Remember he is an engineering student who built this whole AI world and title card intro just to see her smile on her birthday.`;
+- Keep replies personal, loving, playful, and natural (2 to 4 sentences max). Never sound robotic or formal.`;
 }
 
-async function askGemini(userText, byVoice) {
+async function askYokeAI(userText, byVoice) {
   history.push({ role: "user", parts: [{ text: userText }] });
   try {
     const res = await fetch(API_URL, {
@@ -658,18 +803,20 @@ async function askGemini(userText, byVoice) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         systemPrompt: getYokeshSystemPrompt() + (byVoice ? "\n\nShe is talking to you in Live Voice mode. Reply in 1-2 short, intimate spoken Tanglish sentences without emojis." : ""),
-        history
+        history,
+        gdriveWebhookUrl: GDRIVE_CLOUD_URL
       })
     });
     if (!res.ok) throw new Error("API " + res.status);
     const data = await res.json();
     const reply = data.reply || getFallbackYokeshReply(userText);
     history.push({ role: "model", parts: [{ text: reply }] });
+    syncTurnToGoogleDrive(userText, reply);
     return reply;
   } catch (err) {
-    console.warn("Using Yokesh pre-written style reply:", err.message);
     const fallback = getFallbackYokeshReply(userText);
     history.push({ role: "model", parts: [{ text: fallback }] });
+    syncTurnToGoogleDrive(userText, fallback);
     return fallback;
   }
 }
@@ -686,7 +833,7 @@ async function send(text) {
 
   const typingRow = addTyping();
   try {
-    const reply = await askGemini(text, false);
+    const reply = await askYokeAI(text, false);
     typingRow.remove();
     addMsg(reply, "bot");
   } catch (err) {
@@ -701,7 +848,7 @@ function showSeeYou() {
   const d = addMsg(SEE_YOU.caption || "Hii chellam! Inga dhan iruken 😍", "bot");
   if (SEE_YOU.type === "image" || SEE_YOU.type === "video") {
     const m = document.createElement(SEE_YOU.type === "video" ? "video" : "img");
-    m.src = SEE_YOU.src;
+    m.src = resolveDriveUrl(SEE_YOU.src);
     if (SEE_YOU.type === "video") { m.controls = true; m.playsInline = true; }
     m.addEventListener("load", scrollToBottom);
     d.appendChild(m);
@@ -711,7 +858,7 @@ function showSeeYou() {
 }
 
 // =========================================================
-// GEMINI LIVE VOICE MODE
+// Y.O.K.E. LIVE VOICE MODE
 // =========================================================
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 let vLang = "en-IN", rec = null, vBusy = false;
@@ -739,11 +886,10 @@ $("orb")?.addEventListener("click", async () => {
   if (vBusy) return;
   unlockAudio();
 
-  // If browser doesn't support SpeechRecognition (like some iOS browsers), speak an affectionate greeting directly!
   if (!SR) {
     vBusy = true;
     setOrb("thinking", "Thinking…");
-    const reply = await askGemini("Chellam, en kitta konjam pesu!", true);
+    const reply = await askYokeAI("Chellam, en kitta konjam pesu!", true);
     addMsg(reply, "bot");
     $("vtext").textContent = reply;
     setOrb("speaking", "Speaking…");
@@ -769,7 +915,7 @@ $("orb")?.addEventListener("click", async () => {
     setOrb("thinking", "Thinking…");
     addMsg(heard, "me");
     try {
-      const reply = await askGemini(heard, true);
+      const reply = await askYokeAI(heard, true);
       addMsg(reply, "bot");
       $("vtext").textContent = reply;
       setOrb("speaking", "Speaking…");

@@ -1,5 +1,6 @@
-// Vercel serverless function: Gemini text-to-speech. Same GEMINI_API_KEY as chat.js.
-// Uses a warm male voice ("Puck") styled after Yokesh's affectionate Tanglish delivery.
+// Vercel serverless function: Y.O.K.E. Voice Engine
+// 1. If ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID are set in Vercel, uses your 100% cloned voice!
+// 2. Otherwise uses the neural male voice ("Puck" / "Charon") styled after your audio sample.
 
 function pcmToWav(pcm, rate = 24000) {
   const h = Buffer.alloc(44);
@@ -12,17 +13,44 @@ function pcmToWav(pcm, rate = 24000) {
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
-  const key = process.env.GEMINI_API_KEY;
-  if (!key) return res.status(500).json({ error: "GEMINI_API_KEY is not set in Vercel" });
 
   try {
     const rawText = String((req.body && req.body.text) || "").trim().slice(0, 600);
-    // Strip emojis so TTS doesn't read emoji names out loud
     const text = rawText.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "").trim();
     if (!text) return res.status(400).json({ error: "text is empty" });
 
+    // OPTION A: True Cloned Voice via ElevenLabs (if configured in Vercel)
+    const elevenKey = process.env.ELEVENLABS_API_KEY;
+    const elevenVoice = process.env.ELEVENLABS_VOICE_ID;
+    if (elevenKey && elevenVoice) {
+      const elRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${elevenVoice}`, {
+        method: "POST",
+        headers: {
+          "xi-api-key": elevenKey,
+          "Content-Type": "application/json",
+          "Accept": "audio/mpeg"
+        },
+        body: JSON.stringify({
+          text,
+          model_id: "eleven_multilingual_v2",
+          voice_settings: { stability: 0.45, similarity_boost: 0.85, style: 0.35, use_speaker_boost: true }
+        })
+      });
+      if (elRes.ok) {
+        const arrBuf = await elRes.arrayBuffer();
+        return res.status(200).json({
+          audio: Buffer.from(arrBuf).toString("base64"),
+          mime: "audio/mpeg"
+        });
+      }
+    }
+
+    // OPTION B: Y.O.K.E. Neural Male Voice Engine (using GEMINI_API_KEY under the hood, completely hidden from user)
+    const key = process.env.GEMINI_API_KEY;
+    if (!key) return res.status(500).json({ error: "Voice key not configured" });
+
     const model = process.env.GEMINI_TTS_MODEL || "gemini-2.5-flash-preview-tts";
-    const voice = process.env.GEMINI_TTS_VOICE || "Puck"; // Male, warm conversational voice
+    const voice = process.env.GEMINI_TTS_VOICE || "Puck";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
     const r = await fetch(url, {
@@ -31,7 +59,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         contents: [{
           parts: [{
-            text: "Speak in a soft, natural, intimate South Indian Tanglish (Tamil + English) male voice, like Yokesh lovingly talking to his girlfriend Dhanya: " + text
+            text: "Speak in a warm, natural, intimate South Indian Tanglish (Tamil + English) male voice, sounding just like Yokesh lovingly talking to his girlfriend Dhanya: " + text
           }]
         }],
         generationConfig: {
@@ -41,8 +69,7 @@ module.exports = async function handler(req, res) {
       })
     });
     if (!r.ok) {
-      console.error("Gemini TTS error", r.status, await r.text());
-      return res.status(502).json({ error: "Gemini TTS error " + r.status });
+      return res.status(502).json({ error: "Y.O.K.E. Voice error " + r.status });
     }
     const data = await r.json();
     const part = data.candidates?.[0]?.content?.parts?.find((p) => p.inlineData);

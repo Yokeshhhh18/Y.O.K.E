@@ -6,11 +6,12 @@
   --yellow: #ffd166;
   --ink: #3b2f3a;
   --gold: #ffd700;
-  --gold-deep: #d4af37;
-  --gem-bg: #130912;
-  --gem-surface: #1e0f1c;
-  --gem-card: rgba(45, 20, 40, 0.72);
-  --gem-border: rgba(255, 140, 185, 0.22);
+  --gold-bright: #fff3b0;
+  --gold-deep: #b87300;
+  --gem-bg: #120610;
+  --gem-surface: #1e0b1b;
+  --gem-card: rgba(48, 16, 42, 0.78);
+  --gem-border: rgba(255, 165, 205, 0.26);
 }
 * { box-sizing: border-box; }
 html, body {
@@ -27,62 +28,82 @@ html, body {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; padding: 24px; gap: 8px;
 }
-.screen h1 { font-size: 3rem; margin: 0; color: var(--pink); letter-spacing: 6px; }
-.tag { margin: 0 0 12px; }
+.screen h1 { font-family: "Cinzel Decorative", serif; font-size: 3.2rem; margin: 0; color: var(--pink); letter-spacing: 6px; }
+.tag { margin: 0 0 12px; font-weight: 600; }
 #countdown { font-size: 1.6rem; font-weight: bold; background: var(--yellow); padding: 10px 20px; border-radius: 16px; border: 3px solid var(--ink); }
 .cartoon { max-width: 260px; width: 70%; border: 4px solid var(--ink); border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); background: #fff; }
 .cartoon[src=""], .cartoon:not([src]) { display: none; }
 
-/* ---------- UNLOCKED: GEMINI ROMANTIC DARK THEME ---------- */
+/* ---------- UNLOCKED: ROMANTIC ROYAL DARK THEME ---------- */
 body.unlocked {
-  background: radial-gradient(circle at 20% 10%, #2e0f25 0%, #140711 55%, #090308 100%) fixed;
+  background: radial-gradient(circle at 20% 10%, #340d2a 0%, #150613 55%, #080207 100%) fixed;
   color: #fceef5;
 }
 
 .heart {
   position: fixed; bottom: -50px; z-index: 0; pointer-events: none;
-  animation: rise linear forwards; opacity: .75;
+  animation: rise linear forwards; opacity: .8;
 }
 @keyframes rise {
   0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10%  { opacity: .8; }
+  10%  { opacity: .85; }
   100% { transform: translateY(-115vh) rotate(25deg); opacity: 0; }
 }
 
 /* =========================================================
-   JANA NAYAGAN STYLE FULL-SCREEN TITLE CARD INTRO
+   70MM KOLLYWOOD BLOCKBUSTER TITLE CARD INTRO (v7)
    ========================================================= */
 #intro {
   position: fixed; inset: 0; z-index: 100; overflow: hidden;
-  background: #040102;
+  background: radial-gradient(circle at 50% 40%, #1c0510 0%, #050103 75%, #000 100%);
   display: flex; align-items: center; justify-content: center;
   color: #fff; transition: opacity 1s ease;
 }
 #intro.out { opacity: 0; pointer-events: none; }
+#intro.shake { animation: cameraShake 0.42s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes cameraShake {
+  10%, 90% { transform: translate3d(-4px, 2px, 0) scale(1.01); }
+  20%, 80% { transform: translate3d(6px, -3px, 0) scale(1.015); }
+  30%, 50%, 70% { transform: translate3d(-8px, 4px, 0) scale(1.02); }
+  40%, 60% { transform: translate3d(8px, -4px, 0) scale(1.015); }
+}
+
+/* Volumetric Golden God-Rays */
+.god-rays {
+  position: absolute; inset: -40%; z-index: 2; pointer-events: none;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 200, 60, 0.07) 0deg 12deg,
+    transparent 12deg 28deg
+  );
+  animation: rotateRays 28s linear infinite;
+}
+@keyframes rotateRays { to { transform: rotate(360deg); } }
 
 #sparks {
   position: absolute; inset: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none;
 }
 .vignette {
   position: absolute; inset: 0; z-index: 4; pointer-events: none;
-  background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+  background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,0.88) 100%);
+  box-shadow: inset 0 0 90px #000;
 }
 .flash-overlay {
-  position: absolute; inset: 0; z-index: 20; pointer-events: none;
-  background: radial-gradient(circle, rgba(255, 220, 130, 0.9), rgba(255, 100, 50, 0.4), transparent);
+  position: absolute; inset: 0; z-index: 25; pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 240, 180, 0.95), rgba(255, 140, 40, 0.5), transparent);
   opacity: 0;
 }
 .flash-overlay.bang { animation: flashBang 0.65s ease-out forwards; }
 @keyframes flashBang {
-  0%   { opacity: 0.95; }
+  0%   { opacity: 1; }
   100% { opacity: 0; }
 }
 
 #skip {
-  position: absolute; right: 20px; top: 20px; z-index: 30;
-  background: rgba(0, 0, 0, 0.65); border: 1.5px solid var(--gold);
-  color: var(--gold); padding: 8px 16px; border-radius: 999px;
-  font: 700 0.8rem "Plus Jakarta Sans", sans-serif; letter-spacing: 1.5px;
+  position: absolute; right: 20px; top: 20px; z-index: 35;
+  background: rgba(0, 0, 0, 0.7); border: 1.5px solid var(--gold);
+  color: var(--gold); padding: 8px 18px; border-radius: 999px;
+  font: 800 0.8rem "Plus Jakarta Sans", sans-serif; letter-spacing: 2px;
   cursor: pointer; display: none; backdrop-filter: blur(8px);
 }
 #intro.go #skip { display: block; }
@@ -96,141 +117,154 @@ body.unlocked {
 
 /* Gate Screen */
 .jn-cert {
-  font-family: "Cinzel", serif; font-size: 0.78rem; letter-spacing: 3px;
-  color: var(--gold); border: 1px solid var(--gold); padding: 5px 14px;
-  border-radius: 4px; margin-bottom: 18px; background: rgba(255, 215, 0, 0.08);
+  font-family: "Bebas Neue", sans-serif; font-size: 1rem; letter-spacing: 4px;
+  color: var(--gold); border: 1.5px solid var(--gold); padding: 5px 16px;
+  border-radius: 6px; margin-bottom: 16px; background: rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
 }
 .jn-monogram-big {
-  font-family: "Cinzel", serif; font-size: clamp(4.5rem, 16vw, 7.5rem); font-weight: 900;
-  line-height: 1; padding: 12px 34px; border: 4px solid var(--gold);
-  background: linear-gradient(180deg, #fff8d6 0%, #ffd700 45%, #9c6b08 100%);
+  font-family: "Cinzel Decorative", serif; font-size: clamp(4.5rem, 16vw, 7.5rem); font-weight: 900;
+  line-height: 1; padding: 14px 36px; border: 4px solid var(--gold);
+  background: linear-gradient(180deg, #ffffff 0%, #ffe885 40%, #d49000 85%, #6e4000 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  box-shadow: 0 0 50px rgba(255, 215, 0, 0.35), inset 0 0 30px rgba(255, 215, 0, 0.25);
-  margin-bottom: 14px; animation: monogramRotate 4s ease-in-out infinite alternate;
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.4), inset 0 0 30px rgba(255, 215, 0, 0.25);
+  margin-bottom: 12px; animation: monogramRotate 4s ease-in-out infinite alternate;
 }
 @keyframes monogramRotate {
-  from { transform: perspective(600px) rotateY(-12deg); }
-  to   { transform: perspective(600px) rotateY(12deg); }
+  from { transform: perspective(600px) rotateY(-14deg); }
+  to   { transform: perspective(600px) rotateY(14deg); }
 }
 .jn-gate-title {
-  font-family: "Cinzel", serif; font-size: clamp(2.4rem, 9vw, 4.2rem); font-weight: 900;
+  font-family: "Cinzel Decorative", serif; font-size: clamp(2.6rem, 10vw, 4.6rem); font-weight: 900;
   margin: 0; letter-spacing: 10px; color: #fff;
-  text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+  text-shadow: 0 0 35px rgba(255, 215, 0, 0.75), 0 6px 0 #4a2500;
 }
 .jn-gate-sub {
-  font-family: "Dancing Script", cursive; font-size: 1.5rem; color: #ff9ec2; margin: 6px 0 28px;
+  font-family: "Great Vibes", cursive; font-size: clamp(1.8rem, 5vw, 2.5rem);
+  color: #ffb3d1; margin: 4px 0 8px;
+}
+.jn-gate-tamil {
+  font-family: "Kavivanar", "Noto Sans Tamil", sans-serif;
+  font-size: 1.05rem; color: var(--gold-bright); letter-spacing: 1px; margin-bottom: 24px;
 }
 #openBtn {
-  font: 800 1.05rem "Plus Jakarta Sans", sans-serif; letter-spacing: 1.5px;
-  padding: 16px 32px; border-radius: 999px; border: 2px solid var(--gold);
-  background: linear-gradient(135deg, #d81b60, #ff6f00); color: #fff; cursor: pointer;
-  box-shadow: 0 0 40px rgba(255, 160, 0, 0.6), 0 12px 30px rgba(0,0,0,0.8);
+  font: 800 1.08rem "Plus Jakarta Sans", sans-serif; letter-spacing: 2px;
+  padding: 16px 34px; border-radius: 999px; border: 2px solid var(--gold);
+  background: linear-gradient(135deg, #e91e63, #ff6f00); color: #fff; cursor: pointer;
+  box-shadow: 0 0 45px rgba(255, 160, 0, 0.7), 0 12px 30px rgba(0,0,0,0.85);
   animation: pulse 1.5s infinite;
 }
 
-/* Stage 1: 3D Tamil Words Slam (like Jana Nayagan 0:11-0:13) */
+/* Stage 1: 3D Tamil Words Slam */
+.jn-prod-badge {
+  font-family: "Bebas Neue", sans-serif; font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+  letter-spacing: 6px; color: #ffdf80; margin-bottom: 14px;
+  text-shadow: 0 0 18px rgba(255, 200, 0, 0.7);
+}
 .jn-slam-word {
-  font-family: "Noto Sans Tamil", "Cinzel", sans-serif;
-  font-size: clamp(2.4rem, 10vw, 5.5rem); font-weight: 900;
+  font-family: "Noto Sans Tamil", sans-serif;
+  font-size: clamp(2.5rem, 10.5vw, 5.8rem); font-weight: 900;
   line-height: 1.15; margin: 6px 0;
-  background: linear-gradient(180deg, #fffdf2 0%, #ffd700 50%, #b87300 90%, #5e3500 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #ffe885 45%, #d48800 85%, #5e3500 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 6px 0 #3d2000) drop-shadow(0 0 35px rgba(255, 180, 0, 0.75));
+  filter: drop-shadow(0 7px 0 #3d2000) drop-shadow(0 0 40px rgba(255, 180, 0, 0.85));
   opacity: 0; transform: scale(2.4);
 }
 .jn-slam-word.slam-in {
   animation: tamilSlam 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes tamilSlam {
-  0%   { opacity: 0; transform: scale(2.8) translateY(-20px); filter: blur(8px); }
-  70%  { opacity: 1; transform: scale(0.95); filter: blur(0); }
+  0%   { opacity: 0; transform: scale(3) translateY(-25px); filter: blur(10px); }
+  70%  { opacity: 1; transform: scale(0.94); filter: blur(0); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 .jn-sub-credit {
-  margin-top: 24px; font-family: "Cinzel", serif; font-size: 0.95rem;
-  letter-spacing: 6px; color: #ffcf70; text-transform: uppercase;
+  margin-top: 22px; font-family: "Kavivanar", "Noto Sans Tamil", serif;
+  font-size: clamp(1.15rem, 4vw, 1.6rem); color: #ffb3d1;
+  text-shadow: 0 0 20px rgba(255, 92, 138, 0.8);
 }
 
-/* Stage 2 & 3: Full-Screen Heroine & Hero Title Cards (like 0:15-0:21 in video) */
+/* Stage 2 & 3: Full-Screen Heroine & Hero Title Cards */
 .jn-fullscreen-card {
   padding: 0; display: none; position: absolute; inset: 0; overflow: hidden;
 }
 .jn-fullscreen-card.active { display: block; }
 
-/* Giant 3D Metallic Background Watermark (like "TVK" in video) */
+/* Giant 3D Metallic Background Watermark */
 .jn-bg-watermark {
-  position: absolute; left: 4%; top: 50%; transform: translateY(-55%);
-  font-family: "Cinzel", serif; font-size: clamp(6rem, 24vw, 18rem); font-weight: 900;
-  letter-spacing: 12px; line-height: 0.9; z-index: 1; pointer-events: none; user-select: none;
+  position: absolute; left: 3%; top: 44%; transform: translateY(-50%);
+  font-family: "Bebas Neue", "Cinzel Decorative", sans-serif;
+  font-size: clamp(7rem, 27vw, 21rem); font-weight: 900;
+  letter-spacing: 14px; line-height: 0.85; z-index: 1; pointer-events: none; user-select: none;
   color: transparent;
-  -webkit-text-stroke: 2px rgba(255, 200, 80, 0.16);
-  background: linear-gradient(180deg, rgba(255,215,0,0.14) 0%, rgba(120,60,0,0.04) 100%);
+  -webkit-text-stroke: 2px rgba(255, 210, 90, 0.22);
+  background: linear-gradient(180deg, rgba(255,215,0,0.18) 0%, rgba(120,60,0,0.03) 100%);
   -webkit-background-clip: text;
   animation: watermarkDrift 6s ease-out forwards;
 }
 @keyframes watermarkDrift {
-  from { transform: translateY(-55%) scale(0.92); opacity: 0; }
-  to   { transform: translateY(-55%) scale(1.04); opacity: 1; }
+  from { transform: translateY(-50%) scale(0.9); opacity: 0; }
+  to   { transform: translateY(-50%) scale(1.05); opacity: 1; }
 }
 
-/* Full-screen character portrait filling right/full screen */
 .jn-hero-cutout {
   position: absolute; top: 0; right: 0; width: 100%; height: 100%; z-index: 2;
   overflow: hidden;
 }
 .jn-hero-cutout img {
   width: 100%; height: 100%; object-fit: cover; object-position: 60% 20%;
-  filter: contrast(1.08) saturate(1.12);
-  transform: scale(1.14);
-  animation: heroSlowZoom 5.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  filter: contrast(1.1) saturate(1.15);
+  transform: scale(1.15);
+  animation: heroSlowZoom 5.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes heroSlowZoom {
-  0%   { transform: scale(1.22) translateX(4%); opacity: 0; }
-  20%  { opacity: 1; }
+  0%   { transform: scale(1.24) translateX(4%); opacity: 0; }
+  18%  { opacity: 1; }
   100% { transform: scale(1.02) translateX(0%); opacity: 1; }
 }
-/* Cinematic dark gold/fire gradient overlay so text on left/bottom pops just like Jana Nayagan */
 .jn-cutout-fade {
   position: absolute; inset: 0;
   background:
-    linear-gradient(90deg, rgba(5,1,3,0.96) 0%, rgba(5,1,3,0.78) 42%, rgba(5,1,3,0.18) 75%, rgba(5,1,3,0.4) 100%),
-    linear-gradient(0deg, rgba(5,1,3,0.96) 0%, rgba(5,1,3,0.45) 32%, transparent 65%);
+    linear-gradient(90deg, rgba(5,1,3,0.96) 0%, rgba(5,1,3,0.75) 42%, rgba(5,1,3,0.12) 74%, rgba(5,1,3,0.45) 100%),
+    linear-gradient(0deg, rgba(5,1,3,0.98) 0%, rgba(5,1,3,0.5) 34%, transparent 68%);
 }
 
 /* Left/Bottom 3D Metallic Gold Title Block */
 .jn-title-block {
-  position: absolute; left: 6%; bottom: 11%; right: 6%; z-index: 6;
-  text-align: left; max-width: 760px;
-  animation: titleBlockSlam 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s backwards;
+  position: absolute; left: 6%; bottom: 10%; right: 6%; z-index: 6;
+  text-align: left; max-width: 780px;
+  animation: titleBlockSlam 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
 }
 @keyframes titleBlockSlam {
-  from { opacity: 0; transform: translateX(-50px) scale(0.92); }
+  from { opacity: 0; transform: translateX(-55px) scale(0.9); }
   to   { opacity: 1; transform: translateX(0) scale(1); }
 }
-.jn-tamil-tag {
-  font-family: "Noto Sans Tamil", sans-serif;
-  font-size: clamp(1rem, 3.6vw, 1.65rem); font-weight: 900;
-  color: #ffcf66; letter-spacing: 1px; margin-bottom: 4px;
-  text-shadow: 0 3px 14px rgba(0,0,0,0.95), 0 0 20px rgba(255, 160, 0, 0.6);
+.jn-tamil-dialogue {
+  font-family: "Kavivanar", "Noto Sans Tamil", sans-serif;
+  font-size: clamp(1.05rem, 3.8vw, 1.65rem); font-weight: 700;
+  color: #ffe082; letter-spacing: 0.5px; margin-bottom: 8px;
+  text-shadow: 0 3px 14px rgba(0,0,0,0.95), 0 0 22px rgba(255, 160, 0, 0.7);
 }
 .jn-role-sub {
-  font-family: "Cinzel", serif; font-size: clamp(0.85rem, 2.5vw, 1.3rem);
-  font-weight: 800; letter-spacing: 5px; color: #ffffff; margin-bottom: 4px;
+  font-family: "Bebas Neue", sans-serif; font-size: clamp(1.1rem, 3.2vw, 1.6rem);
+  letter-spacing: 5px; color: #ffffff; margin-bottom: 2px;
   text-shadow: 0 2px 10px rgba(0,0,0,0.9);
 }
 .jn-massive-name {
-  font-family: "Cinzel", serif; font-size: clamp(2.8rem, 12vw, 6.2rem);
-  font-weight: 900; line-height: 1; margin: 4px 0 10px; letter-spacing: 5px;
+  font-family: "Cinzel Decorative", "Bebas Neue", serif;
+  font-size: clamp(3rem, 12.5vw, 6.6rem);
+  font-weight: 900; line-height: 1.02; margin: 2px 0 12px; letter-spacing: 6px;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #ffffff 0%, #ffe57f 35%, #ffc107 65%, #b26a00 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #fff1a8 30%, #ffc107 65%, #9e5800 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 6px 0 #3a1c00) drop-shadow(0 12px 30px rgba(255, 160, 0, 0.7));
+  filter: drop-shadow(0 7px 0 #3a1c00) drop-shadow(0 14px 34px rgba(255, 160, 0, 0.8));
 }
 .jn-English-tag {
-  display: inline-block; font-size: clamp(0.9rem, 2.8vw, 1.15rem); font-weight: 700;
-  color: #ffb8d2; background: rgba(20, 4, 12, 0.75);
-  border-left: 4px solid var(--gold); padding: 8px 16px; border-radius: 0 12px 12px 0;
-  backdrop-filter: blur(6px);
+  display: inline-block; font-family: "Cormorant Garamond", serif; font-style: italic;
+  font-size: clamp(1.1rem, 3.4vw, 1.45rem); font-weight: 700;
+  color: #ffc2d9; background: rgba(24, 4, 15, 0.82);
+  border-left: 4px solid var(--gold); padding: 8px 18px; border-radius: 0 14px 14px 0;
+  backdrop-filter: blur(8px); box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
 
 /* Stage 4: Full-screen Climax Dual Poster */
@@ -247,37 +281,38 @@ body.unlocked {
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%;
   animation: heroSlowZoom 6s ease-out forwards;
 }
-.jn-dual-img.left { border-right: 2px solid rgba(255, 215, 0, 0.5); }
+.jn-dual-img.left { border-right: 2.5px solid rgba(255, 215, 0, 0.65); }
 .jn-dual-gradient {
   position: absolute; inset: 0;
-  background: linear-gradient(0deg, rgba(5,1,3,0.98) 0%, rgba(5,1,3,0.72) 42%, rgba(5,1,3,0.25) 100%);
+  background: linear-gradient(0deg, rgba(5,1,3,0.98) 0%, rgba(5,1,3,0.75) 42%, rgba(5,1,3,0.22) 100%);
 }
 .jn-climax-text {
-  position: absolute; bottom: 10%; left: 5%; right: 5%; z-index: 8;
+  position: absolute; bottom: 9%; left: 5%; right: 5%; z-index: 8;
   text-align: center; display: flex; flex-direction: column; align-items: center;
 }
+.climax-quote { font-size: clamp(1.2rem, 4.5vw, 1.9rem); margin-bottom: 4px; }
 #wish {
-  font-family: "Dancing Script", cursive; font-size: clamp(2.3rem, 9vw, 4.5rem);
-  font-weight: 700; color: #fff; margin: 6px 0;
-  text-shadow: 0 0 30px rgba(255, 92, 138, 0.95), 0 4px 15px #000;
+  font-family: "Great Vibes", cursive; font-size: clamp(2.8rem, 10vw, 5.2rem);
+  font-weight: 400; color: #fff; margin: 4px 0;
+  text-shadow: 0 0 35px rgba(255, 92, 138, 0.98), 0 4px 15px #000;
 }
 #wish::after { content: "|"; color: var(--gold); animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .jn-release-tag {
-  margin-top: 10px; font-family: "Cinzel", serif; font-size: 0.85rem;
-  letter-spacing: 4px; color: var(--gold);
+  margin-top: 10px; font-family: "Bebas Neue", sans-serif; font-size: 1.05rem;
+  letter-spacing: 5px; color: var(--gold);
 }
 
 @media (max-width: 640px) {
   .jn-cutout-fade {
     background:
-      linear-gradient(0deg, rgba(5,1,3,0.98) 0%, rgba(5,1,3,0.82) 38%, rgba(5,1,3,0.15) 75%, rgba(5,1,3,0.4) 100%);
+      linear-gradient(0deg, rgba(5,1,3,0.98) 0%, rgba(5,1,3,0.84) 38%, rgba(5,1,3,0.14) 75%, rgba(5,1,3,0.4) 100%);
   }
-  .jn-title-block { bottom: 9%; left: 5%; right: 5%; }
+  .jn-title-block { bottom: 8%; left: 5%; right: 5%; }
 }
 
 /* =========================================================
-   GEMINI-STYLE ROMANTIC INTERFACE
+   Y.O.K.E. ROMANTIC INTERFACE
    ========================================================= */
 #app {
   position: relative; z-index: 2;
@@ -285,11 +320,10 @@ body.unlocked {
   height: 100dvh; max-width: 920px; margin: 0 auto;
 }
 
-/* Top Header */
 .gem-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 18px;
-  background: rgba(22, 9, 20, 0.82); backdrop-filter: blur(16px);
+  background: rgba(22, 8, 20, 0.85); backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--gem-border);
   flex-shrink: 0;
 }
@@ -305,14 +339,14 @@ body.unlocked {
 }
 .gem-title-row { display: flex; align-items: center; gap: 8px; }
 .brand {
-  font-family: "Cinzel", serif; font-size: 1.35rem; font-weight: 800;
-  margin: 0; letter-spacing: 1.5px;
+  font-family: "Cinzel Decorative", serif; font-size: 1.4rem; font-weight: 900;
+  margin: 0; letter-spacing: 2px;
   background: linear-gradient(90deg, #ff9ec2, #ffd166);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .model-pill {
-  font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px;
-  background: rgba(255, 122, 168, 0.18); border: 1px solid rgba(255, 209, 102, 0.4);
+  font-size: 0.7rem; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+  background: rgba(255, 122, 168, 0.18); border: 1px solid rgba(255, 209, 102, 0.45);
   color: #ffd166;
 }
 .status { font-size: 0.76rem; color: #d8a4bf; margin-top: 2px; }
@@ -322,7 +356,7 @@ body.unlocked {
   border: 1px solid rgba(255, 209, 102, 0.4);
   background: rgba(48, 18, 38, 0.85); color: #ffe6f0;
   height: 38px; padding: 0 12px; border-radius: 999px;
-  font: 600 0.82rem "Plus Jakarta Sans", sans-serif;
+  font: 700 0.82rem "Plus Jakarta Sans", sans-serif;
   cursor: pointer; display: flex; align-items: center; gap: 5px;
   transition: transform 0.15s, background 0.2s;
 }
@@ -333,22 +367,21 @@ body.unlocked {
 }
 .icon-btn.gift-glow { border-color: var(--gold); animation: pulse 2s infinite; }
 
-/* Main Scroll Area */
 .gem-scroll {
   flex: 1; overflow-y: auto; padding: 20px 16px 24px;
   display: flex; flex-direction: column; gap: 18px;
   scroll-behavior: smooth;
 }
 
-/* Gemini Welcome Hero & Suggestion Cards */
 .gem-welcome {
-  text-align: center; padding: 18px 10px 8px; max-width: 680px; margin: 0 auto;
+  text-align: center; padding: 14px 10px 8px; max-width: 680px; margin: 0 auto;
 }
-.gem-sparkle { font-size: 2rem; margin-bottom: 6px; animation: beat 2s infinite; }
+.gem-sparkle { font-size: 2rem; margin-bottom: 4px; animation: beat 2s infinite; }
 @keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 .gem-greet {
-  font-size: clamp(1.7rem, 5vw, 2.4rem); font-weight: 800; margin: 0 0 8px;
-  background: linear-gradient(90deg, #ff7aa8, #ffd166, #c86dd7);
+  font-family: "Cinzel Decorative", serif;
+  font-size: clamp(1.7rem, 5vw, 2.5rem); font-weight: 900; margin: 0 0 8px;
+  background: linear-gradient(90deg, #ff7aa8, #ffd166, #ff9ec2);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .gem-subgreet {
@@ -374,7 +407,6 @@ body.unlocked {
 .gem-card-title { font-weight: 700; font-size: 0.9rem; line-height: 1.3; }
 .gem-card-sub { font-size: 0.74rem; color: #d29ab8; }
 
-/* Chat Stream */
 .gem-chat-stream {
   display: flex; flex-direction: column; gap: 14px;
   max-width: 720px; width: 100%; margin: 0 auto;
@@ -396,10 +428,10 @@ body.unlocked {
 @keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 .msg.bot {
-  background: rgba(42, 18, 36, 0.9);
-  color: #fff0f6; border: 1px solid rgba(255, 158, 194, 0.3);
+  background: rgba(42, 18, 36, 0.92);
+  color: #fff0f6; border: 1px solid rgba(255, 158, 194, 0.32);
   border-bottom-left-radius: 6px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 .msg.me {
   color: #fff;
@@ -424,7 +456,6 @@ body.unlocked {
 
 .msg img, .msg video { display: block; max-width: 100%; border-radius: 14px; margin-top: 8px; border: 1.5px solid var(--gold); }
 
-/* Bottom Floating Gemini Input Dock */
 .gem-bottom-dock {
   padding: 8px 14px 14px;
   background: linear-gradient(0deg, rgba(14, 5, 13, 0.98) 60%, transparent);
@@ -494,9 +525,10 @@ body.unlocked {
 .letter {
   text-align: left; background: #fffaf0; border: 2px solid var(--gold); border-radius: 20px;
   padding: 24px 22px; box-shadow: 0 10px 26px rgba(0, 0, 0, .4);
-  font-family: "Dancing Script", cursive; font-size: 1.45rem; line-height: 1.55; color: #3b1124;
+  font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 700;
+  font-size: 1.4rem; line-height: 1.6; color: #3b1124;
 }
-.section-title { font-family: "Dancing Script", cursive; font-size: 1.8rem; color: var(--gold); margin: 0 0 6px; }
+.section-title { font-family: "Great Vibes", cursive; font-size: 2.2rem; color: var(--gold); margin: 0 0 6px; font-weight: 400; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 18px; padding: 10px; }
 .polaroid {
   background: #fff; padding: 10px 10px 8px; border-radius: 6px;
@@ -504,7 +536,7 @@ body.unlocked {
 }
 .polaroid:hover { transform: rotate(0deg) scale(1.04); }
 .polaroid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border-radius: 3px; background: #ffe3ee; }
-.polaroid p { font-family: "Dancing Script", cursive; font-size: 1.25rem; margin: 6px 0 0; color: #3b1124; }
+.polaroid p { font-family: "Great Vibes", cursive; font-size: 1.45rem; margin: 6px 0 0; color: #3b1124; }
 
 .card {
   display: flex; align-items: center; gap: 14px; text-align: left; text-decoration: none;
@@ -520,7 +552,7 @@ body.unlocked {
 @keyframes spin { to { transform: rotate(360deg); } }
 .list { display: flex; flex-direction: column; gap: 10px; }
 
-/* ---------- VOICE MODE (GEMINI LIVE ORB) ---------- */
+/* ---------- VOICE MODE ---------- */
 #voice {
   position: fixed; inset: 0; z-index: 90; display: none; flex-direction: column;
   align-items: center; justify-content: center; gap: 22px;
@@ -543,7 +575,7 @@ body.unlocked {
 #orb.speaking { animation: orbSpeak .45s ease-in-out infinite alternate; box-shadow: 0 0 95px rgba(255, 209, 102, .85); }
 @keyframes orbPulse { 50% { transform: scale(1.12); } }
 @keyframes orbSpeak { from { transform: scale(.96); } to { transform: scale(1.22); } }
-#vstate { font-family: "Dancing Script", cursive; font-size: 2rem; min-height: 1.3em; color: var(--gold); }
+#vstate { font-family: "Great Vibes", cursive; font-size: 2.3rem; min-height: 1.3em; color: var(--gold); }
 #vtext { max-width: 85%; min-height: 3.5em; color: #f8c8da; font-size: 1rem; line-height: 1.5; }
 .vrow { display: flex; gap: 12px; }
 .vrow button {

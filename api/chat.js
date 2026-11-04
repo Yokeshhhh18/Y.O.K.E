@@ -1,5 +1,5 @@
-// Vercel serverless function: keeps the Gemini API key OFF GitHub.
-// Uses audio/test.m4a as a multimodal reference for Yokesh's tone and speaking style!
+// Vercel serverless function: Y.O.K.E. Brain + Google Drive Cloud Logger
+// Uses audio/test.m4a as a multimodal voice & style training reference for Yokesh!
 const fs = require("fs");
 const path = require("path");
 
@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
 
   const key = process.env.GEMINI_API_KEY;
   if (!key) {
-    return res.status(500).json({ error: "GEMINI_API_KEY is not set in Vercel" });
+    return res.status(500).json({ error: "Y.O.K.E. engine key is not set in Vercel" });
   }
 
   try {
@@ -43,16 +43,15 @@ module.exports = async function handler(req, res) {
         role: "user",
         parts: [
           { inlineData: { mimeType: "audio/mp4", data: voiceSample } },
-          { text: "Listen to my real voice recording above ('Hii chellam...'). Adopt my exact casual, warm, affectionate Chennai Tanglish speaking style, cadence, and personality (calling her chellam, thangam, kuttyma, da) in all your replies to Dhanya." }
+          { text: "Listen to my real voice recording above ('Hii chellam...'). Train yourself on my exact casual, warm, affectionate Chennai Tanglish speaking style, cadence, and personality (calling her chellam, thangam, kuttyma, da). NEVER mention any external AI company or model name—you are 100% Y.O.K.E., built by Yokesh for Dhanya." }
         ]
       });
       contents.push({
         role: "model",
-        parts: [{ text: "Seri da! I have listened to your voice sample and locked in your exact warm, loving Tanglish tone and style for Dhanya." }]
+        parts: [{ text: "Hii chellam! Naan Yokesh oda exact voice style matrum pesura vidhatha appadiye kathukitten. Naan eppovume Y.O.K.E. dhan!" }]
       });
     }
 
-    // append conversation history
     const recent = history.slice(-20).map((m) => ({
       role: m.role === "model" ? "model" : "user",
       parts: [{ text: String((m.parts && m.parts[0] && m.parts[0].text) || "").slice(0, 1000) }]
@@ -79,9 +78,7 @@ module.exports = async function handler(req, res) {
     });
 
     if (!r.ok) {
-      const t = await r.text();
-      console.error("Gemini error", r.status, t);
-      return res.status(502).json({ error: "Gemini error " + r.status });
+      return res.status(502).json({ error: "Y.O.K.E. network busy" });
     }
 
     const data = await r.json();
@@ -92,6 +89,23 @@ module.exports = async function handler(req, res) {
         data.candidates[0].content.parts &&
         data.candidates[0].content.parts.map((p) => p.text || "").join("")) ||
       "";
+
+    // Optional: Sync chat turn to Google Drive (via Google Apps Script Web App URL) if set in Vercel or body
+    const gdriveUrl = process.env.GDRIVE_WEBHOOK_URL || body.gdriveWebhookUrl;
+    if (gdriveUrl && gdriveUrl.startsWith("https://script.google.com/")) {
+      const lastUserMsg = recent[recent.length - 1]?.parts?.[0]?.text || "";
+      fetch(gdriveUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          timestamp: new Date().toISOString(),
+          sender: "Dhanya",
+          userMessage: lastUserMsg,
+          yokeReply: reply.trim(),
+          fullHistory: recent
+        })
+      }).catch(() => {});
+    }
 
     return res.status(200).json({ reply: reply.trim() });
   } catch (e) {
