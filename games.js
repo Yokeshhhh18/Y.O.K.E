@@ -1,6 +1,5 @@
-// Y.O.K.E. v10 Interactive Games Module (games.js)
-// 1) Chibi Doll Battle (Tic-Tac-Toe using Dhanya & Yokesh 3D Funko Pop avatars instead of X & O!)
-// 2) The 6-Stage Funny & Enjoyable Tanglish Love Quest -> Ends with Yokesh's Cartoon Chibi Awarding Her the Gold Medal!
+// Y.O.K.E. v10 Interactive Game Module (games.js)
+// Features: 3D Chibi Doll X-O Battle (Dhanya 3D Tiara Doll vs Yokesh 3D AI Doll)
 (function () {
   const $ = (id) => document.getElementById(id);
   const her = (typeof CONFIG !== "undefined" && CONFIG.HER_NAME) || "Dhanya";
@@ -8,7 +7,6 @@
 
   const HER_ICON = (typeof CONFIG !== "undefined" && CONFIG.XO_HER_ICON) || "images/xo_her.png";
   const ME_ICON = (typeof CONFIG !== "undefined" && CONFIG.XO_ME_ICON) || "images/xo_me.png";
-  const MEDAL_PIC = (typeof CONFIG !== "undefined" && CONFIG.MEDAL_AWARD_PIC) || "images/medal_award.jpg";
 
   function playGameTone(freq = 520, dur = 0.14, type = "sine") {
     try {
@@ -32,36 +30,22 @@
   }
 
   function playWinFanfare() {
-    [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => {
-      setTimeout(() => playGameTone(f, 0.22, "triangle"), i * 105);
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+      setTimeout(() => playGameTone(f, 0.22, "triangle"), i * 110);
     });
   }
 
-  function openGamesModal(mode = "hub") {
+  function openGamesModal() {
     const modal = $("gamesModal");
     if (!modal) return;
     modal.classList.remove("hidden");
-    switchGameTab(mode);
+    initXO();
   }
 
   function closeGamesModal() {
     $("gamesModal")?.classList.add("hidden");
   }
 
-  function switchGameTab(tab) {
-    ["gameHubView", "xoView", "ynView"].forEach((id) => {
-      $(id)?.classList.toggle("hidden", id !== tab + "View" && !(tab === "hub" && id === "gameHubView"));
-    });
-    document.querySelectorAll(".gtab").forEach((b) => {
-      b.classList.toggle("active", b.dataset.tab === tab);
-    });
-    if (tab === "xo") initXO();
-    if (tab === "yn") initYN();
-  }
-
-  // =========================================================
-  // GAME 1: 3D CHIBI DOLL BATTLE (DHANYA DOLL vs YOKESH AI DOLL)
-  // =========================================================
   let board = Array(9).fill("");
   let xoOver = false;
   let xoLocked = false;
@@ -141,7 +125,7 @@
     renderXOBoard();
     updateScoreUI();
     if ($("xoStatus")) {
-      $("xoStatus").textContent = `Un turn dhan chellam! Tap a box to place your Queen doll 👑👇`;
+      $("xoStatus").textContent = `Un turn dhan chellam! Tap a box to place your Queen Doll 👑👇`;
     }
   }
 
@@ -175,7 +159,7 @@
     if (res) return finishXO(res);
 
     xoLocked = true;
-    if ($("xoStatus")) $("xoStatus").textContent = "🤖 Y.O.K.E. AI doll move podudhu… 🤔";
+    if ($("xoStatus")) $("xoStatus").textContent = "🤖 Y.O.K.E. AI Doll yosikkudhu… 🤔";
 
     setTimeout(() => {
       const aiIdx = pickSmartAIMove(board);
@@ -187,8 +171,8 @@
       renderXOBoard();
       res = checkWinner(board);
       if (res) return finishXO(res);
-      if ($("xoStatus")) $("xoStatus").textContent = "Un turn chellam! Place your doll 👑💗";
-    }, 480);
+      if ($("xoStatus")) $("xoStatus").textContent = "Un turn chellam! Place your Queen Doll 👑💗";
+    }, 460);
   }
 
   function finishXO(res) {
@@ -206,16 +190,16 @@
       playWinFanfare();
       window.YOKE_FX?.confetti();
       if ($("xoStatus")) $("xoStatus").textContent = `🥳 Woooow ${her} Doll jeichuta! Queen always rules 👑💗`;
-      chatMsg = `🎮 Doll Battle: Yayy chellam! Unnoda Queen doll ennoda AI doll-ah jeichiduchu 🥳👑 Birthday girl-ku neraya chocolates! 🍫💗`;
+      chatMsg = `🎮 Chibi X-O: Yayy chellam! Unnoda Queen doll ennoda AI doll-ah jeichiduchu 🥳👑 Birthday girl-ku neraya chocolates! 🍫💗`;
     } else if (res.winner === "O") {
       scores.yoke++;
       playGameTone(340, 0.28, "sawtooth");
       if ($("xoStatus")) $("xoStatus").textContent = "🤖 Ennoda Y.O.K.E. AI doll jeichuten! 😜 Punishment: Oru cute smile pannu 😁💗";
-      chatMsg = `🎮 Doll Battle-la naan jeichuten 😜 Aana ennoda creator ${you}-kum enakkum eppovume nee dhan real winner chellam! 💗`;
+      chatMsg = `🎮 Chibi X-O la naan jeichuten 😜 Aana ennoda creator ${you}-kum enakkum eppovume nee dhan real winner chellam! 💗`;
     } else {
       scores.draw++;
       if ($("xoStatus")) $("xoStatus").textContent = "🤝 Match Draw! Namma rendu dolls-ume semma cute & tough 😍";
-      chatMsg = `🎮 Doll Battle Draw aagiduchu chellam 🤝 Innoru round vilayaduvoma? 😏`;
+      chatMsg = `🎮 Chibi X-O Draw aagiduchu chellam 🤝 Innoru round vilayaduvoma? 😏`;
     }
     updateScoreUI();
     if (typeof window.addBotGameSummary === "function") {
@@ -223,206 +207,10 @@
     }
   }
 
-  // =========================================================
-  // GAME 2: FUNNY & ENJOYABLE TANGLISH LOVE QUEST -> CHIBI MEDAL AWARD!
-  // =========================================================
-  const QUEST_STAGES = [
-    {
-      stageTitle: "Level 1: The Drama Queen Test 🎭",
-      relicIcon: "👑",
-      relicName: "Drama Queen Tiara",
-      storyIntro: "First truth test before you can claim Yokesh's Chibi Gold Medal…",
-      q: `Unmai sollu chellam — chinna vishayathuku kooda cute-ah kovapadra 'World's #1 Cutest Drama Queen' nee dhana? 😤👑`,
-      yesReply: "😂 Haha othukitta! Aana nee kovapatta kooda Yokesh kannuku semma cute-ah dhan iruppa 😍 [👑 Drama Queen Tiara Unlocked!]"
-    },
-    {
-      stageTitle: "Level 2: The Food & Briyani Law 🍛",
-      relicIcon: "🍗",
-      relicName: "Golden Leg Piece",
-      storyIntro: "Every relationship has one golden rule about food…",
-      q: `"Enakku pasikkala" nu sollitu Yokesh plate-la irukura best chicken piece & fries-ah aattaiya podradhu un favourite hobby dhana? 🍟😏`,
-      yesReply: "🤣 Caught red-handed! Aana unakku ootti vidradhu dhana avanukku ulagathulaye pidicha vishayam! [🍗 Golden Leg Piece Unlocked!]"
-    },
-    {
-      stageTitle: "Level 3: The '5-Minutes' Makeup Myth 💄",
-      relicIcon: "🪞",
-      relicName: "Magic Mirror",
-      storyIntro: "Time-travel physics according to Dhanya…",
-      q: `"Innum 5 mins-la ready aagiduven!" nu sollitu 1 hour kannadi munnadiye nikkiradhu unakku birthright dhana chellam? 💅⏰`,
-      yesReply: "😜 Haha 1 hour wait pannalum, nee veliya varumbodhu Yokesh flat aagiduvan! [🪞 Magic Mirror Unlocked!]"
-    },
-    {
-      stageTitle: "Level 4: The Midnight Reels Spammer 📱",
-      relicIcon: "😂",
-      relicName: "Meme Trophy",
-      storyIntro: "Checking your 2:00 AM phone activity logs…",
-      q: `Night 12 manikku thoongama Yokesh-ku 50 funny reels & food videos anuppi avana disturb panradhu semma jolly-ah irukka? 📲🤭`,
-      yesReply: "🥳 Correct-u! Nee anuppura ovvoru reel-ayum avan sirichite paapan theriyuma! [😂 Meme Trophy Unlocked!]"
-    },
-    {
-      stageTitle: "Level 5: The Birthday Briyani Ransom 🍦",
-      relicIcon: "💳",
-      relicName: "VIP Treat Pass",
-      storyIntro: "Almost at the Medal Ceremony! Just one financial agreement left…",
-      q: `Innaiku un Birthday-va vechi Yokesh pocket-ah gaali panni periya treat & ice cream vaanga plan potrukiya? 🍨💸`,
-      yesReply: "😂 Deal locked! Unakkaga avanoda motha wallet-ayum thara ready-ah irukkan! [💳 VIP Treat Pass Unlocked!]"
-    },
-    {
-      stageTitle: "Final Boss Level: The Lifetime Contract 💍",
-      relicIcon: "🥇",
-      relicName: "Yokesh's Gold Medal",
-      storyIntro: "Final step to receive your Chibi Gold Medal from Yokesh!",
-      q: `Enna dhan sanda potalum, lifetime full-ah Yokesh-ah torture pannite avan koodave happy-ah iruppiya chellam? 🥰💞`,
-      yesReply: "🎉 6/6 QUEST COMPLETE! Prepare for your Official Chibi Gold Medal Ceremony from Yokesh! 🥇👑💖"
-    }
-  ];
-
-  const DODGE_TAUNTS = [
-    "Heyy poi solladha! Olunga YES tap pannu 😜",
-    "No button-eh kedaiyadhu chellam, escape aagudhu paaru 🏃‍♂️💨",
-    "Yokesh AI code-la 'NO' ku idame illa 😂",
-    "Gold Medal venumna unmaiya othukitu YES tap pannu 🥇💗",
-    "Pidikka mudiyuma? Inga vandhuteneyyy! 🙈✨"
-  ];
-
-  let ynIndex = 0;
-  let ynYesCount = 0;
-  let dodgeCount = 0;
-
-  function initYN() {
-    ynIndex = 0;
-    ynYesCount = 0;
-    dodgeCount = 0;
-    renderYNQuestion();
-  }
-
-  function buildQuestMapHTML() {
-    return `<div class="quest-map">
-      ${QUEST_STAGES.map((st, idx) => {
-        const done = idx < ynIndex;
-        const current = idx === ynIndex;
-        return `<div class="quest-node ${done ? "done" : ""} ${current ? "current" : ""}" title="${st.relicName}">
-          <span class="q-icon">${done ? st.relicIcon : idx + 1}</span>
-        </div>`;
-      }).join('<div class="quest-connector"></div>')}
-    </div>`;
-  }
-
-  function renderYNQuestion() {
-    const box = $("ynCardBody");
-    if (!box) return;
-
-    if (ynIndex >= QUEST_STAGES.length) {
-      window.YOKE_FX?.confetti();
-      playWinFanfare();
-      const relics = QUEST_STAGES.map((s) => `<span class="relic-badge" title="${s.relicName}">${s.relicIcon} ${s.relicName}</span>`).join("");
-      box.innerHTML = `
-        <div class="yn-complete medal-ceremony">
-          ${buildQuestMapHTML()}
-          <div class="medal-award-banner">
-            <img src="${MEDAL_PIC}" alt="${you} awarding Gold Medal to ${her}" class="medal-award-img">
-            <div class="medal-ribbon-tag">🥇 OFFICIAL CHIBI MEDAL CEREMONY 🥇</div>
-          </div>
-          <h3 id="ynSummaryScore">🏆 ${you} Awards ${her} the Gold Medal!</h3>
-          <p class="quest-win-sub">For passing all 6 Funny Quests, Chibi <b>${you}</b> officially presents Chibi Queen <b>${her}</b> with the <b>“World's Cutest Drama Queen &amp; Forever Best Partner” Gold Medal!</b> 🎖️👑</p>
-          <div class="relic-collection">${relics}</div>
-          <div class="quest-final-actions">
-            <button type="button" id="ynUnlockGiftBtn" class="game-action-btn gold-cta">🎁 Open Your Birthday Surprise</button>
-            <button type="button" id="ynReplayBtn" class="game-action-btn secondary">🔄 Replay Funny Quest</button>
-          </div>
-        </div>
-      `;
-      $("ynReplayBtn")?.addEventListener("click", initYN);
-      $("ynUnlockGiftBtn")?.addEventListener("click", () => {
-        closeGamesModal();
-        if (typeof window.triggerOpenGiftFromQuest === "function") {
-          window.triggerOpenGiftFromQuest();
-        } else {
-          $("giftNavBtn")?.click();
-        }
-      });
-      if (typeof window.addBotGameSummary === "function") {
-        window.addBotGameSummary(`🥇 Medal Ceremony Complete! Ennoda Chibi Doll unakku "World's Cutest Drama Queen & Forever Partner" Gold Medal kuduthachu chellam! 🥳👑💗`);
-      }
-      return;
-    }
-
-    const item = QUEST_STAGES[ynIndex];
-    dodgeCount = 0;
-    box.innerHTML = `
-      ${buildQuestMapHTML()}
-      <div class="yn-progress">${item.stageTitle} • Badge: ${item.relicIcon} ${item.relicName}</div>
-      <div class="quest-story-intro">${item.storyIntro}</div>
-      <div class="yn-question">${item.q}</div>
-      <div id="ynReaction" class="yn-reaction">Tap YES to claim ${item.relicIcon} (or try catching NO 😏)</div>
-      <div class="yn-arena" id="ynArena">
-        <button type="button" id="ynYes" class="yn-btn yes">AMA / YES ${item.relicIcon} 💗</button>
-        <button type="button" id="ynNo" class="yn-btn no">ILLA / NO 🙈</button>
-      </div>
-    `;
-
-    const yesBtn = $("ynYes");
-    const noBtn = $("ynNo");
-    const arena = $("ynArena");
-    const react = $("ynReaction");
-
-    yesBtn?.addEventListener("click", () => {
-      ynYesCount++;
-      playWinFanfare();
-      window.YOKE_FX?.confetti();
-      if (react) {
-        react.textContent = item.yesReply;
-        react.classList.add("pop-love");
-      }
-      yesBtn.disabled = true;
-      if (noBtn) noBtn.style.display = "none";
-      setTimeout(() => {
-        ynIndex++;
-        renderYNQuestion();
-      }, 1950);
-    });
-
-    function dodgeNoButton(e) {
-      if (e) e.preventDefault();
-      dodgeCount++;
-      playGameTone(740, 0.08, "square");
-      const rect = arena.getBoundingClientRect();
-      const bW = noBtn.offsetWidth || 105;
-      const bH = noBtn.offsetHeight || 44;
-      const maxX = Math.max(20, rect.width - bW - 14);
-      const maxY = Math.max(20, rect.height - bH - 14);
-
-      const newX = 10 + Math.floor(Math.random() * maxX);
-      const newY = 10 + Math.floor(Math.random() * maxY);
-
-      noBtn.style.position = "absolute";
-      noBtn.style.left = newX + "px";
-      noBtn.style.top = newY + "px";
-
-      if (react) {
-        react.textContent = DODGE_TAUNTS[dodgeCount % DODGE_TAUNTS.length];
-      }
-      const scale = Math.min(1.26, 1 + dodgeCount * 0.05);
-      if (yesBtn) yesBtn.style.transform = `scale(${scale})`;
-    }
-
-    noBtn?.addEventListener("pointerenter", dodgeNoButton);
-    noBtn?.addEventListener("pointerdown", dodgeNoButton);
-    noBtn?.addEventListener("click", dodgeNoButton);
-  }
-
   window.addEventListener("DOMContentLoaded", () => {
-    $("gamesNavBtn")?.addEventListener("click", () => openGamesModal("hub"));
+    $("gamesNavBtn")?.addEventListener("click", openGamesModal);
     $("closeGamesBtn")?.addEventListener("click", closeGamesModal);
     $("xoResetBtn")?.addEventListener("click", initXO);
-
-    document.querySelectorAll(".gtab").forEach((b) => {
-      b.addEventListener("click", () => switchGameTab(b.dataset.tab));
-    });
-    document.querySelectorAll(".hub-play-btn").forEach((b) => {
-      b.addEventListener("click", () => switchGameTab(b.dataset.target));
-    });
-
     $("xoBoard")?.addEventListener("click", (e) => {
       const cell = e.target.closest(".xo-cell");
       if (cell) handleXOMove(Number(cell.dataset.idx));
