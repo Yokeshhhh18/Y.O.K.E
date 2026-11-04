@@ -14,8 +14,8 @@
   <canvas id="fx"></canvas>
 
   <!-- =========================================================
-       JANA NAYAGAN STYLE FULL-SCREEN ENGLISH BLOCKBUSTER INTRO (v10)
-       (Full-screen panel images with overlapping 3D gold text — NO chapter names!)
+       JANA NAYAGAN STYLE 3-PANEL FULL-SCREEN ENGLISH INTRO (v11)
+       (Full-screen widescreen panels with overlapping 3D gold text — NO chapter names!)
        ========================================================= -->
   <section id="intro" class="hidden">
     <canvas id="sparks"></canvas>
@@ -25,7 +25,7 @@
     <div class="flash-overlay" id="flashOverlay"></div>
     <button id="skip" type="button">SKIP INTRO ⏭</button>
 
-    <!-- Gate: First Day First Show -->
+    <!-- Gate: Tap for First Day First Show -->
     <div id="gate" class="jn-stage active">
       <div class="jn-cert">U/A • 70MM WORLDWIDE ROMANTIC BLOCKBUSTER</div>
       <div class="jn-monogram-big">Y</div>
@@ -35,56 +35,48 @@
       <button id="openBtn" type="button">🔥 TAP FOR FIRST DAY FIRST SHOW 🎬</button>
     </div>
 
-    <!-- Stage 1: 3D Metallic English Title Slam (0s - 3.8s) -->
-    <div id="jnStage1" class="jn-stage">
-      <div class="jn-slam-word" id="slamWord1">HAPPY</div>
-      <div class="jn-slam-word" id="slamWord2">BIRTHDAY</div>
-      <div class="jn-slam-word gold-glow" id="slamWord3"><span class="her-cine"></span></div>
-      <div class="jn-sub-credit">MY BEST FRIEND • MY QUEEN • MY EVERYTHING 👑💗</div>
-    </div>
-
-    <!-- Stage 2: Full-Screen Heroine Poster — DHANYA (3.8s - 9.5s) -->
-    <div id="jnStage2" class="jn-stage jn-fullscreen-card">
-      <div class="jn-bg-watermark">QUEEN</div>
-      <div class="jn-hero-cutout">
-        <img id="herIntroPic" alt="Dhanya">
-        <div class="jn-cutout-fade"></div>
-      </div>
-      <div class="jn-title-block">
-        <div class="jn-eng-dialogue">“ONE SMILE FROM YOU IS ENOUGH TO LIGHT UP MY ENTIRE WORLD”</div>
-        <div class="jn-role-sub">👑 THE REIGNING QUEEN OF MY HEART</div>
-        <h1 class="jn-massive-name her-cine"></h1>
-        <div class="jn-English-tag">En Chellam • En Thangam • The Birthday Princess ✨💗</div>
-      </div>
-    </div>
-
-    <!-- Stage 3: Full-Screen Hero/Creator Poster — YOKESH (9.5s - 15.2s) -->
-    <div id="jnStage3" class="jn-stage jn-fullscreen-card">
+    <!-- PANEL 1 (Full-Screen): Yokesh Arms Wide Open with Pink Petals + Overlapping Text -->
+    <div id="jnStage1" class="jn-stage jn-fullscreen-card">
       <div class="jn-bg-watermark">Y.O.K.E</div>
       <div class="jn-hero-cutout">
-        <img id="meIntroPic" alt="Yokesh">
+        <img id="panel1Pic" src="images/panel1.png" alt="Yokesh">
         <div class="jn-cutout-fade"></div>
       </div>
       <div class="jn-title-block">
-        <div class="jn-eng-dialogue">“AN AI WORLD BUILT WITH MY VOICE &amp; SOUL, EXCLUSIVELY FOR YOU”</div>
-        <div class="jn-role-sub">🔥 WRITTEN, VOICED &amp; CREATED BY</div>
+        <div class="jn-eng-dialogue">“MY ARMS &amp; MY HEART HAVE ALWAYS BEEN OPEN ONLY FOR YOU…”</div>
+        <div class="jn-role-sub">🔥 WRITTEN, VOICED &amp; CREATED WITH LOVE BY</div>
         <h1 class="jn-massive-name you-cine"></h1>
         <div class="jn-English-tag">Creator of Y.O.K.E. AI • Yours Forever 😎⚡</div>
       </div>
     </div>
 
-    <!-- Stage 4: Full-Screen Climax Dual Poster & Birthday Wish (15.2s - 20.8s) -->
-    <div id="jnStage4" class="jn-stage jn-climax-card">
-      <div class="jn-bg-watermark">FOREVER</div>
-      <div class="jn-dual-posters">
-        <div class="jn-dual-img left"><img id="climaxHer" alt="Dhanya"></div>
-        <div class="jn-dual-img right"><img id="climaxMe" alt="Yokesh"></div>
-        <div class="jn-dual-gradient"></div>
+    <!-- PANEL 2 (Full-Screen): Dhanya Looking Back with Tiara & Pink Petals + Overlapping Text -->
+    <div id="jnStage2" class="jn-stage jn-fullscreen-card">
+      <div class="jn-bg-watermark">QUEEN</div>
+      <div class="jn-hero-cutout">
+        <img id="panel2Pic" src="images/panel2.png" alt="Dhanya">
+        <div class="jn-cutout-fade"></div>
       </div>
-      <div class="jn-climax-text">
-        <div class="jn-eng-dialogue climax-quote">“YOU'RE OUR KIND OF EVERYTHING — TODAY, TOMORROW &amp; ALWAYS”</div>
+      <div class="jn-title-block">
+        <div class="jn-eng-dialogue">“ONE SMILE FROM YOU IS ENOUGH TO STOP MY ENTIRE WORLD”</div>
+        <div class="jn-role-sub">👑 INTRODUCING THE REIGNING QUEEN OF MY HEART</div>
+        <h1 class="jn-massive-name her-cine"></h1>
+        <div class="jn-English-tag">En Chellam • En Thangam • The Birthday Princess ✨💗</div>
+      </div>
+    </div>
+
+    <!-- PANEL 3 (Full-Screen): Both Hugging Together + Overlapping Birthday Wish Climax -->
+    <div id="jnStage3" class="jn-stage jn-fullscreen-card">
+      <div class="jn-bg-watermark">FOREVER</div>
+      <div class="jn-hero-cutout">
+        <img id="panel3Pic" src="images/panel3.png" alt="Us Together Forever">
+        <div class="jn-cutout-fade"></div>
+      </div>
+      <div class="jn-title-block">
+        <div class="jn-eng-dialogue">“IN YOUR ARMS IS THE ONLY PLACE I EVER WANT TO BE”</div>
+        <div class="jn-role-sub">✨ YOU'RE OUR KIND OF EVERYTHING — TODAY, TOMORROW &amp; ALWAYS ✨</div>
         <div id="wish" aria-live="polite"></div>
-        <div class="jn-release-tag">✨ RUNNING SUCCESSFULLY IN OUR HEARTS FOREVER ✨</div>
+        <div class="jn-English-tag">Happy Birthday, My Forever Queen <span class="her-cine"></span> 👑💖</div>
       </div>
     </div>
   </section>
@@ -109,7 +101,7 @@
     <div id="vtext"></div>
     <div class="vrow">
       <button id="playRealVoiceBtn" type="button">🎧 Hear Yokesh's Original Voice</button>
-      <button id="langBtn" type="button">🌐 தமிழ் / Tanglish</button>
+      <button id="langBtn" type="button">🌐 தமிழ் (ta-IN)</button>
       <button id="vclose" type="button">✕ Back to Chat</button>
     </div>
   </section>
@@ -161,10 +153,9 @@
   </section>
 
   <!-- =========================================================
-       Y.O.K.E. MAIN AI INTERFACE (WITH CHAT HISTORY SIDEBAR)
+       Y.O.K.E. MAIN AI INTERFACE (NO POLAROID PHOTOS ON PAGE!)
        ========================================================= -->
   <div id="appLayout" class="app-layout hidden">
-    <!-- Collapsible Chat History Sidebar -->
     <aside id="historySidebar" class="history-sidebar">
       <div class="sidebar-top">
         <div class="sidebar-brand">
@@ -182,7 +173,6 @@
       <button id="clearHistoryBtn" type="button" class="clear-hist-btn">🗑 Clear Local History</button>
     </aside>
 
-    <!-- Main Chat Column -->
     <main id="app" class="main-chat-col">
       <div class="aurora-bg" aria-hidden="true">
         <span class="aurora-blob b1"></span>
@@ -209,12 +199,11 @@
         <div class="gem-actions">
           <button id="gamesNavBtn" class="icon-btn game-glow" type="button" title="Play Chibi Doll X-O Game">👑 <span>X-O Game</span></button>
           <button id="bgmModeBtn" class="icon-btn playing" type="button" title="Switch BGM Vibe">🎵 <span id="bgmLabel">Melody</span></button>
-          <button id="replayIntroBtn" class="icon-btn" type="button" title="Replay Full-Screen Intro">🎬</button>
+          <button id="replayIntroBtn" class="icon-btn" type="button" title="Replay 3-Panel Intro">🎬</button>
           <button id="giftNavBtn" class="icon-btn gift-glow" type="button" title="Read Birthday Letter">💌</button>
         </div>
       </header>
 
-      <!-- Scrollable Main Area (NO POLAROID PHOTOS HERE!) -->
       <div id="chatScroll" class="gem-scroll">
         <div id="welcomeHero" class="gem-welcome">
           <div class="gem-sparkle">✨🤖👑💗</div>
@@ -233,7 +222,6 @@
         </section>
       </div>
 
-      <!-- Bottom Floating Prompt Bar -->
       <div class="gem-bottom-dock">
         <div id="quickBar" class="gem-quick-pills"></div>
         <form id="form" class="gem-input-bar">

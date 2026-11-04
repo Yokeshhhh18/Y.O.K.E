@@ -1,4 +1,4 @@
-// Y.O.K.E. v10 Configuration File
+// Y.O.K.E. v11 Complete Configuration File
 const CONFIG = {
   HER_NAME: "Dhanya",
   YOUR_NAME: "Yokesh",
@@ -9,7 +9,7 @@ const CONFIG = {
   // ==========================================================================
   // GEMINI API KEY SETUP:
   // Best Practice: Add GEMINI_API_KEY in Vercel -> Settings -> Environment Variables & Redeploy.
-  // Quick Option: If you are testing locally or Vercel env vars aren't working yet, you can also paste your AIza... key below!
+  // Instant Option: Or paste your AIza... key directly inside the quotes below!
   // ==========================================================================
   GEMINI_API_KEY: "",
 
@@ -17,11 +17,15 @@ const CONFIG = {
   // GOOGLE DRIVE CLOUD STORAGE (For saving all chats & loading Drive media)
   // Paste your Google Apps Script Web App URL (https://script.google.com/macros/s/.../exec)
   // ==========================================================================
-  GDRIVE_CLOUD_URL: "https://script.google.com/macros/s/AKfycbwhas2_Is88Od53Q9PEFY-wfhLq5adI5VgVvssb1ASlYboZIx9yynyB-uXTu8-iyItGkQ/exec",
+  GDRIVE_CLOUD_URL: "",
 
-  // Full-screen images for the Jana Nayagan English Intro + 3D Chibi Doll icons for X-O Game
-  HER_PIC: "images/dhanya.png",
-  YOUR_PIC: "images/me.png",
+  // Your 3 Widescreen Full-Screen Jana Nayagan Intro Panels (No Chapter Headers!)
+  PANEL_1: "images/panel1.png", // Panel 1: Yokesh arms wide open with falling petals
+  PANEL_2: "images/panel2.png", // Panel 2: Dhanya looking back with tiara & falling petals
+  PANEL_3: "images/panel3.png", // Panel 3: Yokesh & Dhanya hugging together
+
+  // Chat Avatar & 3D Chibi Doll Icons for the X-O Game
+  YOUR_PIC: "images/avatar.jpg",
   XO_HER_ICON: "images/xo_her.png",
   XO_ME_ICON: "images/xo_me.png",
 

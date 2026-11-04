@@ -22,8 +22,10 @@ function resolveDriveUrl(url, type = "media") {
   return url;
 }
 
-const herPicSrc = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.HER_PIC) || "images/dhanya.png");
-const mePicSrc = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.YOUR_PIC) || "images/me.png");
+const panel1Src = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.PANEL_1) || "images/panel1.png");
+const panel2Src = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.PANEL_2) || "images/panel2.png");
+const panel3Src = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.PANEL_3) || "images/panel3.png");
+const mePicSrc = resolveDriveUrl((typeof CONFIG !== "undefined" && CONFIG.YOUR_PIC) || "images/avatar.jpg");
 
 const GEM_CARDS = [
   { icon: "👑", title: "Play Chibi Doll X-O", sub: "Dhanya Doll vs Yokesh AI Doll!", prompt: "Play X-O Game" },
@@ -70,10 +72,9 @@ if ($("youName")) $("youName").textContent = you;
 
 safeImg($("avatar"), mePicSrc);
 safeImg($("sideAvatar"), mePicSrc);
-safeImg($("herIntroPic"), herPicSrc);
-safeImg($("meIntroPic"), mePicSrc);
-safeImg($("climaxHer"), herPicSrc);
-safeImg($("climaxMe"), mePicSrc);
+safeImg($("panel1Pic"), panel1Src);
+safeImg($("panel2Pic"), panel2Src);
+safeImg($("panel3Pic"), panel3Src);
 
 // ---------- Floating Hearts ----------
 const HEARTS = ["💗", "💖", "💛", "🌸", "✨", "💕"];
@@ -537,7 +538,7 @@ function triggerFlashAndShake() {
 }
 
 function showStage(id) {
-  ["gate", "jnStage1", "jnStage2", "jnStage3", "jnStage4"].forEach((s) => {
+  ["gate", "jnStage1", "jnStage2", "jnStage3"].forEach((s) => {
     const el = $(s);
     if (el) el.classList.toggle("active", s === id);
   });
@@ -560,39 +561,29 @@ function startIntro() {
   // Play Yokesh's real voice greeting ("Hii chellam...") right as the intro starts!
   if (CLIPS.wish) playSrc(CLIPS.wish);
 
-  introStageMusic = "slam";
+  // PANEL 1 (0s - 5.8s): Full-Screen Yokesh Arms Open Panel + Overlapping 3D Gold Text
+  introStageMusic = "hero";
   startIntroMassBGM();
-  playCinemaImpact(65, 1.5);
+  playCinemaImpact(65, 1.6);
   triggerFlashAndShake();
-
   showStage("jnStage1");
-  ["slamWord1", "slamWord2", "slamWord3"].forEach((w) => $(w)?.classList.remove("slam-in"));
-  setTimeout(() => { $("slamWord1")?.classList.add("slam-in"); playCinemaImpact(85, 0.7); spawnShockwave(); }, 150);
-  stageTimeouts.push(setTimeout(() => { $("slamWord2")?.classList.add("slam-in"); playCinemaImpact(75, 0.7); spawnShockwave(); }, 1100));
-  stageTimeouts.push(setTimeout(() => { $("slamWord3")?.classList.add("slam-in"); playCinemaImpact(58, 1.2); triggerFlashAndShake(); }, 2100));
 
+  // PANEL 2 (5.8s - 11.6s): Full-Screen Dhanya Looking Back Panel + Overlapping 3D Gold Text
   stageTimeouts.push(setTimeout(() => {
     if (introDone) return;
     introStageMusic = "heroine";
     triggerFlashAndShake();
     playCinemaImpact(55, 1.6);
     showStage("jnStage2");
-  }, 3800));
+  }, 5800));
 
-  stageTimeouts.push(setTimeout(() => {
-    if (introDone) return;
-    introStageMusic = "hero";
-    triggerFlashAndShake();
-    playCinemaImpact(52, 1.7);
-    showStage("jnStage3");
-  }, 9500));
-
+  // PANEL 3 (11.6s - 18.0s): Full-Screen Hugging Climax Panel + Overlapping Birthday Wish
   stageTimeouts.push(setTimeout(() => {
     if (introDone) return;
     introStageMusic = "climax";
     triggerFlashAndShake();
     playCinemaImpact(48, 2.1);
-    showStage("jnStage4");
+    showStage("jnStage3");
     const text = `Happy Birthday, ${her} 💗`;
     let i = 0;
     (function type() {
@@ -601,7 +592,7 @@ function startIntro() {
       if (i <= text.length) stageTimeouts.push(setTimeout(type, 80));
       else stageTimeouts.push(setTimeout(endIntro, 3200));
     })();
-  }, 15200));
+  }, 11600));
 }
 
 function endIntro() {
